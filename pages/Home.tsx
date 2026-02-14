@@ -9,6 +9,7 @@ import {
   TimeCalculator,
   PomodoroTimer
 } from '../components/CalculatorTools.tsx';
+import Seo from '../components/Seo.tsx';
 
 const TimeProgress = () => {
   const [now, setNow] = useState(new Date());
@@ -66,6 +67,11 @@ const TimeProgress = () => {
 const Home: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+      <Seo 
+        title="Time Calculator & Date Tools | Free Online Utilities - TimeCenterHub"
+        description="Free online Time Calculator and Date Tools. Add durations, track work hours, calculate exact age, and convert time zones accurately with TimeCenterHub."
+        canonical="https://timecenterhub.com/"
+      />
       {/* Hero Section */}
       <section className="text-center mb-16 md:mb-10 relative pt-4 md:pt-6">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-56 bg-blue-400 opacity-[0.03] blur-[120px] rounded-full -z-10"></div>
@@ -73,8 +79,8 @@ const Home: React.FC = () => {
           RELIABLE TIME TOOLS
         </div>
         <h1 className="text-3xl md:text-6xl font-black text-slate-900 mb-4 md:mb-6 tracking-tighter leading-[1.1]">
-          Universal Time Calculator & <br />
-          <span className="text-blue-600">Free Online Date</span> Tools
+          Free Time Calculator & <br />
+          <span className="text-blue-600">Online Date</span> Tools
         </h1>
         <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed mb-8 px-2 md:px-4">
           Easy-to-use tools for everyone. Calculate your exact age, track work hours, and add up time durations with 100% accuracy.
@@ -267,7 +273,7 @@ const Home: React.FC = () => {
       {/* VISUALLY HIDDEN SEO CONTENT (CRAWLER ONLY) */}
       <div className="sr-only">
         <article>
-          <h1>Universal Time Calculator and Free Online Date Tools</h1>
+          <h1>Time Calculator and Free Online Date Tools</h1>
           <p>Welcome to TimeCenterHub, your home for accurate <Link to="/time/time-calculator">time calculators</Link> and date tools. We help you with all your time-related questions, from calculating your <Link to="/date/age-calculator">exact age</Link> to tracking work hours. Our goal is to provide simple tools that everyone can use easily. We strictly follow <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank" rel="noreferrer">ISO-8601</a> standards for all time and date calculations. Our date tools are based on the <a href="https://en.wikipedia.org/wiki/Gregorian_calendar" target="_blank" rel="noreferrer">Gregorian calendar</a> system.</p>
         </article>
       </div>

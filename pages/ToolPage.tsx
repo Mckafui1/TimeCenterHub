@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { TOOLS } from '../constants.tsx';
+import Seo from '../components/Seo.tsx';
 import { 
   TimeCalculator,
   TimeDurationCalculator,
@@ -238,6 +239,11 @@ const ToolPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
+       <Seo 
+          title={`${tool.name} - Free Online Tool | TimeCenterHub`} 
+          description={tool.description}
+          canonical={`https://timecenterhub.com/#${tool.path}`} 
+       />
        {/* Breadcrumbs & Header Container */}
        <div className="bg-white border-b border-slate-200 pb-20 pt-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
