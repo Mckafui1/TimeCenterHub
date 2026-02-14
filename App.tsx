@@ -3,6 +3,10 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.tsx';
 import Home from './pages/Home.tsx';
 import ToolPage from './pages/ToolPage.tsx';
+import About from './pages/About.tsx';
+import Contact from './pages/Contact.tsx';
+import Privacy from './pages/Privacy.tsx';
+import Sitemap from './pages/Sitemap.tsx';
 
 const App: React.FC = () => {
   return (
@@ -10,8 +14,11 @@ const App: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/sitemap" element={<Sitemap />} />
           <Route path="/:category/:toolId" element={<ToolPage />} />
-          {/* Fallback for unknown routes */}
           <Route path="*" element={<Home />} />
         </Routes>
       </Layout>
