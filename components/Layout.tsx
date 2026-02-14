@@ -18,11 +18,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200 py-3 shadow-sm' : 'bg-transparent py-6'}`}>
+      <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200 py-3 shadow' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg">
+              <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform shadow-md">
                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
               <span className="text-xl font-black text-slate-900 tracking-tighter">
@@ -35,7 +35,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <Link to="/date/age-calculator" className="text-sm font-black text-slate-500 hover:text-blue-600 uppercase tracking-widest transition-colors">Date</Link>
               <Link to="/time/chronometer" className="text-sm font-black text-slate-500 hover:text-blue-600 uppercase tracking-widest transition-colors">Stopwatch</Link>
               <Link to="/work/work-hours-calculator" className="text-sm font-black text-slate-500 hover:text-blue-600 uppercase tracking-widest transition-colors">Work</Link>
-              <Link to="/converter/unix-timestamp" className="px-5 py-2.5 bg-slate-900 text-white text-xs font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-md">Developer Tools</Link>
+              <Link to="/converter/unix-timestamp" className="px-5 py-2.5 bg-slate-900 text-white text-xs font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-sm">Developer Tools</Link>
             </nav>
 
             <div className="md:hidden">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universal Time Calculator | Free Online Date & Time Tools - TimeCenterHub</title>
-    <meta name="description" content="Accurate and free online time calculator for adding durations, calculating exact age, tracking work hours, and converting time zones. The ultimate hub for all temporal calculations.">
+    <meta name="description" content="Accurate and free online time calculator for adding durations, calculating exact age, tracking work hours, and converting time zones. The ultimate hub for all temporal calculations with ISO-8601 accuracy.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕒</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,8 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(226, 232, 240, 1);
         }
+        /* Ensure the SEO skeleton doesn't look broken if JS is slow */
+        .seo-skeleton { max-width: 800px; margin: 100px auto; padding: 20px; text-align: center; }
     </style>
 <script type="importmap">
 {
@@ -25,14 +27,42 @@
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "react-router-dom": "https://esm.sh/react-router-dom@7.1.5?external=react",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
   }
 }
 </script>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
-    <div id="root"></div>
+    <div id="root">
+        <!-- SEO Static Skeleton: This content is read by bots before JS hydration -->
+        <div class="seo-skeleton">
+            <h1 style="font-size: 3rem; font-weight: 900; color: #0f172a; margin-bottom: 20px;">Universal Time Calculator</h1>
+            <p style="font-size: 1.25rem; color: #64748b; line-height: 1.6; margin-bottom: 40px;">
+                Welcome to TimeCenterHub, your comprehensive suite of free online time calculators, date tools, and work hour trackers. 
+                Our platform provides high-precision temporal engines for professionals, developers, and daily planning.
+            </p>
+            <div style="text-align: left; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
+                <h2 style="font-weight: 800; color: #1e293b; margin-bottom: 15px;">Our Specialized Tool Directory</h2>
+                <ul style="color: #475569; line-height: 2;">
+                    <li><strong>Time Calculators:</strong> Duration Calculator, Add/Subtract Time, Time Between Times, Global World Clock.</li>
+                    <li><strong>Date Tools:</strong> Age Calculator, Birthday Countdown, Time Between Dates, Business Day Calculator, Pregnancy Due Date.</li>
+                    <li><strong>Work & Productivity:</strong> Work Hours Tracker, Time Card Calculator, Overtime Pay, Billable Hours for Legal/Accounting.</li>
+                    <li><strong>Converters:</strong> Military Time Converter, Unix Timestamp for Developers, Minutes to Hours, Decimal Time.</li>
+                    <li><strong>Focus & Countdowns:</strong> Pomodoro Productivity Timer, New Year Countdown, Exam Timer.</li>
+                </ul>
+            </div>
+            <p style="margin-top: 40px; font-weight: 700; color: #3b82f6;">Loading interactive temporal engines...</p>
+        </div>
+    </div>
+    
+    <noscript>
+        <div style="padding: 50px; text-align: center; font-family: sans-serif;">
+            <h2>JavaScript Required</h2>
+            <p>Please enable JavaScript to use our high-precision time calculation tools.</p>
+        </div>
+    </noscript>
+
     <!-- Explicitly load the entry point module -->
     <script type="module" src="./index.tsx"></script>
 </body>

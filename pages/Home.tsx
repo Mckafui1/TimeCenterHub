@@ -30,7 +30,7 @@ const TimeProgress = () => {
   const currentYear = now.getFullYear();
 
   return (
-    <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-xl space-y-6">
+    <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm space-y-6">
        <div className="flex justify-between items-end mb-2">
           <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest">Time Remaining</h3>
           <span className="text-xs font-bold text-slate-300 italic">{currentYear} Cycle Progress</span>
@@ -82,19 +82,19 @@ const Home: React.FC = () => {
 
         {/* SEO Contextual Internal Links Section */}
         <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto mb-16">
-          <Link to="/time/time-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+          <Link to="/time/time-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow">
             # Time Calculator
           </Link>
-          <Link to="/date/age-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+          <Link to="/date/age-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow">
             # Age Tracker
           </Link>
-          <Link to="/work/work-hours-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+          <Link to="/work/work-hours-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow">
             # Work Hours
           </Link>
-          <Link to="/converter/military-time" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+          <Link to="/converter/military-time" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow">
             # Military Time
           </Link>
-          <Link to="/countdown/pomodoro" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+          <Link to="/countdown/pomodoro" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow">
             # Pomodoro Timer
           </Link>
         </div>
@@ -111,11 +111,11 @@ const Home: React.FC = () => {
                Use our flagship <span className="font-bold">Time Calculator</span> to sum hours, minutes, and seconds. Essential for video editors, project managers, and shift workers who need to stack time blocks.
              </p>
              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm">
+                <div className="p-4 bg-white border border-slate-100 rounded-2xl shadow">
                    <p className="text-xs font-black text-slate-400 uppercase mb-1">Base Logic</p>
                    <p className="font-bold text-slate-800">ISO-8601 Math</p>
                 </div>
-                <div className="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm">
+                <div className="p-4 bg-white border border-slate-100 rounded-2xl shadow">
                    <p className="text-xs font-black text-slate-400 uppercase mb-1">Precision</p>
                    <p className="font-bold text-slate-800">Millisecond Scale</p>
                 </div>
@@ -160,7 +160,7 @@ const Home: React.FC = () => {
       <section className="mb-32 grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
           <div className="lg:col-span-1 space-y-8">
              <TimeProgress />
-             <div className="bg-slate-900 p-8 rounded-[2rem] text-white shadow-2xl relative overflow-hidden group">
+             <div className="bg-slate-900 p-8 rounded-[2rem] text-white shadow-md relative overflow-hidden group">
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-600 rounded-full blur-[80px] opacity-20 group-hover:opacity-40 transition-opacity"></div>
                 <h4 className="text-lg font-black mb-4 relative z-10">Global Pulse</h4>
                 <p className="text-slate-400 text-sm leading-relaxed relative z-10 font-medium">
@@ -185,7 +185,7 @@ const Home: React.FC = () => {
              <p className="text-slate-500 font-medium text-lg">Every <span className="text-blue-600 font-bold">Time Calculator</span> you'll ever need, organized for speed.</p>
            </div>
            <div className="flex items-center gap-4">
-             <span className="px-4 py-2 bg-white border border-slate-100 rounded-full text-xs font-black text-slate-500 uppercase tracking-widest shadow-sm">
+             <span className="px-4 py-2 bg-white border border-slate-100 rounded-full text-xs font-black text-slate-500 uppercase tracking-widest shadow">
                {TOOLS.length} Active Engines
              </span>
            </div>
@@ -195,7 +195,7 @@ const Home: React.FC = () => {
           {CATEGORIES.map((cat) => {
             const catTools = TOOLS.filter(t => t.category === cat.name);
             return (
-              <div key={cat.slug} className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border border-slate-100 transition-all duration-500 hover:border-blue-100 group">
+              <div key={cat.slug} className="bg-white rounded-[3rem] p-8 md:p-12 shadow-sm border border-slate-100 transition-all duration-500 hover:border-blue-100 group">
                 <div className="flex flex-col md:flex-row md:items-center gap-6 mb-12">
                    <div className="w-20 h-20 bg-slate-50 rounded-[2rem] flex items-center justify-center text-5xl shadow-inner group-hover:scale-110 transition-transform">
                      {cat.icon}

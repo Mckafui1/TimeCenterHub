@@ -117,7 +117,7 @@ const ToolPage: React.FC = () => {
 
       <section className="mb-20">
         <div className="p-1 bg-slate-100 rounded-[2.5rem]">
-           <div className="bg-white rounded-[2rem] overflow-hidden shadow-2xl shadow-blue-900/5">
+           <div className="bg-white rounded-[2rem] overflow-hidden shadow-md shadow-blue-900/5">
               {renderCalculator()}
            </div>
         </div>
@@ -135,7 +135,7 @@ const ToolPage: React.FC = () => {
           </section>
 
           {tool.howToSteps && (
-            <section className="p-10 bg-blue-600 rounded-[3rem] text-white shadow-xl relative overflow-hidden">
+            <section className="p-10 bg-blue-600 rounded-[3rem] text-white shadow-sm relative overflow-hidden">
                <h2 className="text-3xl font-black mb-8 relative z-10">Step-by-Step Guide</h2>
                <div className="space-y-6 relative z-10">
                   {tool.howToSteps.map((step, i) => (
@@ -178,7 +178,7 @@ const ToolPage: React.FC = () => {
              <h2 className="text-3xl font-black text-slate-900 mb-12">User Reviews</h2>
              <div className="space-y-8">
                 {COMMENTS.map((c, i) => (
-                  <div key={i} className="p-8 bg-white rounded-3xl border border-slate-200/50 shadow-sm">
+                  <div key={i} className="p-8 bg-white rounded-3xl border border-slate-200/50 shadow">
                      <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-400">{c.user[0]}</div>
@@ -193,7 +193,7 @@ const ToolPage: React.FC = () => {
         </div>
 
         <aside className="space-y-10">
-          <div className="bg-slate-900 p-10 rounded-[2.5rem] text-white shadow-xl">
+          <div className="bg-slate-900 p-10 rounded-[2.5rem] text-white shadow-md">
             <h3 className="text-xl font-black mb-8">Related Tools</h3>
             <div className="space-y-4">
               {TOOLS.filter(t => t.category === tool.category && t.id !== tool.id).slice(0, 8).map(t => (
