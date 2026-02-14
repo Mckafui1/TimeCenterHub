@@ -34,17 +34,6 @@ export const TOOLS: Tool[] = [
   { id: 'world-clock', path: '/time/world-clock', name: 'Global World Clock', description: 'Real-time city clocks.', category: 'Time', longDescription: 'Live pulse of global cities.', faqs: [], examples: [] },
   { id: 'time-in-decimal', path: '/time/time-to-decimal', name: 'Time to Decimal Converter', description: '8:30 to 8.5 hours.', category: 'Time', longDescription: 'Decimal conversion for payroll.', faqs: [], examples: [] },
   { id: 'speed-distance-time', path: '/time/speed-distance-time', name: 'Speed Distance Time', description: 'Calculate travel velocity.', category: 'Time', longDescription: 'Basic physics time calculations.', faqs: [], examples: [] },
-  
-  /* 
-  Commenting out low-volume / static info tools 
-  { id: 'seconds-converter', path: '/time/seconds-converter', name: 'Seconds Converter', description: 'Convert seconds to H:M:S.', category: 'Time', longDescription: 'Large second volume to readable time.', faqs: [], examples: [] },
-  { id: 'sunrise-sunset', path: '/time/sunrise-sunset', name: 'Sunrise & Sunset Times', description: 'Daily solar calculations.', category: 'Time', longDescription: 'Local solar event tracker.', faqs: [], examples: [] },
-  { id: 'alarm-clock', path: '/time/alarm-clock', name: 'Online Alarm Clock', description: 'Set browser-based alarms.', category: 'Time', longDescription: 'Simple and reliable alerts.', faqs: [], examples: [] },
-  { id: 'metronome', path: '/time/metronome', name: 'BPM Metronome', description: 'Time for musicians.', category: 'Time', longDescription: 'Keep the beat perfectly.', faqs: [], examples: [] },
-  { id: 'reaction-time', path: '/time/reaction-test', name: 'Reaction Time Test', description: 'How fast are you?', category: 'Time', longDescription: 'Test your reflexes in milliseconds.', faqs: [], examples: [] },
-  { id: 'seconds-in-day', path: '/time/seconds-in-day', name: 'Seconds in a Day', description: '86,400 and beyond.', category: 'Time', longDescription: 'Facts about daily durations.', faqs: [], examples: [] },
-  { id: 'hours-in-year', path: '/time/hours-in-year', name: 'Hours in a Year', description: '8760 hours of life.', category: 'Time', longDescription: 'Yearly duration breakdown.', faqs: [], examples: [] },
-  */
 
   // --- CORE DATE TOOLS ---
   {
@@ -58,19 +47,19 @@ export const TOOLS: Tool[] = [
     examples: ['Check exact age today', 'Age for insurance'],
     howToSteps: ['Input birth date', 'Set calculation date', 'View breakdown']
   },
+  { id: 'date-calculator', path: '/date/date-calculator', name: 'Date Calculator (Add/Sub)', description: 'Add/subtract days, weeks, months.', category: 'Date', longDescription: 'Advanced date arithmetic. Calculate exactly what date falls X days or weeks from now.', faqs: [], examples: [] },
+  { id: 'weekday-calculator', path: '/date/weekday', name: 'Weekday Calculator', description: 'What day is this date?', category: 'Date', longDescription: 'Find out the day of the week for any date in history or the future.', faqs: [], examples: [] },
+  { id: 'week-number', path: '/date/week-number', name: 'Week Number Calculator', description: 'Find the ISO week number.', category: 'Date', longDescription: 'Determine the ISO-8601 week number for any specific date.', faqs: [], examples: [] },
   { id: 'time-between-dates', path: '/date/time-between-dates', name: 'Time Between Dates', description: 'Difference between two dates.', category: 'Date', longDescription: 'Calculate days/weeks/months between dates.', faqs: [], examples: [] },
-  { id: 'days-from-now', path: '/date/days-from-now', name: 'Days From Now', description: 'Future/past date finder.', category: 'Date', longDescription: 'Project deadlines and look-back.', faqs: [], examples: [] },
+  { id: 'days-from-now', path: '/date/days-from-now', name: 'Days From Now', description: 'Simple future/past date finder.', category: 'Date', longDescription: 'Project deadlines and look-back.', faqs: [], examples: [] },
   { id: 'business-day-calculator', path: '/date/business-days', name: 'Business Days Calculator', description: 'Skip weekends and holidays.', category: 'Date', longDescription: 'Legal and financial working day tracker.', faqs: [], examples: [] },
+  { id: 'day-of-year', path: '/date/day-of-year', name: 'Day of Year Calculator', description: 'Find day number (1-366).', category: 'Date', longDescription: 'Find the ordinal day number within the year.', faqs: [], examples: [] },
+  { id: 'leap-year', path: '/date/leap-year', name: 'Leap Year Calculator', description: 'Is it a leap year?', category: 'Date', longDescription: 'Check if a specific year has 366 days.', faqs: [], examples: [] },
   { id: 'pregnancy-due-date', path: '/date/pregnancy-due-date', name: 'Pregnancy Due Date', description: 'Estimate delivery date.', category: 'Date', longDescription: 'Calculate based on LMP.', faqs: [], examples: [] },
+  { id: 'zodiac-calculator', path: '/date/zodiac', name: 'Zodiac Sign Calculator', description: 'Find your star sign.', category: 'Date', longDescription: 'Determine astrological sign based on birth date.', faqs: [], examples: [] },
   { id: 'days-to-birthday', path: '/date/birthday-countdown', name: 'Days to Birthday', description: 'Next birthday countdown.', category: 'Date', longDescription: 'Never miss a celebration.', faqs: [], examples: [] },
   { id: 'retirement-countdown', path: '/date/retirement', name: 'Retirement Countdown', description: 'When can I quit?', category: 'Date', longDescription: 'Days until your golden years.', faqs: [], examples: [] },
   { id: 'wedding-countdown', path: '/date/wedding', name: 'Wedding Countdown', description: 'Days until the big "I do".', category: 'Date', longDescription: 'Event planning essential.', faqs: [], examples: [] },
-
-  /* 
-  { id: 'leap-year-checker', path: '/date/leap-year', name: 'Leap Year Checker', description: 'Is 2024 a leap year?', category: 'Date', longDescription: 'Check any year in history.', faqs: [], examples: [] },
-  { id: 'federal-holidays', path: '/date/holidays', name: 'US Federal Holidays', description: '2025 Bank Holiday list.', category: 'Date', longDescription: 'Full Federal schedule.', faqs: [], examples: [] },
-  { id: 'moon-phase', path: '/date/moon-phase', name: 'Moon Phase Calendar', description: 'Current lunar cycle.', category: 'Date', longDescription: 'Track full and new moons.', faqs: [], examples: [] },
-  */
 
   // --- CORE WORK TOOLS ---
   { id: 'work-hours-calculator', path: '/work/work-hours', name: 'Work Hours Calculator', description: 'Daily clock-in tracker.', category: 'Work', longDescription: 'Total your daily shift hours.', faqs: [], examples: [] },

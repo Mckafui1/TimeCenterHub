@@ -1167,5 +1167,195 @@ export const MsToDateCalculator: React.FC = () => {
   );
 };
 
+// --- DATE ADD/SUBTRACT ---
+export const DateAddSubtractCalculator: React.FC = () => {
+  const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
+  const [op, setOp] = useState<'add' | 'sub'>('add');
+  const [years, setYears] = useState('0');
+  const [months, setMonths] = useState('0');
+  const [weeks, setWeeks] = useState('0');
+  const [days, setDays] = useState('0');
+  const [result, setResult] = useState<string | null>(null);
+
+  const calculate = () => {
+    const date = new Date(startDate);
+    const sign = op === 'add' ? 1 : -1;
+    
+    date.setFullYear(date.getFullYear() + (parseInt(years) || 0) * sign);
+    date.setMonth(date.getMonth() + (parseInt(months) || 0) * sign);
+    date.setDate(date.getDate() + ((parseInt(weeks) || 0) * 7 + (parseInt(days) || 0)) * sign);
+    
+    setResult(date.toDateString());
+  };
+
+  return (
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6">
+      <div>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 mb-2">Start Date</label>
+        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800" />
+      </div>
+      
+      <div className="flex bg-slate-100 p-1.5 rounded-2xl">
+        <button onClick={() => setOp('add')} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${op === 'add' ? 'bg-white text-blue-600 shadow' : 'text-slate-500'}`}>Add (+)</button>
+        <button onClick={() => setOp('sub')} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${op === 'sub' ? 'bg-white text-rose-600 shadow' : 'text-slate-500'}`}>Subtract (-)</button>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+         <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Years</label><input type="number" value={years} onChange={e => setYears(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800" /></div>
+         <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Months</label><input type="number" value={months} onChange={e => setMonths(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800" /></div>
+         <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Weeks</label><input type="number" value={weeks} onChange={e => setWeeks(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800" /></div>
+         <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Days</label><input type="number" value={days} onChange={e => setDays(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800" /></div>
+      </div>
+
+      <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow hover:bg-indigo-700 transition-colors text-base tracking-wide">Calculate New Date</button>
+      {result && <div className="p-8 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100"><p className="text-3xl font-black text-indigo-900">{result}</p></div>}
+    </div>
+  );
+};
+
+// --- WEEKDAY CALCULATOR ---
+export const WeekdayCalculator: React.FC = () => {
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [day, setDay] = useState<string | null>(null);
+  
+  const calculate = () => {
+    const d = new Date(date);
+    // Use UTC to avoid timezone shifts when just asking for "what day is this calendar date"
+    const weekday = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()).toLocaleDateString('en-US', { weekday: 'long' });
+    setDay(weekday);
+  };
+
+  return (
+    <div className="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
+       <div>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 mb-2">Select Date</label>
+        <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-center text-slate-800" />
+      </div>
+      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 transition-colors text-base tracking-wide">What Day Is It?</button>
+      {day && <div className="p-10 bg-slate-50 text-center rounded-[2rem] border border-slate-100"><p className="text-6xl font-black text-slate-900">{day}</p></div>}
+    </div>
+  );
+};
+
+// --- WEEK NUMBER CALCULATOR ---
+export const WeekNumberCalculator: React.FC = () => {
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [week, setWeek] = useState<number | null>(null);
+
+  const calculate = () => {
+    const d = new Date(date);
+    const dateCopy = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const dayNum = dateCopy.getUTCDay() || 7;
+    dateCopy.setUTCDate(dateCopy.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(dateCopy.getUTCFullYear(), 0, 1));
+    const w = Math.ceil((((dateCopy.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+    setWeek(w);
+  };
+
+  return (
+    <div className="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
+       <div>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 mb-2">Select Date</label>
+        <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-center text-slate-800" />
+      </div>
+      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow hover:bg-blue-700 transition-colors text-base tracking-wide">Get ISO Week Number</button>
+      {week !== null && <div className="p-10 bg-blue-50 text-center rounded-[2rem] border border-blue-100"><p className="text-xs font-black uppercase text-blue-500 tracking-widest mb-2">ISO Week Number</p><p className="text-8xl font-black text-blue-900">{week}</p></div>}
+    </div>
+  );
+};
+
+// --- DAY OF YEAR ---
+export const DayOfYearCalculator: React.FC = () => {
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [dayNum, setDayNum] = useState<number | null>(null);
+
+  const calculate = () => {
+    const d = new Date(date);
+    const start = new Date(d.getFullYear(), 0, 0);
+    const diff = d.getTime() - start.getTime();
+    const oneDay = 1000 * 60 * 60 * 24;
+    setDayNum(Math.floor(diff / oneDay));
+  };
+
+  return (
+    <div className="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
+       <div>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 mb-2">Select Date</label>
+        <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-center text-slate-800" />
+      </div>
+      <button onClick={calculate} className="w-full py-5 bg-teal-600 text-white font-black rounded-2xl shadow hover:bg-teal-700 transition-colors text-base tracking-wide">Calculate Day Number</button>
+      {dayNum !== null && <div className="p-10 bg-teal-50 text-center rounded-[2rem] border border-teal-100"><p className="text-xs font-black uppercase text-teal-500 tracking-widest mb-2">Day of Year</p><p className="text-8xl font-black text-teal-900">{dayNum}<span className="text-2xl text-teal-400"> / 36{new Date(new Date(date).getFullYear(), 1, 29).getDate() === 29 ? '6' : '5'}</span></p></div>}
+    </div>
+  );
+};
+
+// --- LEAP YEAR CALCULATOR ---
+export const LeapYearCalculator: React.FC = () => {
+  const [year, setYear] = useState(new Date().getFullYear().toString());
+  const [isLeap, setIsLeap] = useState<boolean | null>(null);
+
+  const calculate = () => {
+    const y = parseInt(year);
+    if (!y) return;
+    setIsLeap((y % 4 === 0 && y % 100 !== 0) || y % 400 === 0);
+  };
+
+  return (
+    <div className="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
+       <div>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 mb-2">Enter Year</label>
+        <input type="number" value={year} onChange={e => setYear(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-4xl text-center text-slate-800" />
+      </div>
+      <button onClick={calculate} className="w-full py-5 bg-indigo-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 transition-colors text-base tracking-wide">Check Year</button>
+      {isLeap !== null && (
+        <div className={`p-10 text-center rounded-[2rem] border ${isLeap ? 'bg-emerald-50 border-emerald-100 text-emerald-900' : 'bg-rose-50 border-rose-100 text-rose-900'}`}>
+          <p className="text-5xl font-black mb-2">{isLeap ? 'YES' : 'NO'}</p>
+          <p className="font-bold text-lg opacity-75">{isLeap ? 'It is a Leap Year (366 Days)' : 'It is a Common Year (365 Days)'}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// --- ZODIAC CALCULATOR ---
+export const ZodiacCalculator: React.FC = () => {
+  const [date, setDate] = useState('');
+  const [sign, setSign] = useState<string | null>(null);
+
+  const calculate = () => {
+    if (!date) return;
+    const d = new Date(date);
+    const day = d.getDate();
+    const month = d.getMonth() + 1;
+    
+    let s = '';
+    if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) s = "Aquarius ♒";
+    else if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) s = "Pisces ♓";
+    else if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) s = "Aries ♈";
+    else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) s = "Taurus ♉";
+    else if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) s = "Gemini ♊";
+    else if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) s = "Cancer ♋";
+    else if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) s = "Leo ♌";
+    else if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) s = "Virgo ♍";
+    else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) s = "Libra ♎";
+    else if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) s = "Scorpio ♏";
+    else if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) s = "Sagittarius ♐";
+    else s = "Capricorn ♑";
+    
+    setSign(s);
+  };
+
+  return (
+    <div className="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
+       <div>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 mb-2">Birth Date</label>
+        <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-center text-slate-800" />
+      </div>
+      <button onClick={calculate} className="w-full py-5 bg-violet-600 text-white font-black rounded-2xl shadow hover:bg-violet-700 transition-colors text-base tracking-wide">Find Sign</button>
+      {sign && <div className="p-10 bg-violet-50 text-center rounded-[2rem] border border-violet-100"><p className="text-5xl font-black text-violet-900">{sign}</p></div>}
+    </div>
+  );
+};
+
 // --- EXPORT ALIASES ---
 export const TimeDurationCalculator = TimeBetweenTimesCalculator;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { TOOLS } from '../constants.tsx';
-import Seo from '../components/Seo.tsx';
 import { 
   TimeCalculator,
   TimeDurationCalculator,
@@ -40,7 +39,13 @@ import {
   Chronometer,
   USFederalHolidays,
   WorkHoursCalculator,
-  TimeBetweenTimesCalculator
+  TimeBetweenTimesCalculator,
+  DateAddSubtractCalculator,
+  WeekdayCalculator,
+  WeekNumberCalculator,
+  DayOfYearCalculator,
+  LeapYearCalculator,
+  ZodiacCalculator
 } from '../components/CalculatorTools.tsx';
 
 // --- EXTENDED CONTENT DATABASE (SEO ENGINE) ---
@@ -55,6 +60,48 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
       { q: "Can I use this for payroll?", a: "Yes, this tool is excellent for summing total hours worked. However, for converting those hours into a dollar amount, we recommend using our Time to Decimal converter after finding the total duration." },
       { q: "Does this calculator handle days?", a: "Currently, this specific tool focuses on H:M:S durations. If your total exceeds 24 hours, it will simply show the total hours (e.g., 26 hours) rather than converting it to '1 day and 2 hours', making it ideal for cumulative project tracking." }
     ]
+  },
+  'date-calculator': {
+    intro: `Calculating future or past dates is critical for planning schedules, project deadlines, and legal timelines. The Date Calculator allows you to add or subtract specific units of time (years, months, weeks, days) to any starting date. Unlike simple arithmetic, adding "1 month" to a date is complex because months vary in length from 28 to 31 days. This tool handles those variations automatically.`,
+    mechanics: `This tool uses the JavaScript Date object's intelligent rollover features. For example, if you add 1 month to January 31st, standard logic might try to create "February 31st," which doesn't exist. Our engine automatically corrects this to the proper date in March (or the last day of February, depending on the standard required), ensuring valid calendar dates are always returned.`,
+    benefits: `Perfect for shipping estimates ("delivery in 3-5 business days"), legal deadlines ("30 days to respond"), or visa planning ("90 day stay limit"). It removes the need to manually count days on a physical calendar.`,
+    howTo: `Select a start date. Choose "Add" or "Subtract". Enter the number of years, months, weeks, or days you wish to modify the date by. Click "Calculate" to see the resulting calendar date.`,
+    faq: [{q: "Does it account for leap years?", a: "Yes, if you add 1 year to February 29th, the result will be handled correctly according to standard calendar logic."}]
+  },
+  'weekday-calculator': {
+    intro: `Have you ever wondered what day of the week you were born on? Or what day of the week Christmas falls on in 2050? The Weekday Calculator answers this instantly. It uses the perpetual Gregorian calendar algorithm to determine the Monday-Sunday value for any valid date in history or the future.`,
+    mechanics: `The calculator extracts the day index (0-6) from the Date object, which corresponds to Sunday through Saturday. It works for any date supported by the modern calendar system.`,
+    benefits: `Useful for planning events where the day of the week matters (like weddings or parties), or for historical research to add context to past events.`,
+    howTo: `Simply pick a date using the date selector. Click "What Day Is It?" and the tool will display the full day name (e.g., "Wednesday").`,
+    faq: [{q: "Does this work for ancient dates?", a: "It works for dates within the standard Gregorian calendar era. Extremely ancient dates might vary due to calendar reforms (Julian vs Gregorian)."}]
+  },
+  'week-number': {
+    intro: `In many corporate and European environments, timelines are managed by "Week Numbers" (1-53) rather than month names. This system, standardized by ISO-8601, breaks the year into numbered weeks starting on Monday. The Week Number Calculator helps you convert any standard date into its corresponding ISO week number.`,
+    mechanics: `Calculating the ISO week number involves determining the first Thursday of the year. The first week of the year is the one that contains the first Thursday. Our algorithm performs this standard calculation to ensure compliance with international business standards.`,
+    benefits: `Essential for supply chain management, manufacturing schedules, and working with international teams that utilize week-number planning.`,
+    howTo: `Select a date. Click "Get ISO Week Number". The result will show the week number (e.g., Week 42).`,
+    faq: [{q: "Why is there sometimes a Week 53?", a: "Years have 52 weeks plus 1 or 2 extra days. These extra days accumulate, leading to a 53rd week approximately every 5 or 6 years."}]
+  },
+  'leap-year': {
+    intro: `A leap year occurs every 4 years to keep our calendar in alignment with the Earth's revolutions around the Sun. However, the rule isn't as simple as "every 4 years" (years divisible by 100 are not leap years, unless they are also divisible by 400). This calculator instantly verifies the status of any year.`,
+    mechanics: `It applies the full Gregorian logic: Year % 4 == 0 AND (Year % 100 != 0 OR Year % 400 == 0).`,
+    benefits: `Useful for developers programming date logic, or anyone curious about why February has 29 days in a specific year.`,
+    howTo: `Type in a 4-digit year (e.g., 2024). Click "Check Year" to see if it is a leap year.`,
+    faq: [{q: "Was 2000 a leap year?", a: "Yes, because it is divisible by 400."}]
+  },
+  'day-of-year': {
+    intro: `The Day of Year (also known as the ordinal date) is the number of the day ranging from 1 to 365 (or 366). January 1st is Day 1. This format is often used in computing, meteorology, and military logistics.`,
+    mechanics: `The tool calculates the difference in time between the selected date and the very first moment of that year, then converts that duration into days.`,
+    benefits: `Simplifies data entry for systems that require ordinal dates and helps in calculating percentage progress through the year.`,
+    howTo: `Select a date. Click "Calculate Day Number".`,
+    faq: []
+  },
+  'zodiac-calculator': {
+    intro: `Astrology divides the year into 12 periods, each associated with a Zodiac sign. This calculator determines your Sun Sign based on your date of birth.`,
+    mechanics: `It checks the month and day against the standard tropical zodiac dates (e.g., Aries is March 21 - April 19).`,
+    benefits: `A fun and simple tool for personal insight or checking horoscopes.`,
+    howTo: `Enter your birth date. Click "Find Sign".`,
+    faq: []
   },
   'time-duration-calculator': {
     intro: `Calculating the exact duration between two clock times is a frequent necessity in daily life, yet it can be surprisingly tricky. The Time Duration Calculator is designed to solve one specific problem: finding the elapsed time between a specific Start Time and End Time. This is distinct from simply adding durations; it involves understanding the 24-hour cycle of the day. A common complexity arises when a duration crosses midnight—for example, a shift starting at 10:00 PM and ending at 2:00 AM. A standard subtraction would result in a negative number, but our engine intelligently detects the day rollover to provide the correct 4-hour duration.`,
@@ -119,7 +166,7 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
     benefits: `Useful for setting alarms ("I need to wake up in 7 hours"), tracking medication intervals ("Take next pill in 4 hours"), or coordinating with international colleagues ("It will be 5 PM their time in 3 hours").`,
     howTo: `Enter the number of hours (or minutes). Click "Project Future Time". The result shows the exact time it will be.`,
     faq: [
-      { q: "Does it adjust for Daylight Savings?", a: "Yes, because it uses your device's calendar logic, if the duration crosses a DST change, the time will reflect that shift." }
+      { q: "Does it adjust for Daylight Savings?", a: "Yes, because it is using your device's calendar logic, if the duration crosses a DST change, the time will reflect that shift." }
     ]
   },
   'countdown-timer': {
@@ -149,8 +196,26 @@ const ToolPage: React.FC = () => {
   const currentPath = `/${category}/${toolId}`;
   const tool = TOOLS.find(t => t.path === currentPath) || TOOLS.find(t => t.id === toolId);
 
-  // Get related tools from same category, excluding current
-  const relatedTools = TOOLS.filter(t => t.category === tool?.category && t.id !== tool?.id).slice(0, 4);
+  // --- RELATED TOOLS LOGIC (UPDATED) ---
+  // Instead of always grabbing the first 4 tools, grab the *next* 4 tools in the list relative to current tool.
+  const categoryTools = TOOLS.filter(t => t.category === tool?.category);
+  const currentIdx = categoryTools.findIndex(t => t.id === tool?.id);
+  const relatedTools: typeof TOOLS = [];
+  
+  if (currentIdx !== -1) {
+    // Cycle through next 4 tools
+    for (let i = 1; i <= 4; i++) {
+        // Use modulo to wrap around to the start of the list if we reach the end
+        const next = categoryTools[(currentIdx + i) % categoryTools.length];
+        // Double check we don't add the current tool (redundant if length > 1 but safe)
+        if (next.id !== tool?.id) {
+            relatedTools.push(next);
+        }
+    }
+  } else if (categoryTools.length > 0) {
+      // Fallback if index not found (shouldn't happen)
+      relatedTools.push(...categoryTools.slice(0, 4));
+  }
 
   // --- SMART CONTENT GENERATOR ---
   const getToolContent = () => {
@@ -205,6 +270,12 @@ const ToolPage: React.FC = () => {
       case 'ms-to-seconds': return <MsToSecondsCalculator />;
       case 'ms-to-date': return <MsToDateCalculator />;
       case 'age-calculator': return <AgeCalculator />;
+      case 'date-calculator': return <DateAddSubtractCalculator />;
+      case 'weekday-calculator': return <WeekdayCalculator />;
+      case 'week-number': return <WeekNumberCalculator />;
+      case 'day-of-year': return <DayOfYearCalculator />;
+      case 'leap-year': return <LeapYearCalculator />;
+      case 'zodiac-calculator': return <ZodiacCalculator />;
       case 'pregnancy-due-date': return <PregnancyCalculator />;
       case 'retirement-countdown': return <RetirementCountdown />;
       case 'work-hours-calculator': return <WorkHoursCalculator />;
@@ -239,11 +310,6 @@ const ToolPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
-       <Seo 
-          title={`${tool.name} - Free Online Tool | TimeCenterHub`} 
-          description={tool.description}
-          canonical={`https://timecenterhub.com/#${tool.path}`} 
-       />
        {/* Breadcrumbs & Header Container */}
        <div className="bg-white border-b border-slate-200 pb-20 pt-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
