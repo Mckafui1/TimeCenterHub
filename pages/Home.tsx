@@ -73,8 +73,8 @@ const Home: React.FC = () => {
           RELIABLE TIME TOOLS
         </div>
         <h1 className="text-3xl md:text-6xl font-black text-slate-900 mb-4 md:mb-6 tracking-tighter leading-[1.1]">
-          Simple & Accurate <br />
-          <span className="text-blue-600">Time Calculator</span> Tools
+          Universal Time Calculator & <br />
+          <span className="text-blue-600">Free Online Date</span> Tools
         </h1>
         <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed mb-8 px-2 md:px-4">
           Easy-to-use tools for everyone. Calculate your exact age, track work hours, and add up time durations with 100% accuracy.
@@ -254,7 +254,7 @@ const Home: React.FC = () => {
       <section className="mb-24 md:mb-36 bg-white rounded-[3rem] p-8 md:p-28 border border-slate-100 text-center">
          <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 md:mb-12 tracking-tight leading-tight">Your Trusted <span className="text-blue-600">Time Tool</span> Hub</h2>
          <p className="text-slate-600 text-lg md:text-2xl max-w-5xl mx-auto leading-relaxed font-bold mb-12 md:mb-20">
-           TimeCenterHub offers a large collection of calculators to help you manage your time. From adding work hours for payroll to tracking how many days until your next birthday. Every tool is built to be fast, accurate, and easy to use for everyone.
+           TimeCenterHub offers a large collection of calculators to help you manage your time. From adding <Link to="/work/work-hours" className="text-blue-600 hover:underline">work hours</Link> for payroll to tracking how many days until your next birthday. Every tool is built to be fast, accurate, and easy to use for everyone.
          </p>
          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
             <div className="p-6 md:p-10 bg-slate-50 rounded-[2rem]"><p className="text-2xl md:text-4xl font-black text-slate-900">Standard</p><p className="text-xs md:text-sm text-slate-500 font-black uppercase mt-2">Math</p></div>
@@ -267,8 +267,8 @@ const Home: React.FC = () => {
       {/* VISUALLY HIDDEN SEO CONTENT (CRAWLER ONLY) */}
       <div className="sr-only">
         <article>
-          <h1>Simple Time Calculator and Date Tool Center</h1>
-          <p>Welcome to TimeCenterHub, your home for accurate time calculators and date tools. We help you with all your time-related questions, from calculating your age to tracking work hours. Our goal is to provide simple tools that everyone can use easily.</p>
+          <h1>Universal Time Calculator and Free Online Date Tools</h1>
+          <p>Welcome to TimeCenterHub, your home for accurate <Link to="/time/time-calculator">time calculators</Link> and date tools. We help you with all your time-related questions, from calculating your <Link to="/date/age-calculator">exact age</Link> to tracking work hours. Our goal is to provide simple tools that everyone can use easily. We strictly follow <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank" rel="noreferrer">ISO-8601</a> standards for all time and date calculations. Our date tools are based on the <a href="https://en.wikipedia.org/wiki/Gregorian_calendar" target="_blank" rel="noreferrer">Gregorian calendar</a> system.</p>
         </article>
       </div>
     </div>
