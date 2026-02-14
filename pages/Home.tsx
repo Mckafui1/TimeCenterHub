@@ -67,18 +67,37 @@ const Home: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
-      <section className="text-center mb-24 relative">
+      <section className="text-center mb-20 relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-blue-400 opacity-[0.03] blur-[120px] rounded-full -z-10"></div>
         <div className="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 animate-pulse">
-          Accurate. Free. Universal.
+          Absolute Temporal Accuracy
         </div>
         <h1 className="text-6xl md:text-8xl font-black text-slate-900 mb-8 tracking-tighter leading-[0.85]">
           Universal <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Time Calculator</span>
         </h1>
-        <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed">
+        <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed mb-12">
           High-precision tools for professionals, travelers, and planners. Add durations, calculate age, and track work hours with 100% accuracy.
         </p>
+
+        {/* SEO Contextual Internal Links Section */}
+        <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto mb-16">
+          <Link to="/time/time-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+            # Time Calculator
+          </Link>
+          <Link to="/date/age-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+            # Age Tracker
+          </Link>
+          <Link to="/work/work-hours-calculator" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+            # Work Hours
+          </Link>
+          <Link to="/converter/military-time" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+            # Military Time
+          </Link>
+          <Link to="/countdown/pomodoro" className="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm">
+            # Pomodoro Timer
+          </Link>
+        </div>
       </section>
 
       {/* Flagship Time Calculator Widget */}
