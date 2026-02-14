@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CATEGORIES, TOOLS } from '../constants';
+import { CATEGORIES, TOOLS } from '../constants.tsx';
 import { 
   TimeZoneConverter, 
   TimeBetweenDatesCalculator, 
@@ -8,7 +8,7 @@ import {
   WorkHoursCalculator,
   TimeCalculator,
   PomodoroTimer
-} from '../components/CalculatorTools';
+} from '../components/CalculatorTools.tsx';
 
 const TimeProgress = () => {
   const [now, setNow] = useState(new Date());

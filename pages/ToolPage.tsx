@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { TOOLS } from '../constants';
+import { TOOLS } from '../constants.tsx';
 import { 
   TimeBetweenDatesCalculator, 
   WorkHoursCalculator, 
@@ -27,7 +27,7 @@ import {
   TimeFromNowCalculator,
   HoursToMinutesCalculator,
   TimeCalculator
-} from '../components/CalculatorTools';
+} from '../components/CalculatorTools.tsx';
 
 const COMMENTS = [
   { user: "Lunar", date: "2024-09-30", text: "this great i can use this when i want to" },
