@@ -22,6 +22,7 @@ export const TOOLS: Tool[] = [
     howToSteps: ['Enter hours/mins/secs', 'Select Add or Subtract', 'Click Calculate'],
     mathLogic: 'Standard Base-60 time arithmetic.'
   },
+  { id: 'chronometer', path: '/time/chronometer', name: 'Stopwatch', description: 'Precision stopwatch with laps.', category: 'Time', longDescription: 'Professional grade stopwatch for tracking time intervals with millisecond precision.', faqs: [], examples: [] },
   { id: 'time-between-times', path: '/time/time-duration', name: 'Time Duration Calculator', description: 'Duration between two times.', category: 'Time', longDescription: 'Calculate the gap between two clock times.', faqs: [], examples: [] },
   { id: 'add-time', path: '/time/add-time', name: 'Add Time Calculator', description: 'Sum multiple time values.', category: 'Time', longDescription: 'Add hours and minutes together.', faqs: [], examples: [] },
   { id: 'subtract-time', path: '/time/subtract-time', name: 'Subtract Time Calculator', description: 'Find the difference between durations.', category: 'Time', longDescription: 'Subtract one time from another.', faqs: [], examples: [] },

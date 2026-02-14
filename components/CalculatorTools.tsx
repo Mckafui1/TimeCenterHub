@@ -634,24 +634,135 @@ export const PomodoroTimer: React.FC = () => {
   );
 };
 
-// --- MILITARY TIME ---
+// --- MILITARY TIME (UPDATED) ---
 export const MilitaryTimeCalculator: React.FC = () => {
-  const [input, setInput] = useState('12:00');
+  const [mode, setMode] = useState<'to24' | 'to12'>('to24');
+  const [h12, setH12] = useState('');
+  const [m12, setM12] = useState('');
+  const [ampm, setAmpm] = useState<'AM' | 'PM'>('PM');
+  const [t24, setT24] = useState('');
   const [res, setRes] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
   const convert = () => {
-    const [h, m] = input.split(':').map(Number);
-    const suffix = h >= 12 ? 'PM' : 'AM';
-    const h12 = h % 12 || 12;
-    setRes(`${h12}:${m.toString().padStart(2, '0')} ${suffix}`);
+    setError(null);
+    setRes(null);
+
+    if (mode === 'to24') {
+      const h = parseInt(h12);
+      const m = parseInt(m12);
+
+      if (isNaN(h) || h < 1 || h > 12) {
+        setError('Please enter a valid hour (1-12).');
+        return;
+      }
+      if (isNaN(m) || m < 0 || m > 59) {
+        setError('Please enter valid minutes (0-59).');
+        return;
+      }
+
+      let hour24 = h;
+      if (ampm === 'PM' && h !== 12) hour24 += 12;
+      if (ampm === 'AM' && h === 12) hour24 = 0;
+
+      setRes(`${hour24.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} Hours`);
+    } else {
+      let input = t24.trim();
+      input = input.replace(':', '');
+
+      if (!/^\d+$/.test(input)) {
+        setError('Please enter a valid time (e.g., 1430 or 14:30).');
+        return;
+      }
+
+      if (input.length === 3) {
+        input = '0' + input;
+      }
+
+      if (input.length !== 4) {
+        setError('Please enter a 4-digit time (e.g., 0930, 1700).');
+        return;
+      }
+
+      const h = parseInt(input.slice(0, 2));
+      const m = parseInt(input.slice(2, 4));
+
+      if (h < 0 || h > 23) {
+        setError('Hours must be between 00 and 23.');
+        return;
+      }
+      if (m < 0 || m > 59) {
+        setError('Minutes must be between 00 and 59.');
+        return;
+      }
+
+      const suffix = h >= 12 ? 'PM' : 'AM';
+      let hStandard = h % 12;
+      if (hStandard === 0) hStandard = 12;
+
+      setRes(`${hStandard}:${m.toString().padStart(2, '0')} ${suffix}`);
+    }
   };
+
   return (
-    <div className="p-10 space-y-8">
-      <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Time to Convert</label>
-        <input aria-label="Time Input" type="time" value={input} onChange={e => setInput(e.target.value)} className="w-full p-5 border rounded-2xl font-bold text-2xl text-slate-800" />
+    <div className="p-8 md:p-12 bg-white rounded-[2rem] border border-slate-100 shadow-sm space-y-10">
+      <div className="flex p-1.5 bg-slate-100 rounded-2xl">
+        <button onClick={() => {setMode('to24'); setRes(null); setError(null);}} className={`flex-1 py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${mode === 'to24' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Standard to Military</button>
+        <button onClick={() => {setMode('to12'); setRes(null); setError(null);}} className={`flex-1 py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${mode === 'to12' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Military to Standard</button>
       </div>
-      <button onClick={convert} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 transition-colors text-base tracking-wide">Convert to AM/PM</button>
-      {res && <div className="p-8 bg-slate-50 text-center font-black text-4xl rounded-2xl border border-slate-100 text-slate-900">{res}</div>}
+      
+      {mode === 'to24' ? (
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+          <div className="flex gap-2 items-center">
+            <input 
+              type="number" 
+              value={h12} 
+              onChange={e => setH12(e.target.value)} 
+              className="w-32 md:w-40 p-5 text-center text-3xl font-black bg-slate-50 border border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none" 
+              placeholder="HH" 
+              min="1" max="12"
+            />
+            <span className="text-2xl font-black text-slate-300">:</span>
+            <input 
+              type="number" 
+              value={m12} 
+              onChange={e => setM12(e.target.value)} 
+              className="w-32 md:w-40 p-5 text-center text-3xl font-black bg-slate-50 border border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none" 
+              placeholder="MM" 
+              min="0" max="59"
+            />
+          </div>
+          <div className="flex gap-2 w-full md:w-auto justify-center">
+            <button onClick={() => setAmpm('AM')} className={`flex-1 md:flex-none px-6 py-5 rounded-2xl text-lg font-black transition-all ${ampm === 'AM' ? 'bg-blue-600 text-white shadow-lg transform scale-105' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}>AM</button>
+            <button onClick={() => setAmpm('PM')} className={`flex-1 md:flex-none px-6 py-5 rounded-2xl text-lg font-black transition-all ${ampm === 'PM' ? 'bg-blue-600 text-white shadow-lg transform scale-105' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}>PM</button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <input 
+            type="text" 
+            value={t24} 
+            onChange={e => setT24(e.target.value)} 
+            className="w-full max-w-md p-6 text-center text-4xl font-black bg-slate-50 border border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none" 
+            placeholder="1300 or 13:30" 
+          />
+        </div>
+      )}
+      
+      {error && (
+        <div className="p-4 bg-rose-50 text-rose-600 font-bold text-center rounded-xl border border-rose-100 animate-pulse">
+          {error}
+        </div>
+      )}
+
+      <button onClick={convert} className="w-full py-6 bg-slate-900 text-white font-black rounded-2xl hover:scale-[1.01] active:scale-[0.99] transition-all text-lg tracking-wide shadow-xl shadow-slate-200">Convert Time</button>
+      
+      {res && (
+        <div className="p-12 bg-blue-50 rounded-[2.5rem] border-2 border-blue-100 text-center shadow-sm">
+          <p className="text-sm font-black uppercase text-blue-400 tracking-[0.2em] mb-4">Converted Result</p>
+          <p className="text-6xl md:text-7xl font-black text-slate-900 tracking-tighter">{res}</p>
+        </div>
+      )}
     </div>
   );
 };

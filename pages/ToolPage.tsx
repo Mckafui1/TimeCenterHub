@@ -129,6 +129,15 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
     faq: [
       { q: "Does this work if I switch tabs?", a: "Modern browsers sometimes slow down background tabs to save battery. For best accuracy, keep the tab open or in a separate window." }
     ]
+  },
+  'chronometer': {
+    intro: `A Chronometer (or Stopwatch) is a device used to measure the amount of time elapsed from a particular time when it is activated to the time when the piece is deactivated. From ancient water clocks to the modern digital stopwatch on your phone, measuring intervals has always been a key human need. Our online Chronometer offers high-precision timing without the need for a physical device.`,
+    mechanics: `This tool uses the high-resolution performance.now() API (where available) or Date.now() to track time deltas. It updates the display every 10 milliseconds to show a smooth ticking effect. The "Lap" feature stores the current time value in an array without stopping the main timer, allowing you to track splits.`,
+    benefits: `Essential for athletes tracking laps, scientists measuring reaction times, or chefs timing complex recipes. The lap function is particularly useful for comparing performance across multiple iterations of the same task.`,
+    howTo: `Click "Start" to begin the timer. Click "Lap" to record a split time (the timer keeps running). Click "Stop" to pause the timer. Click "Reset" to clear all data and return to zero.`,
+    faq: [
+      { q: "How accurate is this stopwatch?", a: "It is accurate to within a few milliseconds, limited only by your browser's refresh rate and device performance." }
+    ]
   }
 };
 
@@ -290,21 +299,8 @@ const ToolPage: React.FC = () => {
 
                 {/* Right Sidebar */}
                 <div className="lg:col-span-4 space-y-8">
-                    {/* FAQ Card */}
-                    <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm">
-                        <h3 className="text-lg font-black text-slate-900 uppercase tracking-wide mb-6">Common Questions</h3>
-                        <div className="space-y-6">
-                            {content.faq.map((item, idx) => (
-                                <div key={idx}>
-                                    <h4 className="font-bold text-slate-800 mb-2 text-base leading-snug">{item.q}</h4>
-                                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{item.a}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Related Tools */}
-                    <div className="bg-slate-900 rounded-[2rem] p-8 text-white shadow-lg sticky top-8">
+                     {/* Related Tools */}
+                    <div className="bg-slate-900 rounded-[2rem] p-8 text-white shadow-lg">
                         <h3 className="text-lg font-black uppercase tracking-wide mb-6 text-blue-400">Related Tools</h3>
                         <div className="space-y-4">
                             {relatedTools.map(rt => (
@@ -316,6 +312,19 @@ const ToolPage: React.FC = () => {
                             {relatedTools.length === 0 && <p className="text-slate-500 text-sm">No related tools found.</p>}
                         </div>
                          <Link to="/sitemap" className="inline-block mt-8 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors">View All Tools →</Link>
+                    </div>
+
+                    {/* FAQ Card */}
+                    <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm sticky top-8">
+                        <h3 className="text-lg font-black text-slate-900 uppercase tracking-wide mb-6">Common Questions</h3>
+                        <div className="space-y-6">
+                            {content.faq.map((item, idx) => (
+                                <div key={idx}>
+                                    <h4 className="font-bold text-slate-800 mb-2 text-base leading-snug">{item.q}</h4>
+                                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{item.a}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
