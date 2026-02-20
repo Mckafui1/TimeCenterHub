@@ -68,11 +68,11 @@ const Home: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
       <Helmet>
-        <title>TimeCenterHub - Free Online Time Calculators, Date Tools & Work Trackers</title>
-        <meta name="description" content="The ultimate collection of free time tools: Age Calculator, Time Duration, Work Hours Tracker, Military Time Converter, and 40+ other utilities. Fast, accurate, and privacy-focused." />
+        <title>Time Calculator - Free Online Date & Work Tools</title>
+        <meta name="description" content="Use our free Time Calculator to add or subtract hours and minutes. Includes Age Calculator, Work Hours Tracker, and Date Tools. Fast and private." />
         <link rel="canonical" href="https://timecenterhub.com/" />
-        <meta property="og:title" content="TimeCenterHub - Free Online Time Calculators" />
-        <meta property="og:description" content="The ultimate collection of free time tools: Age Calculator, Time Duration, Work Hours Tracker, and more." />
+        <meta property="og:title" content="Time Calculator - Free Online Date & Work Tools" />
+        <meta property="og:description" content="Use our free Time Calculator to add or subtract hours and minutes. Includes Age Calculator, Work Hours Tracker, and Date Tools." />
         <meta property="og:url" content="https://timecenterhub.com/" />
       </Helmet>
 
@@ -83,8 +83,8 @@ const Home: React.FC = () => {
           RELIABLE TIME TOOLS
         </div>
         <h1 className="text-3xl md:text-6xl font-black text-slate-900 mb-4 md:mb-6 tracking-tighter leading-[1.1]">
-          Universal Time Calculator & <br />
-          <span className="text-blue-600">Free Online Date</span> Tools
+          Online Time Calculator & <br />
+          <span className="text-blue-600">Date Tools</span>
         </h1>
         <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed mb-8 px-2 md:px-4">
           Easy-to-use tools for everyone. Calculate your exact age, track work hours, and add up time durations with 100% accuracy.
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
           <div className="space-y-8 md:space-y-10 text-center lg:text-left order-first lg:order-none">
              <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-               Add or Subtract <span className="text-blue-600">Time</span> Easily
+               Simple <span className="text-blue-600">Time Calculator</span> for Daily Use
              </h2>
              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
                Use our main <span className="font-bold text-slate-700">Time Calculator</span> to add up hours, minutes, and seconds. It is great for tracking project time or video editing.
