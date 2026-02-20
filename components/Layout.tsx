@@ -64,7 +64,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 </div>
               ))}
 
-              <Link to="/converter/unix-timestamp" className="ml-4 px-5 xl:px-8 py-3 bg-slate-900 text-white text-xs xl:text-sm font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-sm whitespace-nowrap">Coding Tools</Link>
+              <Link to="/unix" className="ml-4 px-5 xl:px-8 py-3 bg-slate-900 text-white text-xs xl:text-sm font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-sm whitespace-nowrap">Coding Tools</Link>
             </nav>
 
             <div className="lg:hidden relative z-50">
@@ -106,7 +106,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                  </div>
               ))}
               
-              <Link to="/converter/unix-timestamp" className="p-5 bg-slate-900 text-white text-center rounded-2xl font-black text-lg shadow-lg mt-4">
+              <Link to="/unix" className="p-5 bg-slate-900 text-white text-center rounded-2xl font-black text-lg shadow-lg mt-4">
                 Dev & Coding Tools
               </Link>
            </nav>
@@ -150,8 +150,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <h4 className="text-slate-900 font-black uppercase text-base tracking-widest mb-6 md:mb-8">Quick Links</h4>
               <ul className="space-y-4 md:space-y-5 font-bold text-slate-600 text-lg">
                 <li><Link to="/" className="hover:text-blue-600 transition-colors">Hub</Link></li>
-                <li><Link to="/date/age-calculator" className="hover:text-blue-600 transition-colors">Age Calculator</Link></li>
-                <li><Link to="/work/work-hours-calculator" className="hover:text-blue-600 transition-colors">Work Tracker</Link></li>
+                <li><Link to="/age-calculator" className="hover:text-blue-600 transition-colors">Age Calculator</Link></li>
+                <li><Link to="/work-hours" className="hover:text-blue-600 transition-colors">Work Tracker</Link></li>
                 <li><Link to="/sitemap" className="hover:text-blue-600 transition-colors">All Tools</Link></li>
               </ul>
             </div>

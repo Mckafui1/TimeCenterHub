@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.tsx';
 import Home from './pages/Home.tsx';
 import ToolPage from './pages/ToolPage.tsx';
@@ -18,7 +18,8 @@ const App: React.FC = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/sitemap" element={<Sitemap />} />
-          <Route path="/:category/:toolId" element={<ToolPage />} />
+          {/* Flat URL structure for tools */}
+          <Route path="/:toolId" element={<ToolPage />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </Layout>

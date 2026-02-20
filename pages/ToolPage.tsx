@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { TOOLS } from '../constants.tsx';
 import { 
   TimeCalculator,
@@ -191,10 +192,10 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
 };
 
 const ToolPage: React.FC = () => {
-  const { category, toolId } = useParams();
+  const { toolId } = useParams();
   
-  // Improved lookup matching the URL structure to the constants paths
-  const currentPath = `/${category}/${toolId}`;
+  // Lookup by path (including leading slash) or id
+  const currentPath = `/${toolId}`;
   const tool = TOOLS.find(t => t.path === currentPath) || TOOLS.find(t => t.id === toolId);
 
   // --- RELATED TOOLS LOGIC (UPDATED) ---
@@ -311,6 +312,21 @@ const ToolPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
+       <Helmet>
+        <title>{tool.name} - TimeCenterHub</title>
+        <meta name="description" content={tool.description} />
+        <link rel="canonical" href={`https://timecenterhub.com${tool.path}`} />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content={`${tool.name} - Free Online Tool`} />
+        <meta property="og:description" content={tool.description} />
+        <meta property="og:url" content={`https://timecenterhub.com${tool.path}`} />
+        
+        {/* Twitter */}
+        <meta name="twitter:title" content={`${tool.name} - TimeCenterHub`} />
+        <meta name="twitter:description" content={tool.description} />
+      </Helmet>
+
        {/* Breadcrumbs & Header Container */}
        <div className="bg-white border-b border-slate-200 pb-20 pt-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
