@@ -47,6 +47,7 @@ import {
   LeapYearCalculator,
   ZodiacCalculator
 } from '../components/CalculatorTools.tsx';
+import SocialShare from '../components/SocialShare.tsx';
 
 // --- EXTENDED CONTENT DATABASE (SEO ENGINE) ---
 const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, benefits: string, howTo: string, faq: {q: string, a: string}[] }> = {
@@ -338,6 +339,7 @@ const ToolPage: React.FC = () => {
                 <div className="bg-slate-50/50 rounded-[2rem] overflow-hidden">
                    {renderCalculator()}
                 </div>
+                <SocialShare title={`Check out this ${tool.name}`} description={tool.description} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24">
