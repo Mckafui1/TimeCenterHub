@@ -264,7 +264,7 @@ const Home: React.FC = () => {
       <section className="mb-24 md:mb-36 bg-white rounded-[3rem] p-8 md:p-28 border border-slate-100 text-center">
          <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 md:mb-12 tracking-tight leading-tight">Your Trusted <span className="text-blue-600">Time Tool</span> Hub</h2>
          <p className="text-slate-600 text-lg md:text-2xl max-w-5xl mx-auto leading-relaxed font-bold mb-12 md:mb-20">
-           TimeCenterHub offers a large collection of calculators to help you manage your time. From adding <Link to="/work/work-hours" className="text-blue-600 hover:underline">work hours</Link> for payroll to tracking how many days until your next birthday. Every tool is built to be fast, accurate, and easy to use for everyone.
+           TimeCenterHub offers a large collection of calculators to help you manage your time. From adding <Link to="/work-hours" className="text-blue-600 hover:underline">work hours</Link> for payroll to tracking how many days until your next birthday. Every tool is built to be fast, accurate, and easy to use for everyone.
          </p>
          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
             <div className="p-6 md:p-10 bg-slate-50 rounded-[2rem]"><p className="text-2xl md:text-4xl font-black text-slate-900">Standard</p><p className="text-xs md:text-sm text-slate-500 font-black uppercase mt-2">Math</p></div>
@@ -274,11 +274,104 @@ const Home: React.FC = () => {
          </div>
       </section>
 
+      {/* EXTENDED SEO CONTENT ARTICLE */}
+      <section className="mb-24 max-w-4xl mx-auto px-4 md:px-0">
+        <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-10 tracking-tight">Comprehensive Guide to Online Time Calculators & Date Tools</h2>
+        
+        <h3 className="text-2xl font-bold text-slate-900 mt-12 mb-6">Why Use an Online Time Calculator?</h3>
+        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+          In our modern, fast-paced world, precision is everything. Whether you are a video editor trying to sync audio tracks, a pilot logging flight hours, or a payroll manager calculating weekly wages, the ability to accurately <strong className="text-slate-900">add hours, minutes, and seconds</strong> is essential. Standard calculators operate on a decimal system (base-10), where 100 units make a whole. Time, however, operates on a sexagesimal system (base-60), where 60 seconds make a minute and 60 minutes make an hour. This fundamental difference makes manual calculation prone to errors.
+        </p>
+        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+          Our <strong className="text-slate-900">Online Time Calculator</strong> eliminates the mental gymnastics required to convert "85 minutes" into "1 hour and 25 minutes". It handles the "rollover" logic automatically, ensuring that your totals are always mathematically correct. This is particularly useful for:
+        </p>
+        <ul className="list-disc pl-6 space-y-3 text-lg text-slate-600 mb-10 marker:text-blue-500">
+          <li className="pl-2"><strong className="text-slate-800">Payroll & Work Hours:</strong> Summing up daily shifts (e.g., 8h 30m + 7h 45m) to get a weekly total for accurate billing.</li>
+          <li className="pl-2"><strong className="text-slate-800">Media Production:</strong> Calculating the total runtime of a playlist, album, or video project by adding track durations.</li>
+          <li className="pl-2"><strong className="text-slate-800">Flight Logs:</strong> Pilots must strictly record flight times; our tool ensures these logs are precise.</li>
+          <li className="pl-2"><strong className="text-slate-800">Fitness Training:</strong> Triathletes and runners use time addition to calculate total race times across splits.</li>
+        </ul>
+
+        <h3 className="text-2xl font-bold text-slate-900 mt-12 mb-6">Examples for Time Calculator Usage</h3>
+        <p className="text-lg text-slate-600 leading-relaxed mb-8">
+          To help you understand the versatility of our tools, here are some practical <strong className="text-slate-900">Examples for Time Calculator</strong> scenarios:
+        </p>
+        
+        <div className="bg-slate-50 rounded-3xl p-8 mb-8 border border-slate-100">
+            <h4 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                <span className="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-sm">A</span>
+                The Freelance Designer
+            </h4>
+            <p className="text-slate-600 leading-relaxed mb-4">
+            Sarah is a freelance graphic designer who bills by the hour. On Monday, she worked 4 hours and 15 minutes. On Tuesday, she worked 3 hours and 50 minutes. To bill her client correctly, she needs the total.
+            </p>
+            <div className="font-mono text-sm bg-white p-4 rounded-xl border border-slate-200 text-slate-700 space-y-2">
+                <div className="flex justify-between border-b border-slate-100 pb-2"><span>Calculation:</span> <span>4h 15m + 3h 50m</span></div>
+                <div className="flex justify-between border-b border-slate-100 pb-2"><span>Manual Math:</span> <span>15m + 50m = 65m (1h 5m). 4h + 3h = 7h.</span></div>
+                <div className="flex justify-between font-bold text-blue-600 pt-1"><span>Result:</span> <span>8 hours and 5 minutes</span></div>
+            </div>
+        </div>
+
+        <div className="bg-slate-50 rounded-3xl p-8 mb-10 border border-slate-100">
+            <h4 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                <span className="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-sm">B</span>
+                The Marathon Runner
+            </h4>
+            <p className="text-slate-600 leading-relaxed mb-4">
+            John is training for a marathon. He runs his first half in 1 hour, 58 minutes, and 30 seconds. He wants to finish the full race under 4 hours. He needs to know his maximum allowable time for the second half.
+            </p>
+            <div className="font-mono text-sm bg-white p-4 rounded-xl border border-slate-200 text-slate-700 space-y-2">
+                <div className="flex justify-between border-b border-slate-100 pb-2"><span>Calculation:</span> <span>4h 00m 00s - 1h 58m 30s</span></div>
+                <div className="flex justify-between font-bold text-indigo-600 pt-1"><span>Result:</span> <span>2 hours, 1 minute, 30 seconds</span></div>
+            </div>
+        </div>
+
+        <h3 className="text-2xl font-bold text-slate-900 mt-12 mb-6">How to Add Hours Minutes Seconds to Time Calculation</h3>
+        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+          Performing time math requires a specific step-by-step approach if done manually. Here is how the logic works, which our <strong className="text-slate-900">Online Time Calculator</strong> automates for you:
+        </p>
+        <ol className="list-decimal pl-6 space-y-4 text-lg text-slate-600 mb-10 marker:text-slate-400 marker:font-bold">
+          <li className="pl-2"><strong className="text-slate-800">Step 1: Add the Seconds.</strong> Sum the seconds column. If the total exceeds 60, subtract 60 from the total and carry 1 over to the minutes column. (e.g., 45s + 20s = 65s → 1 minute and 5 seconds).</li>
+          <li className="pl-2"><strong className="text-slate-800">Step 2: Add the Minutes.</strong> Sum the minutes column, including any carry-over from the seconds. If the total exceeds 60, subtract 60 and carry 1 over to the hours column.</li>
+          <li className="pl-2"><strong className="text-slate-800">Step 3: Add the Hours.</strong> Sum the hours column. Hours can typically go beyond 24 unless you are calculating clock time (time of day), in which case you would roll over every 24 hours.</li>
+        </ol>
+        <p className="text-lg text-slate-600 leading-relaxed mb-10">
+          While this process is logical, it is tedious to do on paper. Our digital tools perform these steps in milliseconds, allowing you to <strong className="text-slate-900">Add Hours Minutes Seconds to Time Calculation</strong> effortlessly.
+        </p>
+
+        <h3 className="text-2xl font-bold text-slate-900 mt-12 mb-6">Beyond Time: Powerful Date Tools</h3>
+        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+          TimeCenterHub is not just about hours and minutes; it is a comprehensive suite of <strong className="text-slate-900">Date Tools</strong>. Understanding the duration between calendar dates is crucial for planning.
+        </p>
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+          <li className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+              <strong className="text-slate-900 block mb-2 text-lg">Age Calculator</strong>
+              <span className="text-slate-600">Have you ever needed to know your exact age in days? Our Age Calculator provides precision down to the day, accounting for leap years.</span>
+          </li>
+          <li className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+              <strong className="text-slate-900 block mb-2 text-lg">Business Days Calculator</strong>
+              <span className="text-slate-600">For project managers, "30 days" often means "30 business days". Our tool allows you to exclude weekends and holidays.</span>
+          </li>
+          <li className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm md:col-span-2">
+              <strong className="text-slate-900 block mb-2 text-lg">Date Duration</strong>
+              <span className="text-slate-600">Calculate the exact number of days, weeks, and months between two events. This is perfect for visa planning, pregnancy tracking, or countdowns to retirement.</span>
+          </li>
+        </ul>
+
+        <h3 className="text-2xl font-bold text-slate-900 mt-12 mb-6">Accuracy and Standards</h3>
+        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+          We take pride in the reliability of our <strong className="text-slate-900">Online Time Calculator & Date Tools</strong>. All our date calculations are based on the Gregorian calendar, the internationally accepted civil calendar. For time zones, we utilize the IANA Time Zone Database, ensuring that our World Clock reflects real-time changes in Daylight Saving Time (DST) across the globe.
+        </p>
+        <p className="text-lg text-slate-600 leading-relaxed">
+          Whether you are a student, a professional, or just someone trying to organize their life, TimeCenterHub is dedicated to providing you with the most accurate, private, and easy-to-use temporal tools on the internet.
+        </p>
+      </section>
+
       {/* VISUALLY HIDDEN SEO CONTENT (CRAWLER ONLY) */}
       <div className="sr-only">
         <article>
-          <h1>Universal Time Calculator and Free Online Date Tools</h1>
-          <p>Welcome to TimeCenterHub, your home for accurate <Link to="/time/time-calculator">time calculators</Link> and date tools. We help you with all your time-related questions, from calculating your <Link to="/date/age-calculator">exact age</Link> to tracking work hours. Our goal is to provide simple tools that everyone can use easily. We strictly follow <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank" rel="noreferrer">ISO-8601</a> standards for all time and date calculations. Our date tools are based on the <a href="https://en.wikipedia.org/wiki/Gregorian_calendar" target="_blank" rel="noreferrer">Gregorian calendar</a> system.</p>
+          <h1>Online Time Calculator & Date Tools</h1>
+          <p>Welcome to TimeCenterHub, your home for accurate <Link to="/time-calculator">time calculators</Link> and date tools. We help you with all your time-related questions, from calculating your <Link to="/age-calculator">exact age</Link> to tracking work hours. Our goal is to provide simple tools that everyone can use easily. We strictly follow <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank" rel="noreferrer">ISO-8601</a> standards for all time and date calculations. Our date tools are based on the <a href="https://en.wikipedia.org/wiki/Gregorian_calendar" target="_blank" rel="noreferrer">Gregorian calendar</a> system.</p>
         </article>
       </div>
     </div>
