@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { CATEGORIES, TOOLS } from '../constants.tsx';
 import { 
   TimeZoneConverter, 
@@ -66,6 +67,15 @@ const TimeProgress = () => {
 const Home: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+      <Helmet>
+        <title>TimeCenterHub - Free Online Time Calculators, Date Tools & Work Trackers</title>
+        <meta name="description" content="The ultimate collection of free time tools: Age Calculator, Time Duration, Work Hours Tracker, Military Time Converter, and 40+ other utilities. Fast, accurate, and privacy-focused." />
+        <link rel="canonical" href="https://timecenterhub.com/" />
+        <meta property="og:title" content="TimeCenterHub - Free Online Time Calculators" />
+        <meta property="og:description" content="The ultimate collection of free time tools: Age Calculator, Time Duration, Work Hours Tracker, and more." />
+        <meta property="og:url" content="https://timecenterhub.com/" />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="text-center mb-16 md:mb-10 relative pt-4 md:pt-6">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-56 bg-blue-400 opacity-[0.03] blur-[120px] rounded-full -z-10"></div>

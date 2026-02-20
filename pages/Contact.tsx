@@ -1,8 +1,14 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const Contact: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-20">
+      <Helmet>
+        <title>Contact Us - TimeCenterHub</title>
+        <meta name="description" content="Get in touch with the TimeCenterHub team for support, feature requests, or bug reports." />
+        <link rel="canonical" href="https://timecenterhub.com/contact" />
+      </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">Contact Us</h1>
       
       <div className="prose prose-slate prose-lg max-w-none space-y-8 text-slate-600 font-medium leading-relaxed">

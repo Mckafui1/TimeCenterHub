@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { CATEGORIES, TOOLS } from '../constants.tsx';
 
 const Sitemap: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 py-20">
+      <Helmet>
+        <title>Sitemap - TimeCenterHub</title>
+        <meta name="description" content="Complete directory of all time calculators and tools available on TimeCenterHub." />
+        <link rel="canonical" href="https://timecenterhub.com/sitemap" />
+      </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">Sitemap & Tool Directory</h1>
       
       <div className="prose prose-slate prose-lg max-w-none space-y-8 text-slate-600 font-medium leading-relaxed mb-16">

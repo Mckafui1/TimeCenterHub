@@ -1,8 +1,14 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const Privacy: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-20">
+      <Helmet>
+        <title>Privacy Policy - TimeCenterHub</title>
+        <meta name="description" content="Read our privacy policy to understand how we protect your data and ensure your privacy while using our tools." />
+        <link rel="canonical" href="https://timecenterhub.com/privacy" />
+      </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">Privacy Policy</h1>
       
       <div className="prose prose-slate prose-lg max-w-none space-y-8 text-slate-600 font-medium leading-relaxed">
