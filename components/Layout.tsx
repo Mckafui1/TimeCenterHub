@@ -26,7 +26,12 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, [mobileMenuOpen]);
 
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://timecenterhub.com';
+  const [shareUrl, setShareUrl] = useState('https://timecenterhub.com');
+  
+  useEffect(() => {
+    setShareUrl(window.location.href);
+  }, []);
+
   const shareText = "Check out TimeCenterHub for free online time calculators!";
 
   return (

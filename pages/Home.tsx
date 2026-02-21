@@ -12,8 +12,40 @@ import {
 } from '../components/CalculatorTools.tsx';
 
 const TimeProgress = () => {
-  const [now, setNow] = useState(new Date());
-  useEffect(() => { const i = setInterval(() => setNow(new Date()), 1000); return () => clearInterval(i); }, []);
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => { 
+    setNow(new Date());
+    const i = setInterval(() => setNow(new Date()), 1000); 
+    return () => clearInterval(i); 
+  }, []);
+
+  if (!now) {
+    // Render a skeleton or empty state that matches the server's initial structure but without the dynamic data
+    // Or simply return null if acceptable, but that might cause layout shift.
+    // Better to return a static placeholder.
+    return (
+        <div className="bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-100 shadow-sm space-y-8 animate-pulse">
+           <div className="flex justify-between items-end mb-2">
+              <h3 className="text-lg font-black text-slate-500 uppercase tracking-widest">Time Remaining</h3>
+              <span className="text-sm font-bold text-slate-300 italic">Loading...</span>
+           </div>
+           <div className="space-y-5">
+              <div>
+                 <div className="h-4 w-full bg-slate-50 rounded mb-2"></div>
+                 <div className="h-3 w-full bg-slate-50 rounded-full"></div>
+              </div>
+              <div>
+                 <div className="h-4 w-full bg-slate-50 rounded mb-2"></div>
+                 <div className="h-3 w-full bg-slate-50 rounded-full"></div>
+              </div>
+           </div>
+           <div className="pt-6 border-t border-slate-50 flex justify-between items-center">
+              <div className="h-12 w-24 bg-slate-50 rounded-xl"></div>
+              <div className="h-12 w-24 bg-slate-50 rounded-xl"></div>
+           </div>
+        </div>
+    );
+  }
 
   const getDayProgress = () => {
     const start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -368,12 +400,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* VISUALLY HIDDEN SEO CONTENT (CRAWLER ONLY) */}
-      <div className="sr-only">
-        <article>
-          <h1>Online Time Calculator & Date Tools</h1>
-          <p>Welcome to TimeCenterHub, your home for accurate <Link to="/time-calculator">time calculators</Link> and date tools. We help you with all your time-related questions, from calculating your <Link to="/age-calculator">exact age</Link> to tracking work hours. Our goal is to provide simple tools that everyone can use easily. We strictly follow <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank" rel="noreferrer">ISO-8601</a> standards for all time and date calculations. Our date tools are based on the <a href="https://en.wikipedia.org/wiki/Gregorian_calendar" target="_blank" rel="noreferrer">Gregorian calendar</a> system.</p>
-        </article>
-      </div>
+      {/* Removed to avoid hydration mismatch with index.html injection */}
     </div>
   );
 };
