@@ -107,9 +107,37 @@ const routes = [
   }
   
   // Clean up: move dist/static to dist
-  // Actually, Vercel expects 'dist' to be the root.
-  // My build script will output client to dist/static and server to dist/server.
-  // I should move dist/static/* to dist/ and remove dist/static and dist/server.
+  console.log('Moving files to dist root...');
+  
+  // Helper to move files recursively
+  const moveFiles = (src, dest) => {
+    const entries = fs.readdirSync(src, { withFileTypes: true });
+    if (!fs.existsSync(dest)) {
+      fs.mkdirSync(dest);
+    }
+    
+    for (const entry of entries) {
+      const srcPath = path.join(src, entry.name);
+      const destPath = path.join(dest, entry.name);
+      
+      if (entry.isDirectory()) {
+        moveFiles(srcPath, destPath);
+      } else {
+        // If file exists (e.g. from a previous run), overwrite it
+        if (fs.existsSync(destPath)) {
+            fs.unlinkSync(destPath);
+        }
+        fs.renameSync(srcPath, destPath);
+      }
+    }
+  };
+
+  // Move static assets to root dist
+  moveFiles(toAbsolute('dist/static'), toAbsolute('dist'));
+  
+  // Remove temp directories
+  fs.rmSync(toAbsolute('dist/static'), { recursive: true, force: true });
+  fs.rmSync(toAbsolute('dist/server'), { recursive: true, force: true });
   
   console.log('Prerendering complete.');
 })();
