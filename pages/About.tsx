@@ -8,6 +8,17 @@ const About: React.FC = () => {
         <title>About Us - TimeCenterHub</title>
         <meta name="description" content="Learn about TimeCenterHub's mission to provide free, accurate, and privacy-focused time calculation tools for everyone." />
         <link rel="canonical" href="https://timecenterhub.com/about" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="About Us - TimeCenterHub" />
+        <meta property="og:description" content="Learn about TimeCenterHub's mission to provide free, accurate, and privacy-focused time calculation tools for everyone." />
+        <meta property="og:url" content="https://timecenterhub.com/about" />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Us - TimeCenterHub" />
+        <meta name="twitter:description" content="Learn about TimeCenterHub's mission to provide free, accurate, and privacy-focused time calculation tools for everyone." />
       </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">About TimeCenterHub</h1>
       

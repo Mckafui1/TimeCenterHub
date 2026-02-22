@@ -321,8 +321,11 @@ const ToolPage: React.FC = () => {
         <meta property="og:title" content={`${tool.name} - Free Online Tool`} />
         <meta property="og:description" content={tool.description} />
         <meta property="og:url" content={`https://timecenterhub.com${tool.path}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="TimeCenterHub" />
         
         {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${tool.name} - TimeCenterHub`} />
         <meta name="twitter:description" content={tool.description} />
       </Helmet>

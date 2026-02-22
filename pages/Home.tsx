@@ -103,9 +103,18 @@ const Home: React.FC = () => {
         <title>Time Calculator - Free Online Date & Work Tools</title>
         <meta name="description" content="Use our free Time Calculator to add or subtract hours and minutes. Includes Age Calculator, Work Hours Tracker, and Date Tools. Fast and private." />
         <link rel="canonical" href="https://timecenterhub.com/" />
+        
+        {/* Open Graph */}
         <meta property="og:title" content="Time Calculator - Free Online Date & Work Tools" />
         <meta property="og:description" content="Use our free Time Calculator to add or subtract hours and minutes. Includes Age Calculator, Work Hours Tracker, and Date Tools." />
         <meta property="og:url" content="https://timecenterhub.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="TimeCenterHub" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Time Calculator - Free Online Date & Work Tools" />
+        <meta name="twitter:description" content="Use our free Time Calculator to add or subtract hours and minutes. Includes Age Calculator, Work Hours Tracker, and Date Tools." />
       </Helmet>
 
       {/* Hero Section */}

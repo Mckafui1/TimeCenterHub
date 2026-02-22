@@ -10,6 +10,17 @@ const Sitemap: React.FC = () => {
         <title>Sitemap - TimeCenterHub</title>
         <meta name="description" content="Complete directory of all time calculators and tools available on TimeCenterHub." />
         <link rel="canonical" href="https://timecenterhub.com/sitemap" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Sitemap - TimeCenterHub" />
+        <meta property="og:description" content="Complete directory of all time calculators and tools available on TimeCenterHub." />
+        <meta property="og:url" content="https://timecenterhub.com/sitemap" />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Sitemap - TimeCenterHub" />
+        <meta name="twitter:description" content="Complete directory of all time calculators and tools available on TimeCenterHub." />
       </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">Sitemap & Tool Directory</h1>
       

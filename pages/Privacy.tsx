@@ -8,6 +8,17 @@ const Privacy: React.FC = () => {
         <title>Privacy Policy - TimeCenterHub</title>
         <meta name="description" content="Read our privacy policy to understand how we protect your data and ensure your privacy while using our tools." />
         <link rel="canonical" href="https://timecenterhub.com/privacy" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Privacy Policy - TimeCenterHub" />
+        <meta property="og:description" content="Read our privacy policy to understand how we protect your data and ensure your privacy while using our tools." />
+        <meta property="og:url" content="https://timecenterhub.com/privacy" />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Privacy Policy - TimeCenterHub" />
+        <meta name="twitter:description" content="Read our privacy policy to understand how we protect your data and ensure your privacy while using our tools." />
       </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">Privacy Policy</h1>
       
