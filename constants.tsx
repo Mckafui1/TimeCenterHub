@@ -75,11 +75,14 @@ export const TOOLS: Tool[] = [
   { id: 'hours-to-minutes', path: '/hours-to-minutes', name: 'Hours to Minutes', description: 'Hours to total minutes.', category: 'Converter', longDescription: 'Reverse duration conversion.', faqs: [], examples: [] },
   { id: 'unix-timestamp', path: '/unix', name: 'Unix Timestamp Converter', description: 'Epoch time for devs.', category: 'Converter', longDescription: 'Standard dev utility.', faqs: [], examples: [] },
   { id: 'time-unit-converter', path: '/units', name: 'Time Unit Converter', description: 's/m/h/d/w conversion.', category: 'Converter', longDescription: 'Comprehensive unit scaling.', faqs: [], examples: [] },
+  { id: 'ms-to-seconds', path: '/ms-to-seconds', name: 'Milliseconds to Seconds', description: 'Convert ms to seconds.', category: 'Converter', longDescription: 'Simple utility for developers.', faqs: [], examples: [] },
+  { id: 'ms-to-date', path: '/ms-to-date', name: 'Milliseconds to Date', description: 'Decode Unix timestamps.', category: 'Converter', longDescription: 'Convert ms timestamps to readable dates.', faqs: [], examples: [] },
   { id: 'pace-calculator', path: '/pace', name: 'Pace Calculator (Running)', description: 'Min/km to km/h.', category: 'Converter', longDescription: 'Running and cycling analytics.', faqs: [], examples: [] },
 
   // --- CORE COUNTDOWN TOOLS ---
   { id: 'pomodoro-timer', path: '/pomodoro', name: 'Pomodoro Timer', description: '25/5 focus technique.', category: 'Countdown', longDescription: 'Boost productivity with focus blocks.', faqs: [], examples: [] },
   { id: 'countdown-timer', path: '/timer', name: 'Countdown Timer', description: 'Simple visual timer.', category: 'Countdown', longDescription: 'Alert-based countdown.', faqs: [], examples: [] },
   { id: 'new-year-countdown', path: '/new-year', name: 'New Year Countdown', description: 'Days until next year.', category: 'Countdown', longDescription: 'Global celebration tracker.', faqs: [], examples: [] },
-  { id: 'exam-countdown', path: '/exam', name: 'Exam Countdown', description: 'Days until test day.', category: 'Countdown', longDescription: 'Student study planner.', faqs: [], examples: [] }
+  { id: 'exam-countdown', path: '/exam', name: 'Exam Countdown', description: 'Days until test day.', category: 'Countdown', longDescription: 'Student study planner.', faqs: [], examples: [] },
+  { id: 'federal-holidays', path: '/federal-holidays', name: 'US Federal Holidays', description: 'List of upcoming holidays.', category: 'Date', longDescription: 'Check dates for US federal holidays.', faqs: [], examples: [] }
 ];

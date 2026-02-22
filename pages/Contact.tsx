@@ -5,20 +5,20 @@ const Contact: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-20">
       <Helmet>
-        <title>Contact Us - TimeCenterHub</title>
-        <meta name="description" content="Get in touch with the TimeCenterHub team for support, feature requests, or bug reports." />
+        <title>Contact TimeCenterHub - Support & Feature Requests</title>
+        <meta name="description" content="Get in touch with the TimeCenterHub team. We welcome feedback, bug reports, and feature requests for our time and date calculators. We are here to help you." />
         <link rel="canonical" href="https://timecenterhub.com/contact" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Contact Us - TimeCenterHub" />
-        <meta property="og:description" content="Get in touch with the TimeCenterHub team for support, feature requests, or bug reports." />
+        <meta property="og:title" content="Contact TimeCenterHub - Support & Feature Requests" />
+        <meta property="og:description" content="Get in touch with the TimeCenterHub team. We welcome feedback, bug reports, and feature requests for our time and date calculators. We are here to help you." />
         <meta property="og:url" content="https://timecenterhub.com/contact" />
         <meta property="og:type" content="website" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Contact Us - TimeCenterHub" />
-        <meta name="twitter:description" content="Get in touch with the TimeCenterHub team for support, feature requests, or bug reports." />
+        <meta name="twitter:title" content="Contact TimeCenterHub - Support & Feature Requests" />
+        <meta name="twitter:description" content="Get in touch with the TimeCenterHub team. We welcome feedback, bug reports, and feature requests for our time and date calculators. We are here to help you." />
       </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">Contact Us</h1>
       

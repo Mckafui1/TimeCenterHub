@@ -100,21 +100,21 @@ const Home: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
       <Helmet>
-        <title>Time Calculator - Free Online Date & Work Tools</title>
-        <meta name="description" content="Use our free Time Calculator to add or subtract hours and minutes. Includes Age Calculator, Work Hours Tracker, and Date Tools. Fast and private." />
+        <title>Time Calculator & Date Tools - Free Online Hours, Minutes & Age Calculator</title>
+        <meta name="description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, convert time zones, and manage dates with our accurate, privacy-focused tools." />
         <link rel="canonical" href="https://timecenterhub.com/" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Time Calculator - Free Online Date & Work Tools" />
-        <meta property="og:description" content="Use our free Time Calculator to add or subtract hours and minutes. Includes Age Calculator, Work Hours Tracker, and Date Tools." />
+        <meta property="og:title" content="Time Calculator & Date Tools - Free Online Hours, Minutes & Age Calculator" />
+        <meta property="og:description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, convert time zones, and manage dates with our accurate, privacy-focused tools." />
         <meta property="og:url" content="https://timecenterhub.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="TimeCenterHub" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Time Calculator - Free Online Date & Work Tools" />
-        <meta name="twitter:description" content="Use our free Time Calculator to add or subtract hours and minutes. Includes Age Calculator, Work Hours Tracker, and Date Tools." />
+        <meta name="twitter:title" content="Time Calculator & Date Tools - Free Online Hours, Minutes & Age Calculator" />
+        <meta name="twitter:description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, convert time zones, and manage dates with our accurate, privacy-focused tools." />
       </Helmet>
 
       {/* Hero Section */}

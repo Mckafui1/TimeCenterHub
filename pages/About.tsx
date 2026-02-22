@@ -5,20 +5,20 @@ const About: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-20">
       <Helmet>
-        <title>About Us - TimeCenterHub</title>
-        <meta name="description" content="Learn about TimeCenterHub's mission to provide free, accurate, and privacy-focused time calculation tools for everyone." />
+        <title>About TimeCenterHub - Our Mission for Accurate Time & Date Tools</title>
+        <meta name="description" content="Learn about TimeCenterHub's mission to provide the world's most accurate, free, and privacy-focused time calculation tools. Discover how we help millions manage their time effectively." />
         <link rel="canonical" href="https://timecenterhub.com/about" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="About Us - TimeCenterHub" />
-        <meta property="og:description" content="Learn about TimeCenterHub's mission to provide free, accurate, and privacy-focused time calculation tools for everyone." />
+        <meta property="og:title" content="About TimeCenterHub - Our Mission for Accurate Time & Date Tools" />
+        <meta property="og:description" content="Learn about TimeCenterHub's mission to provide the world's most accurate, free, and privacy-focused time calculation tools. Discover how we help millions manage their time effectively." />
         <meta property="og:url" content="https://timecenterhub.com/about" />
         <meta property="og:type" content="website" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About Us - TimeCenterHub" />
-        <meta name="twitter:description" content="Learn about TimeCenterHub's mission to provide free, accurate, and privacy-focused time calculation tools for everyone." />
+        <meta name="twitter:title" content="About TimeCenterHub - Our Mission for Accurate Time & Date Tools" />
+        <meta name="twitter:description" content="Learn about TimeCenterHub's mission to provide the world's most accurate, free, and privacy-focused time calculation tools. Discover how we help millions manage their time effectively." />
       </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">About TimeCenterHub</h1>
       

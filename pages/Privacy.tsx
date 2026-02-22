@@ -5,20 +5,20 @@ const Privacy: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-20">
       <Helmet>
-        <title>Privacy Policy - TimeCenterHub</title>
-        <meta name="description" content="Read our privacy policy to understand how we protect your data and ensure your privacy while using our tools." />
+        <title>Privacy Policy - How TimeCenterHub Protects Your Data</title>
+        <meta name="description" content="Read our comprehensive Privacy Policy. We are committed to client-side processing to ensure your personal dates, times, and calculations remain 100% private and secure on your device." />
         <link rel="canonical" href="https://timecenterhub.com/privacy" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Privacy Policy - TimeCenterHub" />
-        <meta property="og:description" content="Read our privacy policy to understand how we protect your data and ensure your privacy while using our tools." />
+        <meta property="og:title" content="Privacy Policy - How TimeCenterHub Protects Your Data" />
+        <meta property="og:description" content="Read our comprehensive Privacy Policy. We are committed to client-side processing to ensure your personal dates, times, and calculations remain 100% private and secure on your device." />
         <meta property="og:url" content="https://timecenterhub.com/privacy" />
         <meta property="og:type" content="website" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Privacy Policy - TimeCenterHub" />
-        <meta name="twitter:description" content="Read our privacy policy to understand how we protect your data and ensure your privacy while using our tools." />
+        <meta name="twitter:title" content="Privacy Policy - How TimeCenterHub Protects Your Data" />
+        <meta name="twitter:description" content="Read our comprehensive Privacy Policy. We are committed to client-side processing to ensure your personal dates, times, and calculations remain 100% private and secure on your device." />
       </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">Privacy Policy</h1>
       

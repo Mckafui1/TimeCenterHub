@@ -64,12 +64,15 @@ const routes = [
   '/hours-to-minutes',
   '/unix',
   '/units',
+  '/ms-to-seconds',
+  '/ms-to-date',
   '/pace',
   // Countdown Tools
   '/pomodoro',
   '/timer',
   '/new-year',
-  '/exam'
+  '/exam',
+  '/federal-holidays'
 ];
 
 (async () => {

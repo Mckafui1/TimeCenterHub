@@ -105,7 +105,7 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
     howTo: `Enter your birth date. Click "Find Sign".`,
     faq: []
   },
-  'time-duration-calculator': {
+  'time-between-times': {
     intro: `Calculating the exact duration between two clock times is a frequent necessity in daily life, yet it can be surprisingly tricky. The Time Duration Calculator is designed to solve one specific problem: finding the elapsed time between a specific Start Time and End Time. This is distinct from simply adding durations; it involves understanding the 24-hour cycle of the day. A common complexity arises when a duration crosses midnight—for example, a shift starting at 10:00 PM and ending at 2:00 AM. A standard subtraction would result in a negative number, but our engine intelligently detects the day rollover to provide the correct 4-hour duration.`,
     mechanics: `The calculator accepts inputs in standard 12-hour (AM/PM) or 24-hour formats. It converts these clock times into "minutes from midnight". For example, 1:00 AM is 60 minutes, while 1:00 PM is 780 minutes. It then subtracts the start value from the end value. If the result is negative (indicating the end time is technically "earlier" in the day cycle than the start time), the engine adds 1440 minutes (24 hours) to the result, correctly interpreting the time as crossing into the next day. This ensures 100% accuracy for overnight shifts, flight connections, and sleep tracking.`,
     benefits: `This tool is indispensable for HR managers verifying timesheets, travelers planning layovers, and individuals tracking sleep or fasting windows. By automating the "midnight math", it prevents the common off-by-one-hour errors that occur when manually calculating durations across the 12-hour meridian. It provides a clear, unambiguous statement of hours and minutes elapsed.`,
@@ -125,7 +125,7 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
       { q: "Can I use minutes instead of hours?", a: "Currently, the standard input for time is hours (as in km/h or mph). To use minutes, enter them as a decimal of an hour (eg., 30 minutes = 0.5 hours) or use our Time Unit Converter first." }
     ]
   },
-  'time-to-decimal': {
+  'time-in-decimal': {
     intro: `In many professional industries—law, accounting, consulting, and payroll—time is not tracked in hours and minutes (8:30), but in decimal hours (8.5). This standardization simplifies billing calculations, as you can simply multiply the decimal time by an hourly rate. The Time to Decimal Calculator bridges the gap between the clock on the wall and the spreadsheet on your computer. It instantly converts hours and minutes into a precise decimal number.`,
     mechanics: `The conversion logic is simple but vital. The hour component remains an integer. The minute component is divided by 60. For example, 15 minutes / 60 = 0.25. The calculator sums these values. It can also handle "rounding" logic implicitly by providing a precise float value, which is often rounded to two decimal places for currency calculations.`,
     benefits: `This tool eliminates the most common payroll error: treating minutes as decimals (e.g., assuming 8 hours 50 minutes is 8.50 hours—it's actually ~8.83). By ensuring accurate conversion, employees get paid for every minute worked, and clients are billed with mathematical integrity.`,
@@ -134,6 +134,20 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
       { q: "Why is 30 minutes 0.5?", a: "Because 30 is half of 60. Decimal hours represent a fraction of the whole hour." },
       { q: "How many decimal places does it show?", a: "It typically shows two decimal places, which is standard for financial calculations." }
     ]
+  },
+  'meeting-cost-calculator': {
+    intro: `Time is money, quite literally. The Meeting Cost Calculator helps you visualize the financial impact of a meeting by multiplying the number of attendees by their average hourly rate and the meeting duration.`,
+    mechanics: `It uses the formula: Cost = (Attendees * Average Hourly Rate * Duration in Minutes) / 60.`,
+    benefits: `Useful for businesses to evaluate the ROI of meetings and encourage efficiency.`,
+    howTo: `Enter the number of attendees, average hourly rate, and duration. Click "Calculate Cost".`,
+    faq: []
+  },
+  'federal-holidays': {
+    intro: `Keeping track of US Federal Holidays is essential for business planning, banking, and government services. This tool lists the upcoming federal holidays.`,
+    mechanics: `It displays a static or calculated list of standard US holidays (New Year's, MLK Day, etc.) based on the current year.`,
+    benefits: `Helps you plan days off and know when banks or post offices are closed.`,
+    howTo: `View the list of holidays displayed on the page.`,
+    faq: []
   },
   'time-unit-converter': {
     intro: `Time is measured in many scales, from the fleeting millisecond to the span of a century. The Time Unit Converter is a comprehensive utility designed to translate temporal quantities across these scales. Whether you are a student visualizing how many seconds are in a year, or a project manager converting a 3-week sprint into working hours, this tool provides the answers instantly. It covers seconds, minutes, hours, days, weeks, months, and years.`,
@@ -313,21 +327,21 @@ const ToolPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50">
        <Helmet>
-        <title>{tool.name} - TimeCenterHub</title>
-        <meta name="description" content={tool.description} />
+        <title>{tool.name} - Free Online Calculator & Tool | TimeCenterHub</title>
+        <meta name="description" content={tool.longDescription || tool.description} />
         <link rel="canonical" href={`https://timecenterhub.com${tool.path}`} />
         
         {/* Open Graph */}
-        <meta property="og:title" content={`${tool.name} - Free Online Tool`} />
-        <meta property="og:description" content={tool.description} />
+        <meta property="og:title" content={`${tool.name} - Free Online Calculator & Tool`} />
+        <meta property="og:description" content={tool.longDescription || tool.description} />
         <meta property="og:url" content={`https://timecenterhub.com${tool.path}`} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="TimeCenterHub" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${tool.name} - TimeCenterHub`} />
-        <meta name="twitter:description" content={tool.description} />
+        <meta name="twitter:title" content={`${tool.name} - Free Online Calculator & Tool`} />
+        <meta name="twitter:description" content={tool.longDescription || tool.description} />
       </Helmet>
 
        {/* Breadcrumbs & Header Container */}

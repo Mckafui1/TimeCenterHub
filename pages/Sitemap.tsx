@@ -7,20 +7,20 @@ const Sitemap: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 py-20">
       <Helmet>
-        <title>Sitemap - TimeCenterHub</title>
-        <meta name="description" content="Complete directory of all time calculators and tools available on TimeCenterHub." />
+        <title>Sitemap & Tool Directory - All Time, Date & Work Calculators</title>
+        <meta name="description" content="Browse the complete directory of TimeCenterHub's free online tools. Find every calculator for time, dates, work hours, conversions, and countdowns in one easy-to-navigate list." />
         <link rel="canonical" href="https://timecenterhub.com/sitemap" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Sitemap - TimeCenterHub" />
-        <meta property="og:description" content="Complete directory of all time calculators and tools available on TimeCenterHub." />
+        <meta property="og:title" content="Sitemap & Tool Directory - All Time, Date & Work Calculators" />
+        <meta property="og:description" content="Browse the complete directory of TimeCenterHub's free online tools. Find every calculator for time, dates, work hours, conversions, and countdowns in one easy-to-navigate list." />
         <meta property="og:url" content="https://timecenterhub.com/sitemap" />
         <meta property="og:type" content="website" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Sitemap - TimeCenterHub" />
-        <meta name="twitter:description" content="Complete directory of all time calculators and tools available on TimeCenterHub." />
+        <meta name="twitter:title" content="Sitemap & Tool Directory - All Time, Date & Work Calculators" />
+        <meta name="twitter:description" content="Browse the complete directory of TimeCenterHub's free online tools. Find every calculator for time, dates, work hours, conversions, and countdowns in one easy-to-navigate list." />
       </Helmet>
       <h1 className="text-5xl font-black text-slate-900 mb-10 tracking-tight">Sitemap & Tool Directory</h1>
       
