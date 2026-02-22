@@ -108,6 +108,20 @@ const routes = [
       console.error(`Error prerendering ${url}:`, e);
     }
   }
+
+  // Generate Sitemap
+  console.log('Generating sitemap.xml...');
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${routes.map(route => `  <url>
+    <loc>https://timecenterhub.com${route}</loc>
+    <changefreq>${route === '/' ? 'daily' : 'weekly'}</changefreq>
+    <priority>${route === '/' ? '1.0' : '0.8'}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+  fs.writeFileSync(toAbsolute('dist/static/sitemap.xml'), sitemap);
+  console.log('Sitemap generated.');
   
   // Clean up: move dist/static to dist
   console.log('Moving files to dist root...');

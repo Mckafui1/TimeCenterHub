@@ -202,6 +202,195 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
     faq: [
       { q: "How accurate is this stopwatch?", a: "It is accurate to within a few milliseconds, limited only by your browser's refresh rate and device performance." }
     ]
+  },
+  'add-time': {
+    intro: `Adding time values together is a common task for pilots, video editors, and project managers. The Add Time Calculator allows you to sum multiple time durations (Hours:Minutes:Seconds) to find a total cumulative time.`,
+    mechanics: `It converts all inputs to seconds, sums them up, and then converts the total back to H:M:S format.`,
+    benefits: `Perfect for calculating total flight hours, video runtime, or weekly work hours.`,
+    howTo: `Enter the time values you want to add. The total is updated automatically.`,
+    faq: []
+  },
+  'subtract-time': {
+    intro: `Finding the difference between two time values is essential for calculating durations or remaining time. The Subtract Time Calculator does exactly this.`,
+    mechanics: `It subtracts the second time value from the first (converted to seconds) and displays the result.`,
+    benefits: `Useful for determining how long a task took or how much time is left before a deadline.`,
+    howTo: `Enter the start and end times (or two durations). The difference is displayed instantly.`,
+    faq: []
+  },
+  'minutes-from-now': {
+    intro: `Need to know exactly what time it will be in 45 minutes? The Minutes From Now Calculator projects the current time forward by any number of minutes.`,
+    mechanics: `It adds the specified number of minutes to the current system time and formats the result.`,
+    benefits: `Great for setting cooking timers, parking meters, or quick reminders.`,
+    howTo: `Enter the number of minutes. The future time is displayed.`,
+    faq: []
+  },
+  'time-until-midnight': {
+    intro: `Curious how much of the day is left? The Time Until Midnight tool provides a live countdown to 12:00 AM.`,
+    mechanics: `It calculates the difference between the current time and the next occurrence of midnight.`,
+    benefits: `Helps with time management and staying aware of the day's remaining hours.`,
+    howTo: `Simply view the countdown. It updates every second.`,
+    faq: []
+  },
+  'sleep-calculator': {
+    intro: `Waking up groggy is often due to interrupting a sleep cycle. The Sleep Calculator helps you determine the best times to fall asleep or wake up to ensure you complete full 90-minute sleep cycles.`,
+    mechanics: `It calculates wake-up times by adding multiples of 90 minutes (the average sleep cycle length) to your fall-asleep time, plus 14 minutes for falling asleep.`,
+    benefits: `Wake up feeling refreshed and alert by timing your alarm to the end of a sleep cycle.`,
+    howTo: `Enter the time you want to wake up, or when you plan to go to bed. The tool suggests optimal times.`,
+    faq: []
+  },
+  'time-between-dates': {
+    intro: `Calculating the number of days between two dates is useful for project planning, event countdowns, or simply curiosity. The Time Between Dates Calculator finds the exact duration in years, months, weeks, and days.`,
+    mechanics: `It calculates the difference in milliseconds between the two selected dates and converts it into various time units.`,
+    benefits: `Accurately track project durations, age differences, or time since a historical event.`,
+    howTo: `Select a start date and an end date. The duration is calculated instantly.`,
+    faq: []
+  },
+  'days-from-now': {
+    intro: `Need to know what date it will be in 90 days? The Days From Now Calculator allows you to add or subtract days from the current date to find a future or past date.`,
+    mechanics: `It adds the specified number of days (converted to milliseconds) to the current date object.`,
+    benefits: `Essential for calculating warranty expirations, trial periods, or project deadlines.`,
+    howTo: `Enter the number of days. Select "From Today" or "Before Today". The date is displayed.`,
+    faq: []
+  },
+  'business-day-calculator': {
+    intro: `In the business world, weekends and holidays don't count. The Business Days Calculator determines the number of working days between two dates, excluding Saturdays and Sundays.`,
+    mechanics: `It iterates through the days between the start and end dates, incrementing the count only if the day is not a weekend (Sat/Sun).`,
+    benefits: `Crucial for HR, payroll, and project management where deadlines are based on business days.`,
+    howTo: `Select start and end dates. The tool displays the total business days.`,
+    faq: []
+  },
+  'pregnancy-due-date': {
+    intro: `Expecting a baby? The Pregnancy Due Date Calculator estimates your delivery date based on the first day of your last menstrual period (LMP).`,
+    mechanics: `It uses Naegele's Rule: adds 280 days (40 weeks) to the first day of the LMP.`,
+    benefits: `Helps expectant parents plan for the arrival of their new family member.`,
+    howTo: `Select the first day of your last period. The estimated due date is shown.`,
+    faq: []
+  },
+  'birthday-countdown': {
+    intro: `Can't wait for your birthday? The Days to Birthday Calculator counts down the days, hours, minutes, and seconds until your special day.`,
+    mechanics: `It compares the current date to your next birthday and calculates the remaining time.`,
+    benefits: `Builds excitement and helps you plan your birthday celebration.`,
+    howTo: `Enter your birth date. The countdown begins immediately.`,
+    faq: []
+  },
+  'retirement-countdown': {
+    intro: `Dreaming of retirement? The Retirement Countdown Calculator shows you exactly how much time is left until you can clock out for the last time.`,
+    mechanics: `It calculates the time remaining until your selected retirement date.`,
+    benefits: `Motivates you to save and plan for your financial freedom.`,
+    howTo: `Enter your planned retirement date. View the countdown.`,
+    faq: []
+  },
+  'wedding-countdown': {
+    intro: `Counting down to the big day? The Wedding Countdown Calculator tracks the time remaining until your wedding ceremony.`,
+    mechanics: `It calculates the difference between now and your wedding date/time.`,
+    benefits: `Keeps you on track with wedding planning and builds anticipation.`,
+    howTo: `Enter your wedding date and time. The countdown starts.`,
+    faq: []
+  },
+  'world-clock': {
+    intro: `In our interconnected world, knowing the time in other cities is vital. The Global World Clock displays the current local time in major cities across different time zones.`,
+    mechanics: `It uses the browser's Intl.DateTimeFormat API to fetch accurate local times for specific time zones.`,
+    benefits: `Essential for scheduling international meetings, calling friends abroad, or tracking global markets.`,
+    howTo: `View the list of cities. You can often add more or search for specific locations.`,
+    faq: []
+  },
+  'work-hours-calculator': {
+    intro: `Tracking your daily work hours is the first step to ensuring fair pay. The Work Hours Calculator allows you to input your clock-in and clock-out times to find your total hours worked.`,
+    mechanics: `It subtracts the start time from the end time. If a break is entered, it subtracts that duration as well.`,
+    benefits: `Prevents payroll disputes and helps freelancers bill accurately.`,
+    howTo: `Enter start time, end time, and break duration. Click calculate.`,
+    faq: []
+  },
+  'time-card-calculator': {
+    intro: `Managing a weekly timesheet can be tedious. The Time Card Calculator sums up your work hours for an entire week, including overtime.`,
+    mechanics: `It iterates through each day's entry, summing the net hours. It then applies overtime rules (e.g., >40 hours) if configured.`,
+    benefits: `Streamlines the payroll process for employees and small business owners.`,
+    howTo: `Enter hours for each day of the week. The total is calculated at the bottom.`,
+    faq: []
+  },
+  'overtime-calculator': {
+    intro: `Working extra hours? The Overtime Calculator helps you determine your gross pay, including time-and-a-half or double-time rates.`,
+    mechanics: `It takes your regular hourly rate and hours worked. It applies a 1.5x multiplier to hours over 40 (standard rule).`,
+    benefits: `Ensures you are being compensated correctly for your extra effort.`,
+    howTo: `Enter your hourly rate and total hours. The pay breakdown is displayed.`,
+    faq: []
+  },
+  'billable-hours': {
+    intro: `Professionals like lawyers and accountants often bill in 6-minute or 15-minute increments. The Billable Hours Calculator converts actual time worked into these billable units.`,
+    mechanics: `It divides the total minutes by the increment size (e.g., 6) and rounds up to the nearest whole unit.`,
+    benefits: `Simplifies invoicing and ensures adherence to industry billing standards.`,
+    howTo: `Enter the time worked and your billing increment. The billable units are shown.`,
+    faq: []
+  },
+  'shift-calculator': {
+    intro: `Complex shift patterns require careful planning. The Shift Calculator helps managers and employees organize rotating schedules.`,
+    mechanics: `It allows you to define shift patterns (e.g., 4 days on, 2 days off) and projects them onto a calendar.`,
+    benefits: `Helps in visualizing long-term schedules and planning time off.`,
+    howTo: `Select your shift pattern and start date. The calendar populates automatically.`,
+    faq: []
+  },
+  'break-calculator': {
+    intro: `Taking breaks is required by law in many places. The Break Calculator helps you determine your net work hours by subtracting mandatory rest periods.`,
+    mechanics: `It subtracts the total break duration from the total shift duration.`,
+    benefits: `Ensures compliance with labor laws and accurate pay.`,
+    howTo: `Enter shift start/end and break start/end. Net hours are calculated.`,
+    faq: []
+  },
+  'military-time': {
+    intro: `Military time (24-hour clock) is the international standard for unambiguous timekeeping. The Military Time Converter translates 12-hour AM/PM times into 24-hour format and vice versa.`,
+    mechanics: `It adds 12 to PM hours (except 12 PM) and converts 12 AM to 00 hours.`,
+    benefits: `Critical for travel, healthcare, and emergency services where confusion is dangerous.`,
+    howTo: `Enter a time. The converted format appears instantly.`,
+    faq: []
+  },
+  'minutes-to-hours': {
+    intro: `Converting large numbers of minutes into hours and minutes makes them easier to understand. The Minutes to Hours Calculator does this instantly.`,
+    mechanics: `It divides total minutes by 60 to get hours, and uses the remainder as minutes.`,
+    benefits: `Useful for interpreting movie runtimes, flight durations, or recipe times.`,
+    howTo: `Enter total minutes. The result is shown as X hr Y min.`,
+    faq: []
+  },
+  'hours-to-minutes': {
+    intro: `Sometimes you need to know the total minutes in a duration. The Hours to Minutes Calculator converts hours (and minutes) into a single minute value.`,
+    mechanics: `It multiplies hours by 60 and adds the remaining minutes.`,
+    benefits: `Helpful for calculations that require a single unit, like total billing minutes.`,
+    howTo: `Enter hours and minutes. The total minutes are displayed.`,
+    faq: []
+  },
+  'unix-timestamp': {
+    intro: `The Unix Timestamp is the heartbeat of modern computing. This converter translates the count of seconds since 1970 into a human-readable date.`,
+    mechanics: `It converts the timestamp (seconds or milliseconds) into a JavaScript Date object.`,
+    benefits: `Essential for debugging server logs and database entries.`,
+    howTo: `Paste a timestamp. The date is shown.`,
+    faq: []
+  },
+  'pace-calculator': {
+    intro: `Runners and cyclists need to know their speed. The Pace Calculator converts your time and distance into a pace (e.g., minutes per mile or km).`,
+    mechanics: `It divides time by distance to find the pace.`,
+    benefits: `Helps athletes track performance and set training goals.`,
+    howTo: `Enter time and distance. Your pace is calculated.`,
+    faq: []
+  },
+  'pomodoro-timer': {
+    intro: `The Pomodoro Technique is a time management method that uses a timer to break work into intervals. This tool is a digital Pomodoro Timer.`,
+    mechanics: `It sets a timer for 25 minutes (focus) followed by 5 minutes (break).`,
+    benefits: `Improves mental agility and prevents burnout.`,
+    howTo: `Click Start. Work until the timer rings. Take a break.`,
+    faq: []
+  },
+  'new-year-countdown': {
+    intro: `The New Year is a global moment of celebration. This countdown tracks the seconds until the ball drops in your time zone.`,
+    mechanics: `It calculates the time remaining until January 1st of the next year.`,
+    benefits: `Builds anticipation for the holiday.`,
+    howTo: `Watch the countdown!`,
+    faq: []
+  },
+  'exam-countdown': {
+    intro: `Exams can be stressful. The Exam Countdown helps students manage their study time by showing exactly how many days are left until the test.`,
+    mechanics: `It counts down to a user-selected exam date.`,
+    benefits: `Encourages disciplined study habits.`,
+    howTo: `Enter your exam date. The countdown begins.`,
+    faq: []
   }
 };
 
@@ -324,16 +513,27 @@ const ToolPage: React.FC = () => {
     }
   };
 
+  // Helper to truncate description for SEO
+  const getMetaDescription = () => {
+      // Priority: 1. Specific Intro (truncated), 2. Long Description, 3. Short Description
+      if (content.intro && content.intro.length > 50 && !content.intro.startsWith("Welcome to the")) {
+          return content.intro.length > 160 ? content.intro.substring(0, 157) + '...' : content.intro;
+      }
+      return tool.longDescription || tool.description;
+  };
+
+  const metaDescription = getMetaDescription();
+
   return (
     <div className="min-h-screen bg-slate-50">
        <Helmet>
         <title>{tool.name} - Free Online Calculator & Tool | TimeCenterHub</title>
-        <meta name="description" content={tool.longDescription || tool.description} />
+        <meta name="description" content={metaDescription} />
         <link rel="canonical" href={`https://timecenterhub.com${tool.path}`} />
         
         {/* Open Graph */}
         <meta property="og:title" content={`${tool.name} - Free Online Calculator & Tool`} />
-        <meta property="og:description" content={tool.longDescription || tool.description} />
+        <meta property="og:description" content={metaDescription} />
         <meta property="og:url" content={`https://timecenterhub.com${tool.path}`} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="TimeCenterHub" />
@@ -341,7 +541,7 @@ const ToolPage: React.FC = () => {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${tool.name} - Free Online Calculator & Tool`} />
-        <meta name="twitter:description" content={tool.longDescription || tool.description} />
+        <meta name="twitter:description" content={metaDescription} />
       </Helmet>
 
        {/* Breadcrumbs & Header Container */}
