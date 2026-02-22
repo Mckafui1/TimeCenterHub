@@ -46,7 +46,9 @@ import {
   WeekNumberCalculator,
   DayOfYearCalculator,
   LeapYearCalculator,
-  ZodiacCalculator
+  ZodiacCalculator,
+  AddTimeCalculator,
+  SubtractTimeCalculator
 } from '../components/CalculatorTools.tsx';
 import SocialShare from '../components/SocialShare.tsx';
 
@@ -506,7 +508,9 @@ const ToolPage: React.FC = () => {
       case 'wedding-countdown': return <WeddingCountdown />;
       case 'new-year-countdown': return <NewYearCountdown />;
       case 'exam-countdown': return <ExamCountdown />;
-      case 'birthday-countdown': return <BirthdayCalculator />;
+      case 'add-time': return <AddTimeCalculator />;
+      case 'subtract-time': return <SubtractTimeCalculator />;
+      case 'days-to-birthday': return <BirthdayCalculator />;
       case 'chronometer': return <Chronometer />;
       case 'federal-holidays': return <USFederalHolidays />;
       default: return <div className="p-16 bg-slate-50 border rounded-3xl text-center text-slate-500 font-bold uppercase tracking-widest italic text-lg">Tool Initializing...</div>;

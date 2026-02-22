@@ -360,21 +360,51 @@ export const AgeCalculator: React.FC = () => {
 // --- BIRTHDAY CALCULATOR ---
 export const BirthdayCalculator: React.FC = () => {
   const [birthDate, setBirthDate] = useState('1995-05-15');
-  const [result, setResult] = useState<{ days: number, weekday: string } | null>(null);
+  const [result, setResult] = useState<{ days: number, weekday: string, isToday: boolean } | null>(null);
 
   const calculate = () => {
-    const today = new Date(); const dob = new Date(birthDate);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Local midnight
+    const [y, m, d] = birthDate.split('-').map(Number);
+    const dob = new Date(y, m - 1, d); // Local midnight for birth date
+
     let next = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
-    if (next < today) next.setFullYear(today.getFullYear() + 1);
-    const diff = Math.ceil((next.getTime() - today.getTime()) / 86400000);
-    setResult({ days: diff, weekday: next.toLocaleDateString(undefined, { weekday: 'long' }) });
+    
+    // If birthday has passed this year, move to next year
+    if (next < today) {
+      next.setFullYear(today.getFullYear() + 1);
+    }
+
+    const diffTime = next.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    setResult({ 
+      days: diffDays, 
+      weekday: next.toLocaleDateString(undefined, { weekday: 'long' }),
+      isToday: diffDays === 0
+    });
   };
 
   return (
     <div className="space-y-8 p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
       <div><label className="block text-xs font-black text-slate-600 uppercase mb-3 tracking-wider">Enter Birthday</label><input type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} className="w-full p-5 border rounded-2xl text-2xl font-black text-center text-slate-800" /></div>
       <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow hover:bg-indigo-700 text-lg">Check Days Until</button>
-      {result && <div className="p-10 bg-indigo-50 rounded-[2rem] text-center border border-indigo-100"><p className="text-7xl font-black text-indigo-900 leading-none">{result.days}</p><p className="text-indigo-400 font-black uppercase tracking-widest text-xs mt-3">Days to next birthday</p><p className="mt-6 text-indigo-900 font-bold italic text-base">A {result.weekday}!</p></div>}
+      {result && (
+        <div className="p-10 bg-indigo-50 rounded-[2rem] text-center border border-indigo-100">
+          {result.isToday ? (
+             <>
+              <p className="text-6xl font-black text-indigo-600 mb-4">🎉 Happy Birthday! 🎂</p>
+              <p className="text-indigo-900 font-bold text-xl">It's your special day!</p>
+             </>
+          ) : (
+             <>
+              <p className="text-7xl font-black text-indigo-900 leading-none">{result.days}</p>
+              <p className="text-indigo-400 font-black uppercase tracking-widest text-xs mt-3">Days to next birthday</p>
+              <p className="mt-6 text-indigo-900 font-bold italic text-base">It will be on a {result.weekday}!</p>
+             </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
