@@ -238,17 +238,24 @@ export const TimeUnitConverter: React.FC = () => {
 
 // --- TIME UNTIL MIDNIGHT ---
 export const TimeUntilMidnight: React.FC = () => {
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState<string | null>(null);
   useEffect(() => {
-    const i = setInterval(() => {
+    const update = () => {
       const now = new Date();
       const mid = new Date(); mid.setHours(24, 0, 0, 0);
       const diff = mid.getTime() - now.getTime();
       const h = Math.floor(diff/3600000); const m = Math.floor((diff%3600000)/60000); const s = Math.floor((diff%60000)/1000);
       setTime(`${h}h ${m}m ${s}s`);
-    }, 1000);
+    };
+    update();
+    const i = setInterval(update, 1000);
     return () => clearInterval(i);
   }, []);
+
+  if (!time) {
+      return <div className="p-16 text-center animate-pulse"><p className="text-xs font-black text-slate-300 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-200 tabular-nums">00h 00m 00s</p></div>;
+  }
+
   return <div className="p-16 text-center"><p className="text-xs font-black text-slate-500 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-900 tabular-nums">{time}</p></div>;
 };
 
@@ -271,11 +278,16 @@ export const WeddingCountdown: React.FC = () => {
 
 // --- NEW YEAR COUNTDOWN ---
 export const NewYearCountdown: React.FC = () => {
-  const [days, setDays] = useState(0);
+  const [days, setDays] = useState<number | null>(null);
   useEffect(() => {
     const target = new Date(new Date().getFullYear() + 1, 0, 1);
     setDays(Math.ceil((target.getTime() - new Date().getTime())/86400000));
   }, []);
+  
+  if (days === null) {
+      return <div className="p-20 text-center bg-slate-900 text-white rounded-[2.5rem] shadow-xl animate-pulse"><p className="text-9xl font-black text-slate-800 mb-4 tabular-nums">000</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-800">Loading...</p></div>;
+  }
+
   return <div className="p-20 text-center bg-slate-900 text-white rounded-[2.5rem] shadow-xl"><p className="text-9xl font-black text-blue-400 mb-4 tabular-nums">{days}</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-400">Days to {new Date().getFullYear() + 1}</p></div>;
 };
 
@@ -551,14 +563,23 @@ export const PaceCalculator: React.FC = () => {
 
 // --- UNIX TIMESTAMP ---
 export const UnixTimestampTool: React.FC = () => {
-  const [now, setNow] = useState(Math.floor(Date.now() / 1000)); const [inputTs, setInputTs] = useState(''); const [tsResult, setTsResult] = useState<string | null>(null);
-  useEffect(() => { const timer = setInterval(() => setNow(Math.floor(Date.now() / 1000)), 1000); return () => clearInterval(timer); }, []);
+  const [now, setNow] = useState<number | null>(null); 
+  const [inputTs, setInputTs] = useState(''); 
+  const [tsResult, setTsResult] = useState<string | null>(null);
+  
+  useEffect(() => { 
+      setNow(Math.floor(Date.now() / 1000));
+      const timer = setInterval(() => setNow(Math.floor(Date.now() / 1000)), 1000); 
+      return () => clearInterval(timer); 
+  }, []);
+  
   const convert = () => { if (!inputTs) return; const ts = parseInt(inputTs); setTsResult(new Date(ts * (inputTs.length > 10 ? 1 : 1000)).toUTCString()); };
+  
   return (
     <div className="space-y-8 p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
       <div className="text-center p-12 bg-slate-900 rounded-[2.5rem] text-white shadow-md">
         <label className="text-xs font-black text-slate-500 uppercase tracking-widest block mb-4">Current Unix Timestamp</label>
-        <p className="text-6xl font-mono font-black text-blue-400 tabular-nums">{now}</p>
+        <p className="text-6xl font-mono font-black text-blue-400 tabular-nums">{now !== null ? now : 'Loading...'}</p>
       </div>
       <div className="space-y-3">
         <label className="text-xs font-black uppercase text-slate-600 block ml-1">Convert Timestamp</label>
@@ -574,8 +595,29 @@ export const UnixTimestampTool: React.FC = () => {
 
 // --- TIME ZONE CONVERTER ---
 export const TimeZoneConverter: React.FC = () => {
-  const [time, setTime] = useState(new Date()); useEffect(() => { const i = setInterval(() => setTime(new Date()), 1000); return () => clearInterval(i); }, []);
+  const [time, setTime] = useState<Date | null>(null);
+  
+  useEffect(() => { 
+    setTime(new Date());
+    const i = setInterval(() => setTime(new Date()), 1000); 
+    return () => clearInterval(i); 
+  }, []);
+
   const zones = [{ label: 'UTC', zone: 'UTC' }, { label: 'New York', zone: 'America/New_York' }, { label: 'London', zone: 'Europe/London' }, { label: 'Tokyo', zone: 'Asia/Tokyo' }, { label: 'Sydney', zone: 'Australia/Sydney' }];
+  
+  if (!time) {
+    return (
+        <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden divide-y animate-pulse">
+          {zones.map(z => (
+            <div key={z.zone} className="px-10 py-8 flex justify-between items-center">
+              <span className="text-slate-300 font-black uppercase text-base tracking-widest bg-slate-100 rounded w-24 h-6 block"></span>
+              <span className="font-mono font-black text-3xl md:text-4xl text-slate-200 tabular-nums bg-slate-100 rounded w-40 h-10 block"></span>
+            </div>
+          ))}
+        </div>
+    );
+  }
+
   return (
     <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden divide-y">
       {zones.map(z => (
