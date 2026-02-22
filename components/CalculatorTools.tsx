@@ -36,42 +36,42 @@ export const TimeCalculator: React.FC<{ initialOp?: 'add' | 'sub' }> = ({ initia
   };
 
   return (
-    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
+    <div className="p-8 md:p-10 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 space-y-8 transition-colors duration-300">
       <div className="space-y-8">
         <div className="space-y-3">
-          <label className="text-xs font-black uppercase text-slate-600 tracking-widest block ml-1">First Duration</label>
+          <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 tracking-widest block ml-1">First Duration</label>
           <div className="grid grid-cols-3 gap-4">
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span><input aria-label="First Duration Hours" type="number" value={h1} onChange={e => setH1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span><input aria-label="First Duration Minutes" type="number" value={m1} onChange={e => setM1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Seconds</span><input aria-label="First Duration Seconds" type="number" value={s1} onChange={e => setS1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Hours</span><input aria-label="First Duration Hours" type="number" value={h1} onChange={e => setH1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Minutes</span><input aria-label="First Duration Minutes" type="number" value={m1} onChange={e => setM1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Seconds</span><input aria-label="First Duration Seconds" type="number" value={s1} onChange={e => setS1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
           </div>
         </div>
 
-        <div className="flex justify-center gap-10 py-4 border-y border-slate-50">
-           <label className="flex items-center gap-3 cursor-pointer font-black text-sm uppercase text-slate-700">
+        <div className="flex justify-center gap-10 py-4 border-y border-slate-50 dark:border-slate-700">
+           <label className="flex items-center gap-3 cursor-pointer font-black text-sm uppercase text-slate-700 dark:text-slate-300">
              <input type="radio" checked={op === 'add'} onChange={() => setOp('add')} className="w-5 h-5 text-blue-600" /> + Add
            </label>
-           <label className="flex items-center gap-3 cursor-pointer font-black text-sm uppercase text-slate-700">
+           <label className="flex items-center gap-3 cursor-pointer font-black text-sm uppercase text-slate-700 dark:text-slate-300">
              <input type="radio" checked={op === 'sub'} onChange={() => setOp('sub')} className="w-5 h-5 text-rose-600" /> - Subtract
            </label>
         </div>
 
         <div className="space-y-3">
-          <label className="text-xs font-black uppercase text-slate-600 tracking-widest block ml-1">Second Duration</label>
+          <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 tracking-widest block ml-1">Second Duration</label>
           <div className="grid grid-cols-3 gap-4">
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span><input aria-label="Second Duration Hours" type="number" value={h2} onChange={e => setH2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span><input aria-label="Second Duration Minutes" type="number" value={m2} onChange={e => setM2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Seconds</span><input aria-label="Second Duration Seconds" type="number" value={s2} onChange={e => setS2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Hours</span><input aria-label="Second Duration Hours" type="number" value={h2} onChange={e => setH2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Minutes</span><input aria-label="Second Duration Minutes" type="number" value={m2} onChange={e => setM2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Seconds</span><input aria-label="Second Duration Seconds" type="number" value={s2} onChange={e => setS2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
           </div>
         </div>
       </div>
       <div className="flex gap-4 pt-4">
         <button onClick={calculate} className="flex-grow py-5 bg-blue-600 text-white font-black rounded-2xl shadow-lg hover:bg-blue-700 transition-all text-base tracking-wide">Calculate</button>
-        <button onClick={clear} className="px-8 py-5 bg-slate-100 text-slate-600 font-black rounded-2xl hover:bg-slate-200 transition-all text-base tracking-wide">Clear</button>
+        <button onClick={clear} className="px-8 py-5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-black rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-600 transition-all text-base tracking-wide">Clear</button>
       </div>
       {result && (
-        <div className="p-8 bg-blue-50 text-blue-900 rounded-[2rem] text-center border-2 border-blue-100">
-          <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500">Resulting Duration</p>
+        <div className="p-8 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 rounded-[2rem] text-center border-2 border-blue-100 dark:border-blue-800">
+          <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500 dark:text-blue-400">Resulting Duration</p>
           <p className="text-5xl md:text-6xl font-black">{result}</p>
         </div>
       )}
@@ -112,33 +112,33 @@ export const SpeedDistanceTimeCalculator: React.FC = () => {
 
   return (
     <div className="p-10 space-y-6">
-      <div className="flex gap-3 p-1.5 bg-slate-100 rounded-2xl mb-6">
+      <div className="flex gap-3 p-1.5 bg-slate-100 dark:bg-slate-700 rounded-2xl mb-6 transition-colors duration-300">
         {['time', 'distance', 'speed'].map(m => (
-          <button key={m} onClick={() => setMode(m as any)} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${mode === m ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>{m}</button>
+          <button key={m} onClick={() => setMode(m as any)} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${mode === m ? 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400'}`}>{m}</button>
         ))}
       </div>
       <div className="space-y-6">
         {mode !== 'distance' && (
           <div>
-            <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Distance (km)</label>
-            <input type="number" value={dist} onChange={e => setDist(e.target.value)} placeholder="e.g. 100" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" />
+            <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Distance (km)</label>
+            <input type="number" value={dist} onChange={e => setDist(e.target.value)} placeholder="e.g. 100" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
           </div>
         )}
         {mode !== 'speed' && (
           <div>
-            <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Speed (km/h)</label>
-            <input type="number" value={speed} onChange={e => setSpeed(e.target.value)} placeholder="e.g. 50" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" />
+            <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Speed (km/h)</label>
+            <input type="number" value={speed} onChange={e => setSpeed(e.target.value)} placeholder="e.g. 50" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
           </div>
         )}
         {mode !== 'time' && (
           <div>
-            <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Time (hours)</label>
-            <input type="number" value={time} onChange={e => setTime(e.target.value)} placeholder="e.g. 2" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" />
+            <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Time (hours)</label>
+            <input type="number" value={time} onChange={e => setTime(e.target.value)} placeholder="e.g. 2" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
           </div>
         )}
       </div>
       <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-700 transition-colors text-base tracking-wide">Calculate</button>
-      {result && <div className="p-8 bg-blue-50 text-center text-4xl font-black rounded-2xl border border-blue-100 text-blue-900">{result}</div>}
+      {result && <div className="p-8 bg-blue-50 dark:bg-blue-900/30 text-center text-4xl font-black rounded-2xl border border-blue-100 dark:border-blue-800 text-blue-900 dark:text-blue-100">{result}</div>}
     </div>
   );
 };
@@ -159,25 +159,25 @@ export const ShiftCalculator: React.FC = () => {
       <div className="space-y-6">
         {shifts.map((s, i) => (
           <div key={i} className="space-y-3">
-            <label className="text-xs font-black uppercase text-slate-600 block ml-1">Shift {shifts.length > 1 ? i + 1 : ''} Times</label>
+            <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block ml-1">Shift {shifts.length > 1 ? i + 1 : ''} Times</label>
             <div className="flex gap-6 items-center">
               <div className="flex-1">
-                <span className="text-[10px] font-black text-slate-500 block mb-1">START</span>
-                <input type="time" value={s.start} onChange={e => updateShift(i, 'start', e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800" />
+                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 block mb-1">START</span>
+                <input type="time" value={s.start} onChange={e => updateShift(i, 'start', e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
               </div>
-              <span className="font-black text-slate-300 pt-6 text-xl">→</span>
+              <span className="font-black text-slate-300 dark:text-slate-600 pt-6 text-xl">→</span>
               <div className="flex-1">
-                <span className="text-[10px] font-black text-slate-500 block mb-1">END</span>
-                <input type="time" value={s.end} onChange={e => updateShift(i, 'end', e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800" />
+                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 block mb-1">END</span>
+                <input type="time" value={s.end} onChange={e => updateShift(i, 'end', e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
               </div>
             </div>
           </div>
         ))}
       </div>
-      <button onClick={addShift} className="w-full py-4 bg-slate-50 text-slate-600 border-2 border-slate-200 border-dashed font-black rounded-2xl text-xs uppercase hover:bg-slate-100 hover:border-slate-300 transition-all tracking-widest">+ Add Split Shift</button>
-      <div className="p-8 bg-indigo-50 text-center rounded-3xl border border-indigo-100">
-        <p className="text-5xl font-black text-indigo-900">{Math.floor(totalMins/60)}h {totalMins%60}m</p>
-        <p className="text-xs font-black text-indigo-400 uppercase tracking-widest mt-2">Total Shift Time</p>
+      <button onClick={addShift} className="w-full py-4 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-2 border-slate-200 dark:border-slate-700 border-dashed font-black rounded-2xl text-xs uppercase hover:bg-slate-100 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 transition-all tracking-widest">+ Add Split Shift</button>
+      <div className="p-8 bg-indigo-50 dark:bg-indigo-900/30 text-center rounded-3xl border border-indigo-100 dark:border-indigo-800">
+        <p className="text-5xl font-black text-indigo-900 dark:text-indigo-100">{Math.floor(totalMins/60)}h {totalMins%60}m</p>
+        <p className="text-xs font-black text-indigo-400 dark:text-indigo-300 uppercase tracking-widest mt-2">Total Shift Time</p>
       </div>
     </div>
   );
@@ -193,16 +193,16 @@ export const BreakCalculator: React.FC = () => {
     <div className="p-10 space-y-8">
       <div className="space-y-6">
         <div>
-          <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Total Minutes Worked</label>
-          <input type="number" value={total} onChange={e => setTotal(e.target.value)} placeholder="Total Mins" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" />
+          <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Total Minutes Worked</label>
+          <input type="number" value={total} onChange={e => setTotal(e.target.value)} placeholder="Total Mins" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
         </div>
         <div>
-          <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Total Break Minutes</label>
-          <input type="number" value={breaks} onChange={e => setBreaks(e.target.value)} placeholder="Break Mins" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" />
+          <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Total Break Minutes</label>
+          <input type="number" value={breaks} onChange={e => setBreaks(e.target.value)} placeholder="Break Mins" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
         </div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl hover:bg-slate-800 transition-colors text-base tracking-wide">Subtract Breaks</button>
-      {res && <div className="p-8 bg-slate-50 text-center text-4xl font-black rounded-2xl border border-slate-200 text-slate-900">{res} Net Hours</div>}
+      <button onClick={calculate} className="w-full py-5 bg-slate-900 dark:bg-slate-700 text-white font-black rounded-2xl hover:bg-slate-800 dark:hover:bg-slate-600 transition-colors text-base tracking-wide">Subtract Breaks</button>
+      {res && <div className="p-8 bg-slate-50 dark:bg-slate-800 text-center text-4xl font-black rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">{res} Net Hours</div>}
     </div>
   );
 };
@@ -216,19 +216,19 @@ export const TimeUnitConverter: React.FC = () => {
   return (
     <div className="p-10 space-y-8">
       <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Amount to Convert</label>
+        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block ml-1">Amount to Convert</label>
         <div className="flex gap-4">
-          <input aria-label="Amount" type="number" value={val} onChange={e => setVal(e.target.value)} className="w-1/2 p-4 border rounded-2xl font-bold text-xl text-slate-800" />
-          <select aria-label="From Unit" value={from} onChange={e => setFrom(e.target.value)} className="w-1/2 p-4 border rounded-2xl font-bold text-xl text-slate-800 bg-white">
+          <input aria-label="Amount" type="number" value={val} onChange={e => setVal(e.target.value)} className="w-1/2 p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+          <select aria-label="From Unit" value={from} onChange={e => setFrom(e.target.value)} className="w-1/2 p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600">
             {Object.keys(factors).map(k => <option key={k} value={k}>{k.charAt(0).toUpperCase() + k.slice(1)}</option>)}
           </select>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 mt-6">
         {Object.keys(factors).map(k => (
-          <div key={k} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col justify-center">
-            <p className="text-[10px] font-black uppercase text-slate-500 tracking-tighter mb-1">{k}</p>
-            <p className="font-bold text-slate-900 text-2xl">{(res / factors[k]).toLocaleString()}</p>
+          <div key={k} className="p-5 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 flex flex-col justify-center">
+            <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-tighter mb-1">{k}</p>
+            <p className="font-bold text-slate-900 dark:text-white text-2xl">{(res / factors[k]).toLocaleString()}</p>
           </div>
         ))}
       </div>
@@ -253,10 +253,10 @@ export const TimeUntilMidnight: React.FC = () => {
   }, []);
 
   if (!time) {
-      return <div className="p-16 text-center animate-pulse"><p className="text-xs font-black text-slate-300 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-200 tabular-nums">00h 00m 00s</p></div>;
+      return <div className="p-16 text-center animate-pulse"><p className="text-xs font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-200 dark:text-slate-700 tabular-nums">00h 00m 00s</p></div>;
   }
 
-  return <div className="p-16 text-center"><p className="text-xs font-black text-slate-500 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-900 tabular-nums">{time}</p></div>;
+  return <div className="p-16 text-center"><p className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-900 dark:text-white tabular-nums">{time}</p></div>;
 };
 
 // --- WEDDING COUNTDOWN ---
@@ -267,11 +267,11 @@ export const WeddingCountdown: React.FC = () => {
   return (
     <div className="p-10 space-y-8">
       <div>
-        <label className="text-xs font-black uppercase text-slate-600 block mb-3 ml-1">Wedding Date</label>
-        <input type="date" value={d} onChange={e => setD(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-2xl text-center bg-slate-50 text-slate-800" />
+        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-3 ml-1">Wedding Date</label>
+        <input type="date" value={d} onChange={e => setD(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-2xl text-center bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" />
       </div>
       <button onClick={calculate} className="w-full py-5 bg-rose-500 text-white font-black rounded-2xl hover:bg-rose-600 transition-colors shadow-lg text-lg tracking-wide">Calculate Days Until</button>
-      {res !== null && <div className="p-12 bg-rose-50 text-center rounded-[2rem] border border-rose-100"><p className="text-8xl font-black text-rose-600">{res}</p><p className="text-sm font-black uppercase tracking-widest text-rose-400 mt-4">Days to the Big Day!</p></div>}
+      {res !== null && <div className="p-12 bg-rose-50 dark:bg-rose-900/30 text-center rounded-[2rem] border border-rose-100 dark:border-rose-800"><p className="text-8xl font-black text-rose-600 dark:text-rose-100">{res}</p><p className="text-sm font-black uppercase tracking-widest text-rose-400 dark:text-rose-300 mt-4">Days to the Big Day!</p></div>}
     </div>
   );
 };
@@ -285,10 +285,10 @@ export const NewYearCountdown: React.FC = () => {
   }, []);
   
   if (days === null) {
-      return <div className="p-20 text-center bg-slate-900 text-white rounded-[2.5rem] shadow-xl animate-pulse"><p className="text-9xl font-black text-slate-800 mb-4 tabular-nums">000</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-800">Loading...</p></div>;
+      return <div className="p-20 text-center bg-slate-900 dark:bg-slate-950 text-white rounded-[2.5rem] shadow-xl animate-pulse"><p className="text-9xl font-black text-slate-800 dark:text-slate-700 mb-4 tabular-nums">000</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-800 dark:text-slate-700">Loading...</p></div>;
   }
 
-  return <div className="p-20 text-center bg-slate-900 text-white rounded-[2.5rem] shadow-xl"><p className="text-9xl font-black text-blue-400 mb-4 tabular-nums">{days}</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-400">Days to {new Date().getFullYear() + 1}</p></div>;
+  return <div className="p-20 text-center bg-slate-900 dark:bg-slate-950 text-white rounded-[2.5rem] shadow-xl"><p className="text-9xl font-black text-blue-400 mb-4 tabular-nums">{days}</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Days to {new Date().getFullYear() + 1}</p></div>;
 };
 
 // --- EXAM COUNTDOWN ---
@@ -299,11 +299,11 @@ export const ExamCountdown: React.FC = () => {
   return (
     <div className="p-10 space-y-8">
       <div>
-        <label className="text-xs font-black uppercase text-slate-600 block mb-3 ml-1">Exam Date</label>
-        <input type="date" value={d} onChange={e => setD(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-2xl text-center bg-slate-50 text-slate-800" />
+        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-3 ml-1">Exam Date</label>
+        <input type="date" value={d} onChange={e => setD(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-2xl text-center bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" />
       </div>
       <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl hover:bg-indigo-700 transition-colors shadow-md text-lg tracking-wide">Check Study Time</button>
-      {res !== null && <div className="p-12 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100"><p className="text-8xl font-black text-indigo-600">{res}</p><p className="text-sm font-black uppercase tracking-widest text-indigo-400 mt-4">Days left to study!</p></div>}
+      {res !== null && <div className="p-12 bg-indigo-50 dark:bg-indigo-900/30 text-center rounded-[2rem] border border-indigo-100 dark:border-indigo-800"><p className="text-8xl font-black text-indigo-600 dark:text-indigo-100">{res}</p><p className="text-sm font-black uppercase tracking-widest text-indigo-400 dark:text-indigo-300 mt-4">Days left to study!</p></div>}
     </div>
   );
 };
@@ -336,19 +336,19 @@ export const AgeCalculator: React.FC = () => {
   };
 
   return (
-    <div className="relative space-y-6 p-8 bg-white rounded-[2rem] shadow-sm border border-slate-100 h-full flex flex-col justify-between overflow-hidden">
+    <div className="relative space-y-6 p-8 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 h-full flex flex-col justify-between overflow-hidden transition-colors duration-300">
       <div className="space-y-6">
-        <div><label className="block text-xs font-black text-slate-600 uppercase mb-2 tracking-wider">Date of Birth</label><input type="date" value={dob} onChange={e => setDob(e.target.value)} className="w-full p-4 border rounded-2xl text-lg font-bold text-slate-900 bg-slate-50 focus:bg-white transition-colors" /></div>
-        <div><label className="block text-xs font-black text-slate-600 uppercase mb-2 tracking-wider">Calculate Age At</label><input type="date" value={atDate} onChange={e => setAtDate(e.target.value)} className="w-full p-4 border rounded-2xl text-lg font-bold text-slate-900 bg-slate-50 focus:bg-white transition-colors" /></div>
+        <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-2 tracking-wider">Date of Birth</label><input type="date" value={dob} onChange={e => setDob(e.target.value)} className="w-full p-4 border rounded-2xl text-lg font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600 focus:bg-white dark:focus:bg-slate-600 transition-colors" /></div>
+        <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-2 tracking-wider">Calculate Age At</label><input type="date" value={atDate} onChange={e => setAtDate(e.target.value)} className="w-full p-4 border rounded-2xl text-lg font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600 focus:bg-white dark:focus:bg-slate-600 transition-colors" /></div>
       </div>
       <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow-md hover:bg-blue-700 transition-all text-sm uppercase tracking-widest mt-4">Get Exact Age</button>
       
       {result && showResult && (
-        <div className="absolute inset-0 bg-slate-50 z-20 p-6 flex flex-col items-center justify-center text-center">
-            <p className="text-5xl font-black text-blue-900 mb-2">{result.y} Years</p>
-            <p className="text-blue-600 font-bold text-lg mb-6">{result.m} Months, {result.d} Days</p>
-            <p className="text-xs text-slate-500 font-black uppercase mb-6">Total Days: {result.totalDays.toLocaleString()}</p>
-            <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white border border-slate-200 text-slate-900 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 transition-colors">
+        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-900 z-20 p-6 flex flex-col items-center justify-center text-center transition-colors duration-300">
+            <p className="text-5xl font-black text-blue-900 dark:text-blue-100 mb-2">{result.y} Years</p>
+            <p className="text-blue-600 dark:text-blue-400 font-bold text-lg mb-6">{result.m} Months, {result.d} Days</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-black uppercase mb-6">Total Days: {result.totalDays.toLocaleString()}</p>
+            <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
               Recalculate
             </button>
         </div>
@@ -386,21 +386,21 @@ export const BirthdayCalculator: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
-      <div><label className="block text-xs font-black text-slate-600 uppercase mb-3 tracking-wider">Enter Birthday</label><input type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} className="w-full p-5 border rounded-2xl text-2xl font-black text-center text-slate-800" /></div>
+    <div className="space-y-8 p-10 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 transition-colors duration-300">
+      <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-3 tracking-wider">Enter Birthday</label><input type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} className="w-full p-5 border rounded-2xl text-2xl font-black text-center text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
       <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow hover:bg-indigo-700 text-lg">Check Days Until</button>
       {result && (
-        <div className="p-10 bg-indigo-50 rounded-[2rem] text-center border border-indigo-100">
+        <div className="p-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-[2rem] text-center border border-indigo-100 dark:border-indigo-800">
           {result.isToday ? (
              <>
-              <p className="text-6xl font-black text-indigo-600 mb-4">🎉 Happy Birthday! 🎂</p>
-              <p className="text-indigo-900 font-bold text-xl">It's your special day!</p>
+              <p className="text-6xl font-black text-indigo-600 dark:text-indigo-300 mb-4">🎉 Happy Birthday! 🎂</p>
+              <p className="text-indigo-900 dark:text-indigo-100 font-bold text-xl">It's your special day!</p>
              </>
           ) : (
              <>
-              <p className="text-7xl font-black text-indigo-900 leading-none">{result.days}</p>
-              <p className="text-indigo-400 font-black uppercase tracking-widest text-xs mt-3">Days to next birthday</p>
-              <p className="mt-6 text-indigo-900 font-bold italic text-base">It will be on a {result.weekday}!</p>
+              <p className="text-7xl font-black text-indigo-900 dark:text-indigo-100 leading-none">{result.days}</p>
+              <p className="text-indigo-400 dark:text-indigo-300 font-black uppercase tracking-widest text-xs mt-3">Days to next birthday</p>
+              <p className="mt-6 text-indigo-900 dark:text-indigo-100 font-bold italic text-base">It will be on a {result.weekday}!</p>
              </>
           )}
         </div>
@@ -425,21 +425,21 @@ export const TimeBetweenDatesCalculator: React.FC = () => {
   };
 
   return (
-    <div className="relative p-8 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6 h-full flex flex-col justify-between overflow-hidden">
+    <div className="relative p-8 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 space-y-6 h-full flex flex-col justify-between overflow-hidden transition-colors duration-300">
       <div className="space-y-6">
-        <div><label className="block text-xs font-black text-slate-600 uppercase mb-2">Start Date</label><input type="date" value={d1} onChange={e=>setD1(e.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800"/></div>
-        <div><label className="block text-xs font-black text-slate-600 uppercase mb-2">End Date</label><input type="date" value={d2} onChange={e=>setD2(e.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800"/></div>
+        <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-2">Start Date</label><input type="date" value={d1} onChange={e=>setD1(e.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600"/></div>
+        <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-2">End Date</label><input type="date" value={d2} onChange={e=>setD2(e.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600"/></div>
       </div>
       <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow text-sm uppercase tracking-widest mt-4">Get Duration</button>
       
       {res && showResult && (
-        <div className="absolute inset-0 bg-slate-50 z-20 p-6 flex flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-900 z-20 p-6 flex flex-col items-center justify-center text-center transition-colors duration-300">
           <div className="grid grid-cols-3 gap-3 w-full mb-8">
-              <div><p className="text-2xl font-black text-slate-900">{res.d}</p><p className="text-[10px] text-slate-500 font-black uppercase mt-1">Days</p></div>
-              <div><p className="text-2xl font-black text-slate-900">{res.w}</p><p className="text-[10px] text-slate-500 font-black uppercase mt-1">Weeks</p></div>
-              <div><p className="text-2xl font-black text-slate-900">{res.m}</p><p className="text-[10px] text-slate-500 font-black uppercase mt-1">Months</p></div>
+              <div><p className="text-2xl font-black text-slate-900 dark:text-white">{res.d}</p><p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase mt-1">Days</p></div>
+              <div><p className="text-2xl font-black text-slate-900 dark:text-white">{res.w}</p><p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase mt-1">Weeks</p></div>
+              <div><p className="text-2xl font-black text-slate-900 dark:text-white">{res.m}</p><p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase mt-1">Months</p></div>
           </div>
-          <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white border border-slate-200 text-slate-900 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 transition-colors">
+          <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
               Recalculate
           </button>
         </div>
@@ -464,21 +464,21 @@ export const WorkHoursCalculator: React.FC = () => {
   };
 
   return (
-    <div className="relative p-8 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6 h-full flex flex-col justify-between overflow-hidden">
+    <div className="relative p-8 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 space-y-6 h-full flex flex-col justify-between overflow-hidden transition-colors duration-300">
       <div className="space-y-6">
         <div className="grid grid-cols-2 gap-5">
-          <div><label className="text-xs font-black uppercase text-slate-600 block mb-2">Start (In)</label><input type="time" value={s} onChange={v => setS(v.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800" /></div>
-          <div><label className="text-xs font-black uppercase text-slate-600 block mb-2">End (Out)</label><input type="time" value={e} onChange={v => setE(v.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800" /></div>
+          <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2">Start (In)</label><input type="time" value={s} onChange={v => setS(v.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" /></div>
+          <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2">End (Out)</label><input type="time" value={e} onChange={v => setE(v.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" /></div>
         </div>
-        <div><label className="text-xs font-black uppercase text-slate-600 block mb-2">Break (Minutes)</label><input type="number" value={b} onChange={v => setB(v.target.value)} placeholder="0" className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800" /></div>
+        <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2">Break (Minutes)</label><input type="number" value={b} onChange={v => setB(v.target.value)} placeholder="0" className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" /></div>
       </div>
       <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow text-sm uppercase tracking-widest mt-4">Calculate Shift</button>
       
       {res && showResult && (
-          <div className="absolute inset-0 bg-indigo-50 z-20 p-6 flex flex-col items-center justify-center text-center">
-             <p className="text-xs font-black uppercase tracking-widest mb-4 text-indigo-400">Total Hours</p>
-             <p className="text-5xl font-black text-indigo-900 mb-8">{res}</p>
-             <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white border border-indigo-100 text-indigo-900 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-indigo-50 transition-colors">
+          <div className="absolute inset-0 bg-indigo-50 dark:bg-indigo-900/30 z-20 p-6 flex flex-col items-center justify-center text-center transition-colors duration-300">
+             <p className="text-xs font-black uppercase tracking-widest mb-4 text-indigo-400 dark:text-indigo-300">Total Hours</p>
+             <p className="text-5xl font-black text-indigo-900 dark:text-indigo-100 mb-8">{res}</p>
+             <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white dark:bg-slate-800 border border-indigo-100 dark:border-indigo-800 text-indigo-900 dark:text-indigo-100 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition-colors">
               Recalculate
             </button>
           </div>
@@ -504,11 +504,11 @@ export const SleepCalculator: React.FC = () => {
   return (
     <div className="p-10 space-y-8 text-center">
       <div className="space-y-5">
-        <label className="text-xs font-black text-slate-600 uppercase tracking-widest block">I want to wake up at:</label>
-        <input aria-label="Wake Up Time" type="time" value={wakeTime} onChange={e => setWakeTime(e.target.value)} className="text-6xl font-black p-6 border rounded-[2rem] text-center bg-slate-50 w-full text-slate-800" />
+        <label className="text-xs font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest block">I want to wake up at:</label>
+        <input aria-label="Wake Up Time" type="time" value={wakeTime} onChange={e => setWakeTime(e.target.value)} className="text-6xl font-black p-6 border rounded-[2rem] text-center bg-slate-50 dark:bg-slate-700 w-full text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" />
       </div>
       <button onClick={calculate} className="w-full py-6 bg-blue-600 text-white font-black rounded-2xl shadow-xl hover:bg-blue-700 transition-colors text-lg">Calculate Bedtimes</button>
-      {results.length > 0 && <div className="space-y-4 pt-6"><p className="text-xs font-black text-slate-600 uppercase">Suggested Bedtimes (90m cycles):</p><div className="grid grid-cols-2 gap-4">{results.map((t, i) => <div key={i} className={`p-6 rounded-2xl text-center font-black text-2xl border ${i === 0 ? 'bg-blue-600 text-white border-blue-700 shadow-lg' : 'bg-slate-50 text-slate-600 border-slate-100'}`}>{t}</div>)}</div><p className="text-[10px] text-slate-500 text-center italic mt-2">Includes 14 minutes to fall asleep.</p></div>}
+      {results.length > 0 && <div className="space-y-4 pt-6"><p className="text-xs font-black text-slate-600 dark:text-slate-400 uppercase">Suggested Bedtimes (90m cycles):</p><div className="grid grid-cols-2 gap-4">{results.map((t, i) => <div key={i} className={`p-6 rounded-2xl text-center font-black text-2xl border ${i === 0 ? 'bg-blue-600 text-white border-blue-700 shadow-lg' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-100 dark:border-slate-700'}`}>{t}</div>)}</div><p className="text-[10px] text-slate-500 dark:text-slate-400 text-center italic mt-2">Includes 14 minutes to fall asleep.</p></div>}
     </div>
   );
 };
@@ -526,12 +526,12 @@ export const MeetingCostCalculator: React.FC = () => {
   return (
     <div className="p-10 space-y-8">
       <div className="space-y-6">
-        <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Number of Attendees</label><input type="number" value={attendees} onChange={e => setAttendees(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" /></div>
-        <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Avg Hourly Rate ($)</label><input type="number" value={avgRate} onChange={e => setAvgRate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" /></div>
-        <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Duration (Minutes)</label><input type="number" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" /></div>
+        <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Number of Attendees</label><input type="number" value={attendees} onChange={e => setAttendees(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+        <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Avg Hourly Rate ($)</label><input type="number" value={avgRate} onChange={e => setAvgRate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+        <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Duration (Minutes)</label><input type="number" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
       </div>
       <button onClick={calculate} className="w-full py-5 bg-emerald-600 text-white font-black rounded-2xl shadow-lg hover:bg-emerald-700 transition-colors text-base tracking-wide">Calculate Cost</button>
-      {cost !== null && <div className="p-10 bg-emerald-50 text-center rounded-[2rem] border border-emerald-100"><p className="text-xs font-black text-emerald-600 uppercase mb-3">Estimated Labor Cost</p><p className="text-6xl font-black text-emerald-900">${cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p></div>}
+      {cost !== null && <div className="p-10 bg-emerald-50 dark:bg-emerald-900/30 text-center rounded-[2rem] border border-emerald-100 dark:border-emerald-800"><p className="text-xs font-black text-emerald-600 dark:text-emerald-300 uppercase mb-3">Estimated Labor Cost</p><p className="text-6xl font-black text-emerald-900 dark:text-emerald-100">${cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p></div>}
     </div>
   );
 };
@@ -551,9 +551,9 @@ export const RetirementCountdown: React.FC = () => {
   };
   return (
     <div className="p-10 space-y-8">
-      <div><label className="text-xs font-black text-slate-600 uppercase tracking-widest block mb-3 ml-1">Expected Retirement Date</label><input type="date" value={retireDate} onChange={e => setRetireDate(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-center text-2xl bg-slate-50 text-slate-800" /></div>
-      <button onClick={calculate} className="w-full py-6 bg-indigo-900 text-white font-black rounded-2xl shadow-xl hover:bg-slate-800 transition-all text-base tracking-wide">Calculate Remaining Time</button>
-      {timeLeft && <div className="p-10 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100"><p className="text-7xl font-black text-indigo-900 leading-none">{timeLeft.y}</p><p className="text-sm font-black text-indigo-400 uppercase mt-3">Years</p><p className="text-4xl font-black text-indigo-700 mt-6">& {timeLeft.d} Days</p></div>}
+      <div><label className="text-xs font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest block mb-3 ml-1">Expected Retirement Date</label><input type="date" value={retireDate} onChange={e => setRetireDate(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-center text-2xl bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" /></div>
+      <button onClick={calculate} className="w-full py-6 bg-indigo-900 dark:bg-indigo-700 text-white font-black rounded-2xl shadow-xl hover:bg-slate-800 dark:hover:bg-indigo-600 transition-all text-base tracking-wide">Calculate Remaining Time</button>
+      {timeLeft && <div className="p-10 bg-indigo-50 dark:bg-indigo-900/30 text-center rounded-[2rem] border border-indigo-100 dark:border-indigo-800"><p className="text-7xl font-black text-indigo-900 dark:text-indigo-100 leading-none">{timeLeft.y}</p><p className="text-sm font-black text-indigo-400 dark:text-indigo-300 uppercase mt-3">Years</p><p className="text-4xl font-black text-indigo-700 dark:text-indigo-200 mt-6">& {timeLeft.d} Days</p></div>}
     </div>
   );
 };
@@ -576,17 +576,17 @@ export const PaceCalculator: React.FC = () => {
   };
   return (
     <div className="p-10 space-y-8">
-      <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Distance (km)</label><input type="number" value={dist} onChange={e => setDist(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" /></div>
+      <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Distance (km)</label><input type="number" value={dist} onChange={e => setDist(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
       <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Total Time</label>
+        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block ml-1">Total Time</label>
         <div className="grid grid-cols-3 gap-4">
-          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span><input aria-label="Hours" type="number" value={h} onChange={e => setH(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
-          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span><input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
-          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Seconds</span><input aria-label="Seconds" type="number" value={s} onChange={e => setS(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800" /></div>
+          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Hours</span><input aria-label="Hours" type="number" value={h} onChange={e => setH(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Minutes</span><input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Seconds</span><input aria-label="Seconds" type="number" value={s} onChange={e => setS(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
         </div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-orange-600 text-white font-black rounded-2xl shadow-lg hover:bg-orange-700 transition-colors text-base tracking-wide">Calculate Pace</button>
-      {pace && <div className="p-10 bg-orange-50 text-center rounded-[2rem] border border-orange-100"><p className="text-xs font-black text-orange-600 uppercase mb-3">Average Pace</p><p className="text-6xl font-black text-orange-900">{pace} /km</p></div>}
+      <button onClick={calculate} className="w-full py-5 bg-orange-600 dark:bg-orange-700 text-white font-black rounded-2xl shadow-lg hover:bg-orange-700 dark:hover:bg-orange-600 transition-colors text-base tracking-wide">Calculate Pace</button>
+      {pace && <div className="p-10 bg-orange-50 dark:bg-orange-900/30 text-center rounded-[2rem] border border-orange-100 dark:border-orange-800"><p className="text-xs font-black text-orange-600 dark:text-orange-300 uppercase mb-3">Average Pace</p><p className="text-6xl font-black text-orange-900 dark:text-orange-100">{pace} /km</p></div>}
     </div>
   );
 };
@@ -606,19 +606,19 @@ export const UnixTimestampTool: React.FC = () => {
   const convert = () => { if (!inputTs) return; const ts = parseInt(inputTs); setTsResult(new Date(ts * (inputTs.length > 10 ? 1 : 1000)).toUTCString()); };
   
   return (
-    <div className="space-y-8 p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
-      <div className="text-center p-12 bg-slate-900 rounded-[2.5rem] text-white shadow-md">
-        <label className="text-xs font-black text-slate-500 uppercase tracking-widest block mb-4">Current Unix Timestamp</label>
+    <div className="space-y-8 p-10 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 transition-colors duration-300">
+      <div className="text-center p-12 bg-slate-900 dark:bg-slate-950 rounded-[2.5rem] text-white shadow-md">
+        <label className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest block mb-4">Current Unix Timestamp</label>
         <p className="text-6xl font-mono font-black text-blue-400 tabular-nums">{now !== null ? now : 'Loading...'}</p>
       </div>
       <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Convert Timestamp</label>
+        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block ml-1">Convert Timestamp</label>
         <div className="flex gap-4">
-          <input aria-label="Timestamp Input" type="text" value={inputTs} onChange={e => setInputTs(e.target.value)} placeholder="Enter Unix TS..." className="flex-grow p-5 border rounded-2xl font-mono text-2xl text-slate-800" />
+          <input aria-label="Timestamp Input" type="text" value={inputTs} onChange={e => setInputTs(e.target.value)} placeholder="Enter Unix TS..." className="flex-grow p-5 border rounded-2xl font-mono text-2xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
           <button onClick={convert} className="px-12 bg-blue-600 text-white font-black rounded-2xl shadow hover:bg-blue-700 transition-colors text-sm uppercase tracking-wider">CONVERT</button>
         </div>
       </div>
-      {tsResult && <div className="p-8 bg-blue-50 rounded-[2rem] text-center font-bold border border-blue-100 text-2xl text-slate-900">{tsResult}</div>}
+      {tsResult && <div className="p-8 bg-blue-50 dark:bg-blue-900/30 rounded-[2rem] text-center font-bold border border-blue-100 dark:border-blue-800 text-2xl text-slate-900 dark:text-white">{tsResult}</div>}
     </div>
   );
 };
@@ -637,11 +637,11 @@ export const TimeZoneConverter: React.FC = () => {
   
   if (!time) {
     return (
-        <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden divide-y animate-pulse">
+        <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden divide-y divide-slate-200 dark:divide-slate-700 animate-pulse transition-colors duration-300">
           {zones.map(z => (
             <div key={z.zone} className="px-10 py-8 flex justify-between items-center">
-              <span className="text-slate-300 font-black uppercase text-base tracking-widest bg-slate-100 rounded w-24 h-6 block"></span>
-              <span className="font-mono font-black text-3xl md:text-4xl text-slate-200 tabular-nums bg-slate-100 rounded w-40 h-10 block"></span>
+              <span className="text-slate-300 dark:text-slate-600 font-black uppercase text-base tracking-widest bg-slate-100 dark:bg-slate-700 rounded w-24 h-6 block"></span>
+              <span className="font-mono font-black text-3xl md:text-4xl text-slate-200 dark:text-slate-600 tabular-nums bg-slate-100 dark:bg-slate-700 rounded w-40 h-10 block"></span>
             </div>
           ))}
         </div>
@@ -649,11 +649,11 @@ export const TimeZoneConverter: React.FC = () => {
   }
 
   return (
-    <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden divide-y">
+    <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden divide-y divide-slate-200 dark:divide-slate-700 transition-colors duration-300">
       {zones.map(z => (
-        <div key={z.zone} className="px-10 py-8 flex justify-between items-center hover:bg-slate-50 transition-colors">
-          <span className="text-slate-600 font-black uppercase text-base tracking-widest">{z.label}</span>
-          <span className="font-mono font-black text-3xl md:text-4xl text-slate-900 tabular-nums">{time.toLocaleTimeString(undefined, { timeZone: z.zone, hour12: false })}</span>
+        <div key={z.zone} className="px-10 py-8 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+          <span className="text-slate-600 dark:text-slate-400 font-black uppercase text-base tracking-widest">{z.label}</span>
+          <span className="font-mono font-black text-3xl md:text-4xl text-slate-900 dark:text-white tabular-nums">{time.toLocaleTimeString(undefined, { timeZone: z.zone, hour12: false })}</span>
         </div>
       ))}
     </div>

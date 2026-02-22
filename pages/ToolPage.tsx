@@ -529,7 +529,7 @@ const ToolPage: React.FC = () => {
   const metaDescription = getMetaDescription();
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
        <Helmet>
         <title>{tool.name} - Free Online Calculator & Tool | TimeCenterHub</title>
         <meta name="description" content={metaDescription} />
@@ -549,21 +549,21 @@ const ToolPage: React.FC = () => {
       </Helmet>
 
        {/* Breadcrumbs & Header Container */}
-       <div className="bg-white border-b border-slate-200 pb-20 pt-8">
+       <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 pb-20 pt-8 transition-colors duration-300">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav className="flex items-center text-sm font-bold text-slate-500 uppercase tracking-wider mb-8">
-                <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
-                <svg className="w-4 h-4 mx-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                <span className="text-slate-600">{tool.category}</span>
-                <svg className="w-4 h-4 mx-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                <span className="text-blue-600 truncate">{tool.name}</span>
+            <nav className="flex items-center text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-8">
+                <Link to="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</Link>
+                <svg className="w-4 h-4 mx-3 text-slate-400 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                <span className="text-slate-600 dark:text-slate-300">{tool.category}</span>
+                <svg className="w-4 h-4 mx-3 text-slate-400 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                <span className="text-blue-600 dark:text-blue-400 truncate">{tool.name}</span>
             </nav>
 
             <div className="text-center max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight mb-6 leading-tight">
+                <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">
                 {tool.name}
                 </h1>
-                <p className="text-xl text-slate-600 font-medium leading-relaxed">
+                <p className="text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
                 {tool.description}
                 </p>
             </div>
@@ -572,8 +572,8 @@ const ToolPage: React.FC = () => {
 
        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
             {/* Calculator Card - Floating effect */}
-            <div className="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 p-2 md:p-4 mb-16 relative z-10">
-                <div className="bg-slate-50/50 rounded-[2rem] overflow-hidden">
+            <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 border border-slate-100 dark:border-slate-700 p-2 md:p-4 mb-16 relative z-10 transition-colors duration-300">
+                <div className="bg-slate-50/50 dark:bg-slate-900/50 rounded-[2rem] overflow-hidden transition-colors duration-300">
                    {renderCalculator()}
                 </div>
                 <SocialShare title={`Check out this ${tool.name}`} description={tool.description} />
@@ -583,35 +583,35 @@ const ToolPage: React.FC = () => {
                 {/* Left Content Column */}
                 <div className="lg:col-span-8 space-y-12">
                      {/* How To Use Section */}
-                     <section className="bg-white rounded-[2rem] p-8 md:p-10 border border-slate-100 shadow-sm">
+                     <section className="bg-white dark:bg-slate-800 rounded-[2rem] p-8 md:p-10 border border-slate-100 dark:border-slate-700 shadow-sm transition-colors duration-300">
                         <div className="flex items-center gap-4 mb-6">
-                            <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
+                            <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                             </div>
-                            <h2 className="text-2xl font-black text-slate-900">How to use this tool</h2>
+                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">How to use this tool</h2>
                         </div>
-                        <div className="prose prose-slate prose-lg max-w-none font-medium text-slate-600 whitespace-pre-line leading-relaxed">
+                        <div className="prose prose-slate dark:prose-invert prose-lg max-w-none font-medium text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed">
                             {content.howTo}
                         </div>
                      </section>
 
                      {/* Deep Content */}
-                     <article className="prose prose-slate prose-lg max-w-none">
-                        <h3 className="text-3xl font-black text-slate-900 mb-6">About {tool.name}</h3>
-                        <p className="mb-8 text-slate-600 font-medium leading-relaxed text-lg">{content.intro}</p>
+                     <article className="prose prose-slate dark:prose-invert prose-lg max-w-none">
+                        <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-6">About {tool.name}</h3>
+                        <p className="mb-8 text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-lg">{content.intro}</p>
                         
-                        <h3 className="text-3xl font-black text-slate-900 mb-6">How It Works</h3>
-                        <p className="mb-8 text-slate-600 font-medium leading-relaxed text-lg">{content.mechanics}</p>
+                        <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-6">How It Works</h3>
+                        <p className="mb-8 text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-lg">{content.mechanics}</p>
                         
-                        <h3 className="text-3xl font-black text-slate-900 mb-6">Benefits</h3>
-                        <p className="mb-8 text-slate-600 font-medium leading-relaxed text-lg">{content.benefits}</p>
+                        <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-6">Benefits</h3>
+                        <p className="mb-8 text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-lg">{content.benefits}</p>
                      </article>
                 </div>
 
                 {/* Right Sidebar */}
                 <div className="lg:col-span-4 space-y-8">
                      {/* Related Tools */}
-                    <div className="bg-slate-900 rounded-[2rem] p-8 text-white shadow-lg">
+                    <div className="bg-slate-900 dark:bg-slate-950 rounded-[2rem] p-8 text-white shadow-lg transition-colors duration-300">
                         <h3 className="text-lg font-black uppercase tracking-wide mb-6 text-blue-400">Related Tools</h3>
                         <div className="space-y-4">
                             {relatedTools.map(rt => (
@@ -626,13 +626,13 @@ const ToolPage: React.FC = () => {
                     </div>
 
                     {/* FAQ Card */}
-                    <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm sticky top-8">
-                        <h3 className="text-lg font-black text-slate-900 uppercase tracking-wide mb-6">Common Questions</h3>
+                    <div className="bg-white dark:bg-slate-800 rounded-[2rem] p-8 border border-slate-100 dark:border-slate-700 shadow-sm sticky top-8 transition-colors duration-300">
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-wide mb-6">Common Questions</h3>
                         <div className="space-y-6">
                             {content.faq.map((item, idx) => (
                                 <div key={idx}>
-                                    <h4 className="font-bold text-slate-800 mb-2 text-base leading-snug">{item.q}</h4>
-                                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{item.a}</p>
+                                    <h4 className="font-bold text-slate-800 dark:text-slate-200 mb-2 text-base leading-snug">{item.q}</h4>
+                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{item.a}</p>
                                 </div>
                             ))}
                         </div>
