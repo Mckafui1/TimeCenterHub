@@ -56,7 +56,7 @@ import SocialShare from '../components/SocialShare.tsx';
 const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, benefits: string, howTo: string, faq: {q: string, a: string}[] }> = {
   'time-calculator': {
     intro: `Time calculation is a unique mathematical challenge because time does not follow the standard decimal (base-10) system that we use for most other forms of measurement. Instead, time relies on a sexagesimal (base-60) system, where 60 seconds make a minute and 60 minutes make an hour. This ancient system, dating back to the Babylonians, makes manual calculation prone to error. The Time Calculator on TimeCenterHub is engineered to handle these complex conversions instantly, allowing you to add or subtract hours, minutes, and seconds with atomic precision. Whether you are a video editor trying to calculate the total runtime of multiple clips, a pilot logging flight hours, or a payroll manager summing up weekly shifts, this tool eliminates the mental gymnastics required to convert "85 minutes" into "1 hour and 25 minutes".`,
-    mechanics: `Under the hood, our Time Calculator converts all inputs into the smallest common unit (seconds). It then performs the addition or subtraction operation on this total second count. Once the result is obtained, the engine essentially "re-hydrates" the total seconds back into hours, minutes, and seconds using modulo arithmetic. For example, if you add 45 minutes to 30 minutes, the result is 75 minutes. The calculator divides 75 by 60 to find 1 hour with a remainder of 15 minutes. This logic ensures that no matter how large or small your values are, the final result is always mathematically valid according to ISO-8601 time standards.`,
+    mechanics: `Under the hood, our Time Calculator converts all inputs into the smallest common unit (seconds). It then performs the addition or subtraction operation on this total second count. Once the result is obtained, the engine essentially "re-hydrates" the total seconds back into hours, minutes, and seconds using modulo arithmetic. For example, if you add 45 minutes to 30 minutes, the result is 75 minutes. The calculator divides 75 by 60 to find 1 hour with a remainder of 15 minutes. This logic ensures that no matter how large or small your values are, the final result is always mathematically valid according to ISO-8601 time standards. We also provide a detailed "Calculation Steps" breakdown so you can verify the math yourself.`,
     benefits: `Accurate time tracking is essential for productivity and fair compensation. For freelancers and contractors, every minute billed is revenue earned. Using a precise calculator prevents under-billing due to rounding errors. In scientific and athletic fields, the difference of a few seconds can be statistically significant. By automating the math, TimeCenterHub ensures that your data is consistent, verifiable, and free from human error. Furthermore, our calculator operates entirely client-side, meaning your data never leaves your device, ensuring maximum privacy for sensitive logs.`,
     howTo: `Using the Time Calculator is straightforward. First, enter your starting duration in the "Hours", "Minutes", and "Seconds" fields. You can leave fields blank if they are zero. Next, select your operation: choose "Add" if you want to combine two durations, or "Subtract" if you want to find the difference (or remaining time). Then, enter the second duration. Finally, click "Calculate Time". The result will appear instantly below, broken down into hours, minutes, and seconds. You can also use negative numbers if you need to subtract a larger time from a smaller one, which is useful for countdown planning.`,
     faq: [
@@ -117,6 +117,7 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
       { q: "What if the duration is longer than 24 hours?", a: "This calculator assumes the start and end times occur within a 24-hour window (or the immediate next day). For multi-day calculations, use the Time Between Dates tool." }
     ]
   },
+
   'speed-distance-time': {
     intro: `The relationship between Speed, Distance, and Time is one of the fundamental principles of physics and everyday logistics. Whether you are planning a road trip, training for a marathon, or managing a shipping fleet, understanding this triad is essential. The Speed Distance Time Calculator allows you to solve for any one of these variables by inputting the other two. It utilizes the classic formula: Speed = Distance ÷ Time. However, it simplifies the process by handling unit conversions and providing a user-friendly interface that lets you toggle between what you know and what you need to find.`,
     mechanics: `The calculator operates on three modes. In "Time" mode, it divides Distance by Speed. In "Distance" mode, it multiplies Speed by Time. In "Speed" mode, it divides Distance by Time. The output is formatted for readability—for example, converting a decimal hour result (like 1.5 hours) into a human-readable "1 hour and 30 minutes". It handles floating-point arithmetic to ensure high precision, making it suitable for both casual estimation and precise scientific homework.`,
@@ -128,13 +129,13 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
     ]
   },
   'time-in-decimal': {
-    intro: `In many professional industries—law, accounting, consulting, and payroll—time is not tracked in hours and minutes (8:30), but in decimal hours (8.5). This standardization simplifies billing calculations, as you can simply multiply the decimal time by an hourly rate. The Time to Decimal Calculator bridges the gap between the clock on the wall and the spreadsheet on your computer. It instantly converts hours and minutes into a precise decimal number.`,
-    mechanics: `The conversion logic is simple but vital. The hour component remains an integer. The minute component is divided by 60. For example, 15 minutes / 60 = 0.25. The calculator sums these values. It can also handle "rounding" logic implicitly by providing a precise float value, which is often rounded to two decimal places for currency calculations.`,
+    intro: `In many professional industries—law, accounting, consulting, and payroll—time is not tracked in hours and minutes (8:30), but in decimal hours (8.5). This standardization simplifies billing calculations, as you can simply multiply the decimal time by an hourly rate. The Time to Decimal Calculator bridges the gap between the clock on the wall and the spreadsheet on your computer. It instantly converts hours, minutes, and seconds into a precise decimal number.`,
+    mechanics: `The conversion logic is simple but vital. The hour component remains an integer. The minute component is divided by 60. The second component is divided by 3600. For example, 15 minutes / 60 = 0.25. The calculator sums these values. It can also handle "rounding" logic implicitly by providing a precise float value, which is often rounded to two decimal places for currency calculations. We now include a full "Calculation Steps" section to show you exactly how the math works.`,
     benefits: `This tool eliminates the most common payroll error: treating minutes as decimals (e.g., assuming 8 hours 50 minutes is 8.50 hours—it's actually ~8.83). By ensuring accurate conversion, employees get paid for every minute worked, and clients are billed with mathematical integrity.`,
-    howTo: `Enter the hours and minutes from your timesheet or clock. Click "Convert". The result is displayed as a decimal number (e.g., 8.75). You can then copy this number directly into your billing software or Excel sheet.`,
+    howTo: `Enter the hours, minutes, and seconds from your timesheet or clock. Click "Convert". The result is displayed as a decimal number (e.g., 8.75). You can then copy this number directly into your billing software or Excel sheet. Scroll down to see the step-by-step math.`,
     faq: [
       { q: "Why is 30 minutes 0.5?", a: "Because 30 is half of 60. Decimal hours represent a fraction of the whole hour." },
-      { q: "How many decimal places does it show?", a: "It typically shows two decimal places, which is standard for financial calculations." }
+      { q: "How many decimal places does it show?", a: "It typically shows two decimal places, which is standard for financial calculations, but the underlying calculation is more precise." }
     ]
   },
   'meeting-cost-calculator': {
@@ -290,11 +291,14 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
     faq: []
   },
   'world-clock': {
-    intro: `In our interconnected world, knowing the time in other cities is vital. The Global World Clock displays the current local time in major cities across different time zones.`,
-    mechanics: `It uses the browser's Intl.DateTimeFormat API to fetch accurate local times for specific time zones.`,
-    benefits: `Essential for scheduling international meetings, calling friends abroad, or tracking global markets.`,
-    howTo: `View the list of cities. You can often add more or search for specific locations.`,
-    faq: []
+    intro: `In our interconnected world, knowing the time in other cities is vital. The Global World Clock displays the current local time in over 150 major cities across different time zones. Whether you are coordinating a global team, planning international travel, or just curious about what time it is on the other side of the world, this tool provides instant, accurate results.`,
+    mechanics: `It uses the browser's Intl.DateTimeFormat API to fetch accurate local times for specific time zones based on the IANA Time Zone Database. The search functionality filters through our extensive database of cities and countries in real-time.`,
+    benefits: `Essential for scheduling international meetings, calling friends abroad, or tracking global markets. You can "favorite" cities to keep them at the top of your list for quick access.`,
+    howTo: `1. Use the search bar to find a specific city or country.\n2. Click the star icon next to a city to add it to your favorites list at the top.\n3. The clock updates every second to show the current local time and date.`,
+    faq: [
+      { q: "How do I add a city?", a: "Use the search bar to find the city you want, then click the star icon to pin it to the top." },
+      { q: "Does it adjust for Daylight Saving Time?", a: "Yes, the tool automatically adjusts for Daylight Saving Time rules for each specific location." }
+    ]
   },
   'work-hours-calculator': {
     intro: `Tracking your daily work hours is the first step to ensuring fair pay. The Work Hours Calculator allows you to input your clock-in and clock-out times to find your total hours worked.`,
@@ -346,17 +350,17 @@ const TOOL_ARTICLE_DATA: Record<string, { intro: string, mechanics: string, bene
     faq: []
   },
   'minutes-to-hours': {
-    intro: `Converting large numbers of minutes into hours and minutes makes them easier to understand. The Minutes to Hours Calculator does this instantly.`,
-    mechanics: `It divides total minutes by 60 to get hours, and uses the remainder as minutes.`,
+    intro: `Converting large numbers of minutes into hours and minutes makes them easier to understand. The Minutes to Hours Calculator does this instantly and shows you the math.`,
+    mechanics: `It divides total minutes by 60 to get hours, and uses the remainder as minutes. We display the full division and remainder logic below the result.`,
     benefits: `Useful for interpreting movie runtimes, flight durations, or recipe times.`,
-    howTo: `Enter total minutes. The result is shown as X hr Y min.`,
+    howTo: `Enter total minutes. The result is shown as X hr Y min, with a full breakdown of the calculation.`,
     faq: []
   },
   'hours-to-minutes': {
     intro: `Sometimes you need to know the total minutes in a duration. The Hours to Minutes Calculator converts hours (and minutes) into a single minute value.`,
-    mechanics: `It multiplies hours by 60 and adds the remaining minutes.`,
+    mechanics: `It multiplies hours by 60 and adds the remaining minutes. The tool provides a step-by-step explanation of this multiplication and addition.`,
     benefits: `Helpful for calculations that require a single unit, like total billing minutes.`,
-    howTo: `Enter hours and minutes. The total minutes are displayed.`,
+    howTo: `Enter hours and minutes. The total minutes are displayed along with the math steps.`,
     faq: []
   },
   'unix-timestamp': {
@@ -470,7 +474,8 @@ const ToolPage: React.FC = () => {
       case 'time-duration-calculator': return <TimeDurationCalculator />;
       case 'speed-distance-time': return <SpeedDistanceTimeCalculator />;
       case 'time-unit-converter': return <TimeUnitConverter />;
-      case 'hours-from-now': return <TimeFromNowCalculator />;
+      case 'hours-from-now': return <TimeFromNowCalculator defaultUnit="hours" />;
+      case 'minutes-from-now': return <TimeFromNowCalculator defaultUnit="minutes" />;
       case 'countdown-timer': return <CountdownTimer />;
       case 'time-in-decimal': 
       case 'time-to-decimal': return <DecimalTimeCalculatorComp />;
@@ -529,7 +534,7 @@ const ToolPage: React.FC = () => {
   const metaDescription = getMetaDescription();
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50">
        <Helmet>
         <title>{tool.name} - Free Online Calculator & Tool | TimeCenterHub</title>
         <meta name="description" content={metaDescription} />
@@ -549,21 +554,21 @@ const ToolPage: React.FC = () => {
       </Helmet>
 
        {/* Breadcrumbs & Header Container */}
-       <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 pb-20 pt-8 transition-colors duration-300">
+       <div className="bg-white border-b border-slate-200 pb-20 pt-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav className="flex items-center text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-8">
-                <Link to="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</Link>
-                <svg className="w-4 h-4 mx-3 text-slate-400 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                <span className="text-slate-600 dark:text-slate-300">{tool.category}</span>
-                <svg className="w-4 h-4 mx-3 text-slate-400 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                <span className="text-blue-600 dark:text-blue-400 truncate">{tool.name}</span>
+            <nav className="flex items-center text-sm font-bold text-slate-500 uppercase tracking-wider mb-8">
+                <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
+                <svg className="w-4 h-4 mx-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                <span className="text-slate-600">{tool.category}</span>
+                <svg className="w-4 h-4 mx-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                <span className="text-blue-600 truncate">{tool.name}</span>
             </nav>
 
             <div className="text-center max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">
+                <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight mb-6 leading-tight">
                 {tool.name}
                 </h1>
-                <p className="text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                <p className="text-xl text-slate-600 font-medium leading-relaxed">
                 {tool.description}
                 </p>
             </div>
@@ -572,8 +577,8 @@ const ToolPage: React.FC = () => {
 
        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
             {/* Calculator Card - Floating effect */}
-            <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 border border-slate-100 dark:border-slate-700 p-2 md:p-4 mb-16 relative z-10 transition-colors duration-300">
-                <div className="bg-slate-50/50 dark:bg-slate-900/50 rounded-[2rem] overflow-hidden transition-colors duration-300">
+            <div className="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 p-2 md:p-4 mb-16 relative z-10">
+                <div className="bg-slate-50/50 rounded-[2rem] overflow-hidden">
                    {renderCalculator()}
                 </div>
                 <SocialShare title={`Check out this ${tool.name}`} description={tool.description} />
@@ -583,35 +588,35 @@ const ToolPage: React.FC = () => {
                 {/* Left Content Column */}
                 <div className="lg:col-span-8 space-y-12">
                      {/* How To Use Section */}
-                     <section className="bg-white dark:bg-slate-800 rounded-[2rem] p-8 md:p-10 border border-slate-100 dark:border-slate-700 shadow-sm transition-colors duration-300">
+                     <section className="bg-white rounded-[2rem] p-8 md:p-10 border border-slate-100 shadow-sm">
                         <div className="flex items-center gap-4 mb-6">
-                            <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                            <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                             </div>
-                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">How to use this tool</h2>
+                            <h2 className="text-2xl font-black text-slate-900">How to use this tool</h2>
                         </div>
-                        <div className="prose prose-slate dark:prose-invert prose-lg max-w-none font-medium text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed">
+                        <div className="prose prose-slate prose-lg max-w-none font-medium text-slate-600 whitespace-pre-line leading-relaxed">
                             {content.howTo}
                         </div>
                      </section>
 
                      {/* Deep Content */}
-                     <article className="prose prose-slate dark:prose-invert prose-lg max-w-none">
-                        <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-6">About {tool.name}</h3>
-                        <p className="mb-8 text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-lg">{content.intro}</p>
+                     <article className="prose prose-slate prose-lg max-w-none">
+                        <h3 className="text-3xl font-black text-slate-900 mb-6">About {tool.name}</h3>
+                        <p className="mb-8 text-slate-600 font-medium leading-relaxed text-lg">{content.intro}</p>
                         
-                        <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-6">How It Works</h3>
-                        <p className="mb-8 text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-lg">{content.mechanics}</p>
+                        <h3 className="text-3xl font-black text-slate-900 mb-6">How It Works</h3>
+                        <p className="mb-8 text-slate-600 font-medium leading-relaxed text-lg">{content.mechanics}</p>
                         
-                        <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-6">Benefits</h3>
-                        <p className="mb-8 text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-lg">{content.benefits}</p>
+                        <h3 className="text-3xl font-black text-slate-900 mb-6">Benefits</h3>
+                        <p className="mb-8 text-slate-600 font-medium leading-relaxed text-lg">{content.benefits}</p>
                      </article>
                 </div>
 
                 {/* Right Sidebar */}
                 <div className="lg:col-span-4 space-y-8">
                      {/* Related Tools */}
-                    <div className="bg-slate-900 dark:bg-slate-950 rounded-[2rem] p-8 text-white shadow-lg transition-colors duration-300">
+                    <div className="bg-slate-900 rounded-[2rem] p-8 text-white shadow-lg">
                         <h3 className="text-lg font-black uppercase tracking-wide mb-6 text-blue-400">Related Tools</h3>
                         <div className="space-y-4">
                             {relatedTools.map(rt => (
@@ -626,13 +631,13 @@ const ToolPage: React.FC = () => {
                     </div>
 
                     {/* FAQ Card */}
-                    <div className="bg-white dark:bg-slate-800 rounded-[2rem] p-8 border border-slate-100 dark:border-slate-700 shadow-sm sticky top-8 transition-colors duration-300">
-                        <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-wide mb-6">Common Questions</h3>
+                    <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm sticky top-8">
+                        <h3 className="text-lg font-black text-slate-900 uppercase tracking-wide mb-6">Common Questions</h3>
                         <div className="space-y-6">
                             {content.faq.map((item, idx) => (
                                 <div key={idx}>
-                                    <h4 className="font-bold text-slate-800 dark:text-slate-200 mb-2 text-base leading-snug">{item.q}</h4>
-                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{item.a}</p>
+                                    <h4 className="font-bold text-slate-800 mb-2 text-base leading-snug">{item.q}</h4>
+                                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{item.a}</p>
                                 </div>
                             ))}
                         </div>

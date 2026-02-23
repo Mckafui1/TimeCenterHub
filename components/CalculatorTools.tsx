@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { CITIES } from '../src/data/cities';
 
 // --- SHARED UTILS ---
 const formatTimeHM = (mins: number) => {
@@ -16,7 +17,7 @@ export const TimeCalculator: React.FC<{ initialOp?: 'add' | 'sub' }> = ({ initia
   const [m2, setM2] = useState('0');
   const [s2, setS2] = useState('0');
   const [op, setOp] = useState<'add' | 'sub'>(initialOp);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<{ str: string, t1: number, t2: number, total: number } | null>(null);
 
   const calculate = () => {
     const t1 = (parseInt(h1 || '0') * 3600) + (parseInt(m1 || '0') * 60) + parseInt(s1 || '0');
@@ -26,7 +27,12 @@ export const TimeCalculator: React.FC<{ initialOp?: 'add' | 'sub' }> = ({ initia
     const h = Math.floor(abs / 3600);
     const m = Math.floor((abs % 3600) / 60);
     const s = abs % 60;
-    setResult(`${diff < 0 ? '-' : ''}${h}h ${m}m ${s}s`);
+    setResult({ 
+      str: `${diff < 0 ? '-' : ''}${h}h ${m}m ${s}s`,
+      t1,
+      t2,
+      total: diff
+    });
   };
 
   const clear = () => {
@@ -36,43 +42,79 @@ export const TimeCalculator: React.FC<{ initialOp?: 'add' | 'sub' }> = ({ initia
   };
 
   return (
-    <div className="p-8 md:p-10 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 space-y-8 transition-colors duration-300">
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
       <div className="space-y-8">
         <div className="space-y-3">
-          <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 tracking-widest block ml-1">First Duration</label>
+          <label className="text-xs font-black uppercase text-slate-600 tracking-widest block ml-1">First Duration</label>
           <div className="grid grid-cols-3 gap-4">
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Hours</span><input aria-label="First Duration Hours" type="number" value={h1} onChange={e => setH1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Minutes</span><input aria-label="First Duration Minutes" type="number" value={m1} onChange={e => setM1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Seconds</span><input aria-label="First Duration Seconds" type="number" value={s1} onChange={e => setS1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span><input aria-label="First Duration Hours" type="number" value={h1} onChange={e => setH1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span><input aria-label="First Duration Minutes" type="number" value={m1} onChange={e => setM1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Seconds</span><input aria-label="First Duration Seconds" type="number" value={s1} onChange={e => setS1(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" /></div>
           </div>
         </div>
 
-        <div className="flex justify-center gap-10 py-4 border-y border-slate-50 dark:border-slate-700">
-           <label className="flex items-center gap-3 cursor-pointer font-black text-sm uppercase text-slate-700 dark:text-slate-300">
-             <input type="radio" checked={op === 'add'} onChange={() => setOp('add')} className="w-5 h-5 text-blue-600" /> + Add
+        <div className="flex justify-center gap-10 py-4 border-y border-slate-50">
+           <label className="flex items-center gap-3 cursor-pointer font-black text-sm uppercase text-slate-700 hover:text-blue-600 transition-colors">
+             <input type="radio" checked={op === 'add'} onChange={() => setOp('add')} className="w-5 h-5 text-blue-600 focus:ring-blue-500" /> + Add
            </label>
-           <label className="flex items-center gap-3 cursor-pointer font-black text-sm uppercase text-slate-700 dark:text-slate-300">
-             <input type="radio" checked={op === 'sub'} onChange={() => setOp('sub')} className="w-5 h-5 text-rose-600" /> - Subtract
+           <label className="flex items-center gap-3 cursor-pointer font-black text-sm uppercase text-slate-700 hover:text-rose-600 transition-colors">
+             <input type="radio" checked={op === 'sub'} onChange={() => setOp('sub')} className="w-5 h-5 text-rose-600 focus:ring-rose-500" /> - Subtract
            </label>
         </div>
 
         <div className="space-y-3">
-          <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 tracking-widest block ml-1">Second Duration</label>
+          <label className="text-xs font-black uppercase text-slate-600 tracking-widest block ml-1">Second Duration</label>
           <div className="grid grid-cols-3 gap-4">
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Hours</span><input aria-label="Second Duration Hours" type="number" value={h2} onChange={e => setH2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Minutes</span><input aria-label="Second Duration Minutes" type="number" value={m2} onChange={e => setM2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
-            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Seconds</span><input aria-label="Second Duration Seconds" type="number" value={s2} onChange={e => setS2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span><input aria-label="Second Duration Hours" type="number" value={h2} onChange={e => setH2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span><input aria-label="Second Duration Minutes" type="number" value={m2} onChange={e => setM2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" /></div>
+            <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Seconds</span><input aria-label="Second Duration Seconds" type="number" value={s2} onChange={e => setS2(e.target.value)} placeholder="0" className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" /></div>
           </div>
         </div>
       </div>
       <div className="flex gap-4 pt-4">
-        <button onClick={calculate} className="flex-grow py-5 bg-blue-600 text-white font-black rounded-2xl shadow-lg hover:bg-blue-700 transition-all text-base tracking-wide">Calculate</button>
-        <button onClick={clear} className="px-8 py-5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-black rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-600 transition-all text-base tracking-wide">Clear</button>
+        <button onClick={calculate} className="flex-grow py-5 bg-blue-600 text-white font-black rounded-2xl shadow-lg hover:bg-blue-700 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Calculate</button>
+        <button onClick={clear} className="px-8 py-5 bg-slate-100 text-slate-600 font-black rounded-2xl hover:bg-slate-200 transition-all text-base tracking-wide uppercase">Clear</button>
       </div>
+      
       {result && (
-        <div className="p-8 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 rounded-[2rem] text-center border-2 border-blue-100 dark:border-blue-800">
-          <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500 dark:text-blue-400">Resulting Duration</p>
-          <p className="text-5xl md:text-6xl font-black">{result}</p>
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="p-8 bg-blue-50 text-blue-900 rounded-[2rem] text-center border-2 border-blue-100 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500">Resulting Duration</p>
+            <p className="text-5xl md:text-6xl font-black tracking-tight">{result.str}</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-8">
+            <h3 className="text-xl font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Calculation Steps
+            </h3>
+            
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-500">1. Convert everything to seconds</h4>
+                <div className="bg-slate-50 p-4 rounded-xl font-mono text-sm text-slate-700 space-y-2">
+                  <p><span className="font-bold text-blue-600">Time 1:</span> ({h1 || 0} × 3600) + ({m1 || 0} × 60) + {s1 || 0} = <span className="font-bold">{result.t1.toLocaleString()} sec</span></p>
+                  <p><span className="font-bold text-blue-600">Time 2:</span> ({h2 || 0} × 3600) + ({m2 || 0} × 60) + {s2 || 0} = <span className="font-bold">{result.t2.toLocaleString()} sec</span></p>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-500">2. Perform {op === 'add' ? 'Addition' : 'Subtraction'}</h4>
+                <div className="bg-slate-50 p-4 rounded-xl font-mono text-sm text-slate-700">
+                  <p>{result.t1.toLocaleString()} {op === 'add' ? '+' : '-'} {result.t2.toLocaleString()} = <span className="font-bold text-lg">{result.total.toLocaleString()} sec</span></p>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-500">3. Convert back to HH:MM:SS</h4>
+                <div className="bg-slate-50 p-4 rounded-xl font-mono text-sm text-slate-700 space-y-2">
+                  <p>Hours = {Math.floor(Math.abs(result.total) / 3600)}</p>
+                  <p>Minutes = {Math.floor((Math.abs(result.total) % 3600) / 60)}</p>
+                  <p>Seconds = {Math.abs(result.total) % 60}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -93,52 +135,115 @@ export const SubtractTimeCalculator: React.FC = () => {
 export const SpeedDistanceTimeCalculator: React.FC = () => {
   const [dist, setDist] = useState('100');
   const [speed, setSpeed] = useState('50');
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState('2');
   const [mode, setMode] = useState<'time' | 'distance' | 'speed'>('time');
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<{ val: string, formula: string, steps: string[] } | null>(null);
 
   const calculate = () => {
+    let val = '';
+    let formula = '';
+    let steps: string[] = [];
+
     if (mode === 'time') {
-      const res = parseFloat(dist) / parseFloat(speed);
+      const d = parseFloat(dist);
+      const s = parseFloat(speed);
+      if (s === 0) return;
+      
+      const res = d / s;
       const h = Math.floor(res);
       const m = Math.round((res - h) * 60);
-      setResult(`${h}h ${m}m`);
+      
+      val = `${h}h ${m}m`;
+      formula = 'Time = Distance ÷ Speed';
+      steps = [
+        `Distance: ${d} km`,
+        `Speed: ${s} km/h`,
+        `${d} ÷ ${s} = ${res.toFixed(4)} hours`,
+        `Convert ${res.toFixed(4)} hours to minutes:`,
+        `${h} hours + (0.${(res - h).toFixed(4).split('.')[1]} × 60) minutes`,
+        `= ${h}h ${m}m`
+      ];
     } else if (mode === 'distance') {
-      setResult(`${(parseFloat(speed) * parseFloat(time)).toFixed(2)} km`);
+      const s = parseFloat(speed);
+      const t = parseFloat(time);
+      
+      val = `${(s * t).toFixed(2)} km`;
+      formula = 'Distance = Speed × Time';
+      steps = [
+        `Speed: ${s} km/h`,
+        `Time: ${t} hours`,
+        `${s} × ${t} = ${(s * t).toFixed(2)} km`
+      ];
     } else {
-      setResult(`${(parseFloat(dist) / parseFloat(time)).toFixed(2)} km/h`);
+      const d = parseFloat(dist);
+      const t = parseFloat(time);
+      if (t === 0) return;
+      
+      val = `${(d / t).toFixed(2)} km/h`;
+      formula = 'Speed = Distance ÷ Time';
+      steps = [
+        `Distance: ${d} km`,
+        `Time: ${t} hours`,
+        `${d} ÷ ${t} = ${(d / t).toFixed(2)} km/h`
+      ];
     }
+    
+    setResult({ val, formula, steps });
   };
 
   return (
-    <div className="p-10 space-y-6">
-      <div className="flex gap-3 p-1.5 bg-slate-100 dark:bg-slate-700 rounded-2xl mb-6 transition-colors duration-300">
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6">
+      <div className="flex gap-3 p-1.5 bg-slate-100 rounded-2xl mb-6">
         {['time', 'distance', 'speed'].map(m => (
-          <button key={m} onClick={() => setMode(m as any)} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${mode === m ? 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400'}`}>{m}</button>
+          <button key={m} onClick={() => { setMode(m as any); setResult(null); }} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${mode === m ? 'bg-white text-blue-600 shadow-sm scale-[1.02]' : 'text-slate-500 hover:text-slate-700'}`}>{m}</button>
         ))}
       </div>
+      
       <div className="space-y-6">
         {mode !== 'distance' && (
           <div>
-            <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Distance (km)</label>
-            <input type="number" value={dist} onChange={e => setDist(e.target.value)} placeholder="e.g. 100" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+            <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1 tracking-widest">Distance (km)</label>
+            <input type="number" value={dist} onChange={e => setDist(e.target.value)} placeholder="e.g. 100" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
           </div>
         )}
         {mode !== 'speed' && (
           <div>
-            <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Speed (km/h)</label>
-            <input type="number" value={speed} onChange={e => setSpeed(e.target.value)} placeholder="e.g. 50" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+            <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1 tracking-widest">Speed (km/h)</label>
+            <input type="number" value={speed} onChange={e => setSpeed(e.target.value)} placeholder="e.g. 50" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
           </div>
         )}
         {mode !== 'time' && (
           <div>
-            <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Time (hours)</label>
-            <input type="number" value={time} onChange={e => setTime(e.target.value)} placeholder="e.g. 2" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+            <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1 tracking-widest">Time (hours)</label>
+            <input type="number" value={time} onChange={e => setTime(e.target.value)} placeholder="e.g. 2" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
           </div>
         )}
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-700 transition-colors text-base tracking-wide">Calculate</button>
-      {result && <div className="p-8 bg-blue-50 dark:bg-blue-900/30 text-center text-4xl font-black rounded-2xl border border-blue-100 dark:border-blue-800 text-blue-900 dark:text-blue-100">{result}</div>}
+      
+      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow hover:bg-blue-700 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Calculate {mode}</button>
+      
+      {result && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pt-6 border-t border-slate-100">
+          <div className="p-10 bg-blue-50 text-center rounded-[2rem] border border-blue-100 shadow-sm">
+             <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500">Result</p>
+             <p className="text-5xl font-black text-blue-900">{result.val}</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Calculation Steps
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p className="font-bold text-slate-900 mb-2">Formula: {result.formula}</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              {result.steps.map((step, i) => (
+                <p key={i} className="pl-4 text-blue-600">{step}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -146,38 +251,95 @@ export const SpeedDistanceTimeCalculator: React.FC = () => {
 // --- SHIFT CALCULATOR ---
 export const ShiftCalculator: React.FC = () => {
   const [shifts, setShifts] = useState([{ start: '09:00', end: '17:00' }]);
+  
   const addShift = () => setShifts([...shifts, { start: '09:00', end: '17:00' }]);
+  
   const updateShift = (i: number, field: 'start' | 'end', val: string) => {
     const n = [...shifts]; n[i][field] = val; setShifts(n);
   };
+  
+  const removeShift = (i: number) => {
+    if (shifts.length > 1) {
+      const n = [...shifts]; n.splice(i, 1); setShifts(n);
+    }
+  };
+  
   const totalMins = shifts.reduce((acc, s) => {
-    const [h1, m1] = s.start.split(':').map(Number); const [h2, m2] = s.end.split(':').map(Number);
-    let d = (h2*60+m2)-(h1*60+m1); if (d < 0) d += 1440; return acc + d;
+    const [h1, m1] = s.start.split(':').map(Number); 
+    const [h2, m2] = s.end.split(':').map(Number);
+    let d = (h2 * 60 + m2) - (h1 * 60 + m1); 
+    if (d < 0) d += 1440; 
+    return acc + d;
   }, 0);
+
   return (
-    <div className="p-10 space-y-8">
-      <div className="space-y-6">
-        {shifts.map((s, i) => (
-          <div key={i} className="space-y-3">
-            <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block ml-1">Shift {shifts.length > 1 ? i + 1 : ''} Times</label>
-            <div className="flex gap-6 items-center">
-              <div className="flex-1">
-                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 block mb-1">START</span>
-                <input type="time" value={s.start} onChange={e => updateShift(i, 'start', e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
+      <div className="space-y-8">
+        {shifts.map((s, i) => {
+          const [h1, m1] = s.start.split(':').map(Number); 
+          const [h2, m2] = s.end.split(':').map(Number);
+          let d = (h2 * 60 + m2) - (h1 * 60 + m1); 
+          if (d < 0) d += 1440;
+          
+          return (
+            <div key={i} className="space-y-3 relative group">
+              <div className="flex justify-between items-center">
+                <label className="text-xs font-black uppercase text-slate-600 block ml-1 tracking-widest">Shift {shifts.length > 1 ? i + 1 : ''}</label>
+                {shifts.length > 1 && (
+                  <button onClick={() => removeShift(i)} className="text-rose-400 hover:text-rose-600 text-xs font-bold uppercase tracking-wider transition-colors">Remove</button>
+                )}
               </div>
-              <span className="font-black text-slate-300 dark:text-slate-600 pt-6 text-xl">→</span>
-              <div className="flex-1">
-                <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 block mb-1">END</span>
-                <input type="time" value={s.end} onChange={e => updateShift(i, 'end', e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+              <div className="flex gap-4 md:gap-6 items-center">
+                <div className="flex-1">
+                  <span className="text-[10px] font-black text-slate-400 block mb-1 uppercase tracking-wider">Start</span>
+                  <input type="time" value={s.start} onChange={e => updateShift(i, 'start', e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
+                </div>
+                <span className="font-black text-slate-300 pt-6 text-xl">→</span>
+                <div className="flex-1">
+                  <span className="text-[10px] font-black text-slate-400 block mb-1 uppercase tracking-wider">End</span>
+                  <input type="time" value={s.end} onChange={e => updateShift(i, 'end', e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
+                </div>
+              </div>
+              <div className="text-right text-xs font-bold text-slate-400">
+                Duration: <span className="text-blue-600">{Math.floor(d / 60)}h {d % 60}m</span>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-      <button onClick={addShift} className="w-full py-4 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-2 border-slate-200 dark:border-slate-700 border-dashed font-black rounded-2xl text-xs uppercase hover:bg-slate-100 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 transition-all tracking-widest">+ Add Split Shift</button>
-      <div className="p-8 bg-indigo-50 dark:bg-indigo-900/30 text-center rounded-3xl border border-indigo-100 dark:border-indigo-800">
-        <p className="text-5xl font-black text-indigo-900 dark:text-indigo-100">{Math.floor(totalMins/60)}h {totalMins%60}m</p>
-        <p className="text-xs font-black text-indigo-400 dark:text-indigo-300 uppercase tracking-widest mt-2">Total Shift Time</p>
+      
+      <button onClick={addShift} className="w-full py-4 bg-slate-50 text-slate-600 border-2 border-slate-200 border-dashed font-black rounded-2xl text-xs uppercase hover:bg-slate-100 hover:border-slate-300 transition-all tracking-widest">+ Add Split Shift</button>
+      
+      <div className="space-y-8 pt-6 border-t border-slate-100">
+        <div className="p-8 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100 shadow-sm">
+          <p className="text-xs font-black text-indigo-400 uppercase tracking-widest mb-2">Total Shift Time</p>
+          <p className="text-5xl font-black text-indigo-900">{Math.floor(totalMins / 60)}h {totalMins % 60}m</p>
+        </div>
+
+        <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+          <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+            <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+            Calculation Breakdown
+          </h3>
+          <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+            {shifts.map((s, i) => {
+              const [h1, m1] = s.start.split(':').map(Number); 
+              const [h2, m2] = s.end.split(':').map(Number);
+              let d = (h2 * 60 + m2) - (h1 * 60 + m1); 
+              if (d < 0) d += 1440;
+              return (
+                <div key={i}>
+                  <p className="font-bold text-slate-900">Shift {i + 1}:</p>
+                  <p className="pl-4 text-indigo-600">{s.start} to {s.end} = {d} minutes ({Math.floor(d/60)}h {d%60}m)</p>
+                  {i < shifts.length - 1 && <div className="border-t border-slate-200 my-2"></div>}
+                </div>
+              );
+            })}
+            <div className="border-t-2 border-slate-300 my-3"></div>
+            <p className="font-bold text-slate-900">Total:</p>
+            <p className="pl-4 font-bold text-indigo-600">{totalMins} minutes = {Math.floor(totalMins / 60)}h {totalMins % 60}m</p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -187,22 +349,60 @@ export const ShiftCalculator: React.FC = () => {
 export const BreakCalculator: React.FC = () => {
   const [total, setTotal] = useState('480');
   const [breaks, setBreaks] = useState('60');
-  const [res, setRes] = useState<string | null>(null);
-  const calculate = () => setRes(`${Math.floor((parseInt(total) - parseInt(breaks))/60)}h ${(parseInt(total) - parseInt(breaks))%60}m`);
+  const [res, setRes] = useState<{ str: string, totalM: number, breakM: number, netM: number } | null>(null);
+
+  const calculate = () => {
+    const t = parseInt(total) || 0;
+    const b = parseInt(breaks) || 0;
+    const net = t - b;
+    setRes({ 
+      str: `${Math.floor(net / 60)}h ${net % 60}m`,
+      totalM: t,
+      breakM: b,
+      netM: net
+    });
+  };
+
   return (
-    <div className="p-10 space-y-8">
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6">
       <div className="space-y-6">
         <div>
-          <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Total Minutes Worked</label>
-          <input type="number" value={total} onChange={e => setTotal(e.target.value)} placeholder="Total Mins" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+          <label className="text-xs font-black uppercase text-slate-600 block mb-2 tracking-widest">Total Shift Duration (minutes)</label>
+          <input type="number" value={total} onChange={e => setTotal(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
         </div>
         <div>
-          <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Total Break Minutes</label>
-          <input type="number" value={breaks} onChange={e => setBreaks(e.target.value)} placeholder="Break Mins" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+          <label className="text-xs font-black uppercase text-slate-600 block mb-2 tracking-widest">Total Break Time (minutes)</label>
+          <input type="number" value={breaks} onChange={e => setBreaks(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
         </div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-slate-900 dark:bg-slate-700 text-white font-black rounded-2xl hover:bg-slate-800 dark:hover:bg-slate-600 transition-colors text-base tracking-wide">Subtract Breaks</button>
-      {res && <div className="p-8 bg-slate-50 dark:bg-slate-800 text-center text-4xl font-black rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">{res} Net Hours</div>}
+      
+      <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow hover:bg-indigo-700 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Calculate Net Work Time</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pt-6 border-t border-slate-100">
+          <div className="p-10 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100 shadow-sm">
+             <p className="text-xs font-black uppercase tracking-widest mb-2 text-indigo-400">Net Work Time</p>
+             <p className="text-5xl font-black text-indigo-900">{res.str}</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Calculation Steps
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Start with Total Duration:</p>
+              <p className="pl-4 font-bold text-indigo-600">{res.totalM} minutes</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. Subtract Break Time:</p>
+              <p className="pl-4 font-bold text-indigo-600">{res.totalM} - {res.breakM} = {res.netM} minutes</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>3. Convert to Hours & Minutes:</p>
+              <p className="pl-4 font-bold text-indigo-600">{Math.floor(res.netM/60)} hours, {res.netM%60} minutes</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -216,19 +416,19 @@ export const TimeUnitConverter: React.FC = () => {
   return (
     <div className="p-10 space-y-8">
       <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block ml-1">Amount to Convert</label>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Amount to Convert</label>
         <div className="flex gap-4">
-          <input aria-label="Amount" type="number" value={val} onChange={e => setVal(e.target.value)} className="w-1/2 p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
-          <select aria-label="From Unit" value={from} onChange={e => setFrom(e.target.value)} className="w-1/2 p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600">
+          <input aria-label="Amount" type="number" value={val} onChange={e => setVal(e.target.value)} className="w-1/2 p-4 border rounded-2xl font-bold text-xl text-slate-800" />
+          <select aria-label="From Unit" value={from} onChange={e => setFrom(e.target.value)} className="w-1/2 p-4 border rounded-2xl font-bold text-xl text-slate-800 bg-white">
             {Object.keys(factors).map(k => <option key={k} value={k}>{k.charAt(0).toUpperCase() + k.slice(1)}</option>)}
           </select>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 mt-6">
         {Object.keys(factors).map(k => (
-          <div key={k} className="p-5 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 flex flex-col justify-center">
-            <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-tighter mb-1">{k}</p>
-            <p className="font-bold text-slate-900 dark:text-white text-2xl">{(res / factors[k]).toLocaleString()}</p>
+          <div key={k} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col justify-center">
+            <p className="text-[10px] font-black uppercase text-slate-500 tracking-tighter mb-1">{k}</p>
+            <p className="font-bold text-slate-900 text-2xl">{(res / factors[k]).toLocaleString()}</p>
           </div>
         ))}
       </div>
@@ -253,10 +453,10 @@ export const TimeUntilMidnight: React.FC = () => {
   }, []);
 
   if (!time) {
-      return <div className="p-16 text-center animate-pulse"><p className="text-xs font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-200 dark:text-slate-700 tabular-nums">00h 00m 00s</p></div>;
+      return <div className="p-16 text-center animate-pulse"><p className="text-xs font-black text-slate-300 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-200 tabular-nums">00h 00m 00s</p></div>;
   }
 
-  return <div className="p-16 text-center"><p className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-900 dark:text-white tabular-nums">{time}</p></div>;
+  return <div className="p-16 text-center"><p className="text-xs font-black text-slate-500 uppercase tracking-[0.25em] mb-6">Countdown to Midnight</p><p className="text-7xl md:text-8xl font-black font-mono text-slate-900 tabular-nums">{time}</p></div>;
 };
 
 // --- WEDDING COUNTDOWN ---
@@ -267,11 +467,11 @@ export const WeddingCountdown: React.FC = () => {
   return (
     <div className="p-10 space-y-8">
       <div>
-        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-3 ml-1">Wedding Date</label>
-        <input type="date" value={d} onChange={e => setD(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-2xl text-center bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" />
+        <label className="text-xs font-black uppercase text-slate-600 block mb-3 ml-1">Wedding Date</label>
+        <input type="date" value={d} onChange={e => setD(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-2xl text-center bg-slate-50 text-slate-800" />
       </div>
       <button onClick={calculate} className="w-full py-5 bg-rose-500 text-white font-black rounded-2xl hover:bg-rose-600 transition-colors shadow-lg text-lg tracking-wide">Calculate Days Until</button>
-      {res !== null && <div className="p-12 bg-rose-50 dark:bg-rose-900/30 text-center rounded-[2rem] border border-rose-100 dark:border-rose-800"><p className="text-8xl font-black text-rose-600 dark:text-rose-100">{res}</p><p className="text-sm font-black uppercase tracking-widest text-rose-400 dark:text-rose-300 mt-4">Days to the Big Day!</p></div>}
+      {res !== null && <div className="p-12 bg-rose-50 text-center rounded-[2rem] border border-rose-100"><p className="text-8xl font-black text-rose-600">{res}</p><p className="text-sm font-black uppercase tracking-widest text-rose-400 mt-4">Days to the Big Day!</p></div>}
     </div>
   );
 };
@@ -285,10 +485,10 @@ export const NewYearCountdown: React.FC = () => {
   }, []);
   
   if (days === null) {
-      return <div className="p-20 text-center bg-slate-900 dark:bg-slate-950 text-white rounded-[2.5rem] shadow-xl animate-pulse"><p className="text-9xl font-black text-slate-800 dark:text-slate-700 mb-4 tabular-nums">000</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-800 dark:text-slate-700">Loading...</p></div>;
+      return <div className="p-20 text-center bg-slate-900 text-white rounded-[2.5rem] shadow-xl animate-pulse"><p className="text-9xl font-black text-slate-800 mb-4 tabular-nums">000</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-800">Loading...</p></div>;
   }
 
-  return <div className="p-20 text-center bg-slate-900 dark:bg-slate-950 text-white rounded-[2.5rem] shadow-xl"><p className="text-9xl font-black text-blue-400 mb-4 tabular-nums">{days}</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Days to {new Date().getFullYear() + 1}</p></div>;
+  return <div className="p-20 text-center bg-slate-900 text-white rounded-[2.5rem] shadow-xl"><p className="text-9xl font-black text-blue-400 mb-4 tabular-nums">{days}</p><p className="text-base font-black uppercase tracking-[0.3em] text-slate-400">Days to {new Date().getFullYear() + 1}</p></div>;
 };
 
 // --- EXAM COUNTDOWN ---
@@ -299,11 +499,11 @@ export const ExamCountdown: React.FC = () => {
   return (
     <div className="p-10 space-y-8">
       <div>
-        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-3 ml-1">Exam Date</label>
-        <input type="date" value={d} onChange={e => setD(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-2xl text-center bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" />
+        <label className="text-xs font-black uppercase text-slate-600 block mb-3 ml-1">Exam Date</label>
+        <input type="date" value={d} onChange={e => setD(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-2xl text-center bg-slate-50 text-slate-800" />
       </div>
       <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl hover:bg-indigo-700 transition-colors shadow-md text-lg tracking-wide">Check Study Time</button>
-      {res !== null && <div className="p-12 bg-indigo-50 dark:bg-indigo-900/30 text-center rounded-[2rem] border border-indigo-100 dark:border-indigo-800"><p className="text-8xl font-black text-indigo-600 dark:text-indigo-100">{res}</p><p className="text-sm font-black uppercase tracking-widest text-indigo-400 dark:text-indigo-300 mt-4">Days left to study!</p></div>}
+      {res !== null && <div className="p-12 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100"><p className="text-8xl font-black text-indigo-600">{res}</p><p className="text-sm font-black uppercase tracking-widest text-indigo-400 mt-4">Days left to study!</p></div>}
     </div>
   );
 };
@@ -313,15 +513,16 @@ export const AgeCalculator: React.FC = () => {
   const [dob, setDob] = useState('1990-01-01');
   const [atDate, setAtDate] = useState(new Date().toISOString().split('T')[0]);
   const [result, setResult] = useState<{ y: number, m: number, d: number, totalDays: number } | null>(null);
-  const [showResult, setShowResult] = useState(false);
 
   const calculate = () => {
     const start = new Date(dob);
     const end = new Date(atDate);
     if (isNaN(start.getTime()) || isNaN(end.getTime())) return;
+    
     let years = end.getFullYear() - start.getFullYear();
     let months = end.getMonth() - start.getMonth();
     let days = end.getDate() - start.getDate();
+    
     if (days < 0) {
       months -= 1;
       days += new Date(end.getFullYear(), end.getMonth(), 0).getDate();
@@ -330,27 +531,41 @@ export const AgeCalculator: React.FC = () => {
       years -= 1;
       months += 12;
     }
+    
     const totalDays = Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
     setResult({ y: years, m: months, d: days, totalDays });
-    setShowResult(true);
   };
 
   return (
-    <div className="relative space-y-6 p-8 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 h-full flex flex-col justify-between overflow-hidden transition-colors duration-300">
+    <div className="space-y-6 p-8 bg-white rounded-[2rem] shadow-sm border border-slate-100">
       <div className="space-y-6">
-        <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-2 tracking-wider">Date of Birth</label><input type="date" value={dob} onChange={e => setDob(e.target.value)} className="w-full p-4 border rounded-2xl text-lg font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600 focus:bg-white dark:focus:bg-slate-600 transition-colors" /></div>
-        <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-2 tracking-wider">Calculate Age At</label><input type="date" value={atDate} onChange={e => setAtDate(e.target.value)} className="w-full p-4 border rounded-2xl text-lg font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600 focus:bg-white dark:focus:bg-slate-600 transition-colors" /></div>
+        <div><label className="block text-xs font-black text-slate-600 uppercase mb-2 tracking-wider">Date of Birth</label><input type="date" value={dob} onChange={e => setDob(e.target.value)} className="w-full p-4 border rounded-2xl text-lg font-bold text-slate-900 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none transition-all" /></div>
+        <div><label className="block text-xs font-black text-slate-600 uppercase mb-2 tracking-wider">Calculate Age At</label><input type="date" value={atDate} onChange={e => setAtDate(e.target.value)} className="w-full p-4 border rounded-2xl text-lg font-bold text-slate-900 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none transition-all" /></div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow-md hover:bg-blue-700 transition-all text-sm uppercase tracking-widest mt-4">Get Exact Age</button>
+      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow-md hover:bg-blue-700 hover:scale-[1.01] active:scale-[0.99] transition-all text-sm uppercase tracking-widest mt-4">Get Exact Age</button>
       
-      {result && showResult && (
-        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-900 z-20 p-6 flex flex-col items-center justify-center text-center transition-colors duration-300">
-            <p className="text-5xl font-black text-blue-900 dark:text-blue-100 mb-2">{result.y} Years</p>
-            <p className="text-blue-600 dark:text-blue-400 font-bold text-lg mb-6">{result.m} Months, {result.d} Days</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-black uppercase mb-6">Total Days: {result.totalDays.toLocaleString()}</p>
-            <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
-              Recalculate
-            </button>
+      {result && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pt-6 border-t border-slate-100">
+          <div className="p-8 bg-blue-50 text-center rounded-[2rem] border border-blue-100 shadow-sm">
+             <p className="text-5xl font-black text-blue-900 mb-2">{result.y} Years</p>
+             <p className="text-blue-600 font-bold text-lg">{result.m} Months, {result.d} Days</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Age Breakdown
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Total Duration:</p>
+              <p className="pl-4 font-bold text-blue-600">{result.totalDays.toLocaleString()} days</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. Detailed Breakdown:</p>
+              <p className="pl-4 font-bold text-blue-600">{result.y} years</p>
+              <p className="pl-4 font-bold text-blue-600">+ {result.m} months</p>
+              <p className="pl-4 font-bold text-blue-600">+ {result.d} days</p>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -386,21 +601,21 @@ export const BirthdayCalculator: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 p-10 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 transition-colors duration-300">
-      <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-3 tracking-wider">Enter Birthday</label><input type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} className="w-full p-5 border rounded-2xl text-2xl font-black text-center text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+    <div className="space-y-8 p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
+      <div><label className="block text-xs font-black text-slate-600 uppercase mb-3 tracking-wider">Enter Birthday</label><input type="date" value={birthDate} onChange={e => setBirthDate(e.target.value)} className="w-full p-5 border rounded-2xl text-2xl font-black text-center text-slate-800" /></div>
       <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow hover:bg-indigo-700 text-lg">Check Days Until</button>
       {result && (
-        <div className="p-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-[2rem] text-center border border-indigo-100 dark:border-indigo-800">
+        <div className="p-10 bg-indigo-50 rounded-[2rem] text-center border border-indigo-100">
           {result.isToday ? (
              <>
-              <p className="text-6xl font-black text-indigo-600 dark:text-indigo-300 mb-4">🎉 Happy Birthday! 🎂</p>
-              <p className="text-indigo-900 dark:text-indigo-100 font-bold text-xl">It's your special day!</p>
+              <p className="text-6xl font-black text-indigo-600 mb-4">🎉 Happy Birthday! 🎂</p>
+              <p className="text-indigo-900 font-bold text-xl">It's your special day!</p>
              </>
           ) : (
              <>
-              <p className="text-7xl font-black text-indigo-900 dark:text-indigo-100 leading-none">{result.days}</p>
-              <p className="text-indigo-400 dark:text-indigo-300 font-black uppercase tracking-widest text-xs mt-3">Days to next birthday</p>
-              <p className="mt-6 text-indigo-900 dark:text-indigo-100 font-bold italic text-base">It will be on a {result.weekday}!</p>
+              <p className="text-7xl font-black text-indigo-900 leading-none">{result.days}</p>
+              <p className="text-indigo-400 font-black uppercase tracking-widest text-xs mt-3">Days to next birthday</p>
+              <p className="mt-6 text-indigo-900 font-bold italic text-base">It will be on a {result.weekday}!</p>
              </>
           )}
         </div>
@@ -425,21 +640,21 @@ export const TimeBetweenDatesCalculator: React.FC = () => {
   };
 
   return (
-    <div className="relative p-8 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 space-y-6 h-full flex flex-col justify-between overflow-hidden transition-colors duration-300">
+    <div className="relative p-8 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6 h-full flex flex-col justify-between overflow-hidden">
       <div className="space-y-6">
-        <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-2">Start Date</label><input type="date" value={d1} onChange={e=>setD1(e.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600"/></div>
-        <div><label className="block text-xs font-black text-slate-600 dark:text-slate-400 uppercase mb-2">End Date</label><input type="date" value={d2} onChange={e=>setD2(e.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600"/></div>
+        <div><label className="block text-xs font-black text-slate-600 uppercase mb-2">Start Date</label><input type="date" value={d1} onChange={e=>setD1(e.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800"/></div>
+        <div><label className="block text-xs font-black text-slate-600 uppercase mb-2">End Date</label><input type="date" value={d2} onChange={e=>setD2(e.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800"/></div>
       </div>
       <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow text-sm uppercase tracking-widest mt-4">Get Duration</button>
       
       {res && showResult && (
-        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-900 z-20 p-6 flex flex-col items-center justify-center text-center transition-colors duration-300">
+        <div className="absolute inset-0 bg-slate-50 z-20 p-6 flex flex-col items-center justify-center text-center">
           <div className="grid grid-cols-3 gap-3 w-full mb-8">
-              <div><p className="text-2xl font-black text-slate-900 dark:text-white">{res.d}</p><p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase mt-1">Days</p></div>
-              <div><p className="text-2xl font-black text-slate-900 dark:text-white">{res.w}</p><p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase mt-1">Weeks</p></div>
-              <div><p className="text-2xl font-black text-slate-900 dark:text-white">{res.m}</p><p className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase mt-1">Months</p></div>
+              <div><p className="text-2xl font-black text-slate-900">{res.d}</p><p className="text-[10px] text-slate-500 font-black uppercase mt-1">Days</p></div>
+              <div><p className="text-2xl font-black text-slate-900">{res.w}</p><p className="text-[10px] text-slate-500 font-black uppercase mt-1">Weeks</p></div>
+              <div><p className="text-2xl font-black text-slate-900">{res.m}</p><p className="text-[10px] text-slate-500 font-black uppercase mt-1">Months</p></div>
           </div>
-          <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+          <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white border border-slate-200 text-slate-900 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-slate-100 transition-colors">
               Recalculate
           </button>
         </div>
@@ -450,38 +665,65 @@ export const TimeBetweenDatesCalculator: React.FC = () => {
 
 // --- WORK HOURS ---
 export const WorkHoursCalculator: React.FC = () => {
-  const [s, setS] = useState('09:00'); const [e, setE] = useState('17:00'); const [b, setB] = useState('30'); const [res, setRes] = useState<string | null>(null);
-  const [showResult, setShowResult] = useState(false);
+  const [s, setS] = useState('09:00');
+  const [e, setE] = useState('17:00');
+  const [b, setB] = useState('30');
+  const [res, setRes] = useState<{ str: string, totalM: number, breakM: number, grossM: number } | null>(null);
 
   const calculate = () => { 
       const [sh, sm] = s.split(':').map(Number); 
       const [eh, em] = e.split(':').map(Number); 
-      let d = (eh * 60 + em) - (sh * 60 + sm); 
-      if (d < 0) d += 1440; 
-      d -= parseInt(b || '0'); 
-      setRes(`${Math.floor(d / 60)}h ${d % 60}m`); 
-      setShowResult(true);
+      
+      let gross = (eh * 60 + em) - (sh * 60 + sm); 
+      if (gross < 0) gross += 1440; 
+      
+      const breakMins = parseInt(b || '0');
+      const net = gross - breakMins;
+      
+      setRes({ 
+        str: `${Math.floor(net / 60)}h ${net % 60}m`,
+        totalM: net,
+        breakM: breakMins,
+        grossM: gross
+      }); 
   };
 
   return (
-    <div className="relative p-8 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 space-y-6 h-full flex flex-col justify-between overflow-hidden transition-colors duration-300">
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6">
       <div className="space-y-6">
         <div className="grid grid-cols-2 gap-5">
-          <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2">Start (In)</label><input type="time" value={s} onChange={v => setS(v.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" /></div>
-          <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2">End (Out)</label><input type="time" value={e} onChange={v => setE(v.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" /></div>
+          <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 tracking-widest">Start (In)</label><input type="time" value={s} onChange={v => setS(v.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none transition-all" /></div>
+          <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 tracking-widest">End (Out)</label><input type="time" value={e} onChange={v => setE(v.target.value)} className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none transition-all" /></div>
         </div>
-        <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2">Break (Minutes)</label><input type="number" value={b} onChange={v => setB(v.target.value)} placeholder="0" className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" /></div>
+        <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 tracking-widest">Break (Minutes)</label><input type="number" value={b} onChange={v => setB(v.target.value)} placeholder="0" className="w-full p-4 border rounded-2xl text-base font-bold bg-slate-50 text-slate-800 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none transition-all" /></div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow text-sm uppercase tracking-widest mt-4">Calculate Shift</button>
       
-      {res && showResult && (
-          <div className="absolute inset-0 bg-indigo-50 dark:bg-indigo-900/30 z-20 p-6 flex flex-col items-center justify-center text-center transition-colors duration-300">
-             <p className="text-xs font-black uppercase tracking-widest mb-4 text-indigo-400 dark:text-indigo-300">Total Hours</p>
-             <p className="text-5xl font-black text-indigo-900 dark:text-indigo-100 mb-8">{res}</p>
-             <button onClick={() => setShowResult(false)} className="px-6 py-3 bg-white dark:bg-slate-800 border border-indigo-100 dark:border-indigo-800 text-indigo-900 dark:text-indigo-100 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition-colors">
-              Recalculate
-            </button>
+      <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow hover:bg-indigo-700 hover:scale-[1.01] active:scale-[0.99] transition-all text-sm uppercase tracking-widest mt-4">Calculate Shift</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pt-6 border-t border-slate-100">
+          <div className="p-8 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100 shadow-sm">
+             <p className="text-xs font-black uppercase tracking-widest mb-2 text-indigo-400">Net Work Hours</p>
+             <p className="text-5xl font-black text-indigo-900">{res.str}</p>
           </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Calculation Steps
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Calculate Gross Duration:</p>
+              <p className="pl-4 font-bold text-indigo-600">End - Start = {res.grossM} minutes ({Math.floor(res.grossM/60)}h {res.grossM%60}m)</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. Subtract Break:</p>
+              <p className="pl-4 font-bold text-indigo-600">{res.grossM} - {res.breakM} = {res.totalM} minutes</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>3. Convert to Hours & Minutes:</p>
+              <p className="pl-4 font-bold text-indigo-600">{Math.floor(res.totalM/60)} hours, {res.totalM%60} minutes</p>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -504,11 +746,11 @@ export const SleepCalculator: React.FC = () => {
   return (
     <div className="p-10 space-y-8 text-center">
       <div className="space-y-5">
-        <label className="text-xs font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest block">I want to wake up at:</label>
-        <input aria-label="Wake Up Time" type="time" value={wakeTime} onChange={e => setWakeTime(e.target.value)} className="text-6xl font-black p-6 border rounded-[2rem] text-center bg-slate-50 dark:bg-slate-700 w-full text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" />
+        <label className="text-xs font-black text-slate-600 uppercase tracking-widest block">I want to wake up at:</label>
+        <input aria-label="Wake Up Time" type="time" value={wakeTime} onChange={e => setWakeTime(e.target.value)} className="text-6xl font-black p-6 border rounded-[2rem] text-center bg-slate-50 w-full text-slate-800" />
       </div>
       <button onClick={calculate} className="w-full py-6 bg-blue-600 text-white font-black rounded-2xl shadow-xl hover:bg-blue-700 transition-colors text-lg">Calculate Bedtimes</button>
-      {results.length > 0 && <div className="space-y-4 pt-6"><p className="text-xs font-black text-slate-600 dark:text-slate-400 uppercase">Suggested Bedtimes (90m cycles):</p><div className="grid grid-cols-2 gap-4">{results.map((t, i) => <div key={i} className={`p-6 rounded-2xl text-center font-black text-2xl border ${i === 0 ? 'bg-blue-600 text-white border-blue-700 shadow-lg' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-100 dark:border-slate-700'}`}>{t}</div>)}</div><p className="text-[10px] text-slate-500 dark:text-slate-400 text-center italic mt-2">Includes 14 minutes to fall asleep.</p></div>}
+      {results.length > 0 && <div className="space-y-4 pt-6"><p className="text-xs font-black text-slate-600 uppercase">Suggested Bedtimes (90m cycles):</p><div className="grid grid-cols-2 gap-4">{results.map((t, i) => <div key={i} className={`p-6 rounded-2xl text-center font-black text-2xl border ${i === 0 ? 'bg-blue-600 text-white border-blue-700 shadow-lg' : 'bg-slate-50 text-slate-600 border-slate-100'}`}>{t}</div>)}</div><p className="text-[10px] text-slate-500 text-center italic mt-2">Includes 14 minutes to fall asleep.</p></div>}
     </div>
   );
 };
@@ -526,12 +768,12 @@ export const MeetingCostCalculator: React.FC = () => {
   return (
     <div className="p-10 space-y-8">
       <div className="space-y-6">
-        <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Number of Attendees</label><input type="number" value={attendees} onChange={e => setAttendees(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
-        <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Avg Hourly Rate ($)</label><input type="number" value={avgRate} onChange={e => setAvgRate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
-        <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Duration (Minutes)</label><input type="number" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+        <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Number of Attendees</label><input type="number" value={attendees} onChange={e => setAttendees(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" /></div>
+        <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Avg Hourly Rate ($)</label><input type="number" value={avgRate} onChange={e => setAvgRate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" /></div>
+        <div><label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Duration (Minutes)</label><input type="number" value={duration} onChange={e => setDuration(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" /></div>
       </div>
       <button onClick={calculate} className="w-full py-5 bg-emerald-600 text-white font-black rounded-2xl shadow-lg hover:bg-emerald-700 transition-colors text-base tracking-wide">Calculate Cost</button>
-      {cost !== null && <div className="p-10 bg-emerald-50 dark:bg-emerald-900/30 text-center rounded-[2rem] border border-emerald-100 dark:border-emerald-800"><p className="text-xs font-black text-emerald-600 dark:text-emerald-300 uppercase mb-3">Estimated Labor Cost</p><p className="text-6xl font-black text-emerald-900 dark:text-emerald-100">${cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p></div>}
+      {cost !== null && <div className="p-10 bg-emerald-50 text-center rounded-[2rem] border border-emerald-100"><p className="text-xs font-black text-emerald-600 uppercase mb-3">Estimated Labor Cost</p><p className="text-6xl font-black text-emerald-900">${cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p></div>}
     </div>
   );
 };
@@ -551,9 +793,9 @@ export const RetirementCountdown: React.FC = () => {
   };
   return (
     <div className="p-10 space-y-8">
-      <div><label className="text-xs font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest block mb-3 ml-1">Expected Retirement Date</label><input type="date" value={retireDate} onChange={e => setRetireDate(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-center text-2xl bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-200 dark:border-slate-600" /></div>
-      <button onClick={calculate} className="w-full py-6 bg-indigo-900 dark:bg-indigo-700 text-white font-black rounded-2xl shadow-xl hover:bg-slate-800 dark:hover:bg-indigo-600 transition-all text-base tracking-wide">Calculate Remaining Time</button>
-      {timeLeft && <div className="p-10 bg-indigo-50 dark:bg-indigo-900/30 text-center rounded-[2rem] border border-indigo-100 dark:border-indigo-800"><p className="text-7xl font-black text-indigo-900 dark:text-indigo-100 leading-none">{timeLeft.y}</p><p className="text-sm font-black text-indigo-400 dark:text-indigo-300 uppercase mt-3">Years</p><p className="text-4xl font-black text-indigo-700 dark:text-indigo-200 mt-6">& {timeLeft.d} Days</p></div>}
+      <div><label className="text-xs font-black text-slate-600 uppercase tracking-widest block mb-3 ml-1">Expected Retirement Date</label><input type="date" value={retireDate} onChange={e => setRetireDate(e.target.value)} className="w-full p-5 border rounded-2xl font-black text-center text-2xl bg-slate-50 text-slate-800" /></div>
+      <button onClick={calculate} className="w-full py-6 bg-indigo-900 text-white font-black rounded-2xl shadow-xl hover:bg-slate-800 transition-all text-base tracking-wide">Calculate Remaining Time</button>
+      {timeLeft && <div className="p-10 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100"><p className="text-7xl font-black text-indigo-900 leading-none">{timeLeft.y}</p><p className="text-sm font-black text-indigo-400 uppercase mt-3">Years</p><p className="text-4xl font-black text-indigo-700 mt-6">& {timeLeft.d} Days</p></div>}
     </div>
   );
 };
@@ -564,29 +806,80 @@ export const PaceCalculator: React.FC = () => {
   const [h, setH] = useState('0');
   const [m, setM] = useState('25');
   const [s, setS] = useState('0');
-  const [pace, setPace] = useState<string | null>(null);
+  const [res, setRes] = useState<{ pace: string, totalSecs: number, dist: number, paceSecs: number } | null>(null);
+
   const calculate = () => {
-    const totalSecs = (parseInt(h) * 3600) + (parseInt(m) * 60) + parseInt(s);
+    const totalSecs = (parseInt(h || '0') * 3600) + (parseInt(m || '0') * 60) + parseInt(s || '0');
     const d = parseFloat(dist);
+    
     if (!d || d === 0) return;
+    
     const paceSecs = totalSecs / d;
     const pm = Math.floor(paceSecs / 60);
     const ps = Math.round(paceSecs % 60);
-    setPace(`${pm}:${ps.toString().padStart(2, '0')}`);
+    const paceStr = `${pm}:${ps.toString().padStart(2, '0')}`;
+    
+    setRes({ pace: paceStr, totalSecs, dist: d, paceSecs });
   };
+
   return (
-    <div className="p-10 space-y-8">
-      <div><label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block mb-2 ml-1">Distance (km)</label><input type="number" value={dist} onChange={e => setDist(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
+      <div>
+        <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1 tracking-widest">Distance (km)</label>
+        <input type="number" value={dist} onChange={e => setDist(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 focus:ring-2 focus:ring-orange-100 focus:border-orange-400 outline-none transition-all" />
+      </div>
+      
       <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block ml-1">Total Time</label>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 tracking-widest">Total Time</label>
         <div className="grid grid-cols-3 gap-4">
-          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Hours</span><input aria-label="Hours" type="number" value={h} onChange={e => setH(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
-          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Minutes</span><input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
-          <div className="relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase">Seconds</span><input aria-label="Seconds" type="number" value={s} onChange={e => setS(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl text-center font-bold text-xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" /></div>
+          <div className="relative">
+            <span className="absolute left-3 top-2 text-[10px] font-black text-slate-400 uppercase tracking-wider">Hours</span>
+            <input aria-label="Hours" type="number" value={h} onChange={e => setH(e.target.value)} className="w-full p-4 pt-7 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-orange-100 focus:border-orange-400 outline-none transition-all" />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-2 text-[10px] font-black text-slate-400 uppercase tracking-wider">Minutes</span>
+            <input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-4 pt-7 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-orange-100 focus:border-orange-400 outline-none transition-all" />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-2 text-[10px] font-black text-slate-400 uppercase tracking-wider">Seconds</span>
+            <input aria-label="Seconds" type="number" value={s} onChange={e => setS(e.target.value)} className="w-full p-4 pt-7 border rounded-2xl text-center font-bold text-xl text-slate-800 focus:ring-2 focus:ring-orange-100 focus:border-orange-400 outline-none transition-all" />
+          </div>
         </div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-orange-600 dark:bg-orange-700 text-white font-black rounded-2xl shadow-lg hover:bg-orange-700 dark:hover:bg-orange-600 transition-colors text-base tracking-wide">Calculate Pace</button>
-      {pace && <div className="p-10 bg-orange-50 dark:bg-orange-900/30 text-center rounded-[2rem] border border-orange-100 dark:border-orange-800"><p className="text-xs font-black text-orange-600 dark:text-orange-300 uppercase mb-3">Average Pace</p><p className="text-6xl font-black text-orange-900 dark:text-orange-100">{pace} /km</p></div>}
+      
+      <button onClick={calculate} className="w-full py-5 bg-orange-600 text-white font-black rounded-2xl shadow-lg hover:bg-orange-700 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Calculate Pace</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pt-6 border-t border-slate-100">
+          <div className="p-10 bg-orange-50 text-center rounded-[2rem] border border-orange-100 shadow-sm">
+             <p className="text-xs font-black uppercase tracking-widest mb-2 text-orange-500">Average Pace</p>
+             <p className="text-6xl font-black text-orange-900">{res.pace} <span className="text-lg text-orange-400 font-bold">/km</span></p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Calculation Steps
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Convert Total Time to Seconds:</p>
+              <p className="pl-4 font-bold text-orange-600">
+                ({h}h × 3600) + ({m}m × 60) + {s}s = {res.totalSecs} seconds
+              </p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. Divide by Distance:</p>
+              <p className="pl-4 font-bold text-orange-600">
+                {res.totalSecs} ÷ {res.dist} = {res.paceSecs.toFixed(1)} seconds/km
+              </p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>3. Convert back to MM:SS:</p>
+              <p className="pl-4 font-bold text-orange-600">
+                {Math.floor(res.paceSecs / 60)} minutes, {Math.round(res.paceSecs % 60)} seconds
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -606,19 +899,19 @@ export const UnixTimestampTool: React.FC = () => {
   const convert = () => { if (!inputTs) return; const ts = parseInt(inputTs); setTsResult(new Date(ts * (inputTs.length > 10 ? 1 : 1000)).toUTCString()); };
   
   return (
-    <div className="space-y-8 p-10 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 transition-colors duration-300">
-      <div className="text-center p-12 bg-slate-900 dark:bg-slate-950 rounded-[2.5rem] text-white shadow-md">
-        <label className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest block mb-4">Current Unix Timestamp</label>
+    <div className="space-y-8 p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100">
+      <div className="text-center p-12 bg-slate-900 rounded-[2.5rem] text-white shadow-md">
+        <label className="text-xs font-black text-slate-500 uppercase tracking-widest block mb-4">Current Unix Timestamp</label>
         <p className="text-6xl font-mono font-black text-blue-400 tabular-nums">{now !== null ? now : 'Loading...'}</p>
       </div>
       <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 dark:text-slate-400 block ml-1">Convert Timestamp</label>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Convert Timestamp</label>
         <div className="flex gap-4">
-          <input aria-label="Timestamp Input" type="text" value={inputTs} onChange={e => setInputTs(e.target.value)} placeholder="Enter Unix TS..." className="flex-grow p-5 border rounded-2xl font-mono text-2xl text-slate-800 dark:text-white bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600" />
+          <input aria-label="Timestamp Input" type="text" value={inputTs} onChange={e => setInputTs(e.target.value)} placeholder="Enter Unix TS..." className="flex-grow p-5 border rounded-2xl font-mono text-2xl text-slate-800" />
           <button onClick={convert} className="px-12 bg-blue-600 text-white font-black rounded-2xl shadow hover:bg-blue-700 transition-colors text-sm uppercase tracking-wider">CONVERT</button>
         </div>
       </div>
-      {tsResult && <div className="p-8 bg-blue-50 dark:bg-blue-900/30 rounded-[2rem] text-center font-bold border border-blue-100 dark:border-blue-800 text-2xl text-slate-900 dark:text-white">{tsResult}</div>}
+      {tsResult && <div className="p-8 bg-blue-50 rounded-[2rem] text-center font-bold border border-blue-100 text-2xl text-slate-900">{tsResult}</div>}
     </div>
   );
 };
@@ -626,22 +919,45 @@ export const UnixTimestampTool: React.FC = () => {
 // --- TIME ZONE CONVERTER ---
 export const TimeZoneConverter: React.FC = () => {
   const [time, setTime] = useState<Date | null>(null);
-  
+  const [search, setSearch] = useState('');
+  const [favorites, setFavorites] = useState<string[]>(['UTC', 'America/New_York', 'Europe/London', 'Asia/Tokyo', 'Australia/Sydney']);
+
   useEffect(() => { 
     setTime(new Date());
     const i = setInterval(() => setTime(new Date()), 1000); 
     return () => clearInterval(i); 
   }, []);
 
-  const zones = [{ label: 'UTC', zone: 'UTC' }, { label: 'New York', zone: 'America/New_York' }, { label: 'London', zone: 'Europe/London' }, { label: 'Tokyo', zone: 'Asia/Tokyo' }, { label: 'Sydney', zone: 'Australia/Sydney' }];
-  
+  const toggleFavorite = (zone: string) => {
+    if (favorites.includes(zone)) {
+      setFavorites(favorites.filter(z => z !== zone));
+    } else {
+      setFavorites([...favorites, zone]);
+    }
+  };
+
+  const filteredCities = CITIES.filter(c => 
+    c.name.toLowerCase().includes(search.toLowerCase()) || 
+    c.country.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // Sort: Favorites first, then alphabetical
+  const sortedCities = [...filteredCities].sort((a, b) => {
+    const aFav = favorites.includes(a.zone);
+    const bFav = favorites.includes(b.zone);
+    if (aFav && !bFav) return -1;
+    if (!aFav && bFav) return 1;
+    return a.name.localeCompare(b.name);
+  });
+
   if (!time) {
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden divide-y divide-slate-200 dark:divide-slate-700 animate-pulse transition-colors duration-300">
-          {zones.map(z => (
-            <div key={z.zone} className="px-10 py-8 flex justify-between items-center">
-              <span className="text-slate-300 dark:text-slate-600 font-black uppercase text-base tracking-widest bg-slate-100 dark:bg-slate-700 rounded w-24 h-6 block"></span>
-              <span className="font-mono font-black text-3xl md:text-4xl text-slate-200 dark:text-slate-600 tabular-nums bg-slate-100 dark:bg-slate-700 rounded w-40 h-10 block"></span>
+        <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden divide-y animate-pulse p-10">
+          <div className="h-10 bg-slate-100 rounded-xl w-full mb-8"></div>
+          {[1,2,3,4,5].map(i => (
+            <div key={i} className="py-6 flex justify-between items-center border-b border-slate-50 last:border-0">
+              <span className="bg-slate-100 rounded w-32 h-6 block"></span>
+              <span className="bg-slate-100 rounded w-24 h-8 block"></span>
             </div>
           ))}
         </div>
@@ -649,13 +965,48 @@ export const TimeZoneConverter: React.FC = () => {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden divide-y divide-slate-200 dark:divide-slate-700 transition-colors duration-300">
-      {zones.map(z => (
-        <div key={z.zone} className="px-10 py-8 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-          <span className="text-slate-600 dark:text-slate-400 font-black uppercase text-base tracking-widest">{z.label}</span>
-          <span className="font-mono font-black text-3xl md:text-4xl text-slate-900 dark:text-white tabular-nums">{time.toLocaleTimeString(undefined, { timeZone: z.zone, hour12: false })}</span>
+    <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col h-[600px]">
+      <div className="p-6 border-b border-slate-100 bg-slate-50/50">
+        <div className="relative">
+            <svg className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <input 
+                type="text" 
+                placeholder="Search city or country..." 
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl font-bold text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+            />
         </div>
-      ))}
+      </div>
+      
+      <div className="overflow-y-auto flex-grow divide-y divide-slate-50">
+        {sortedCities.length > 0 ? sortedCities.map(city => {
+            const isFav = favorites.includes(city.zone);
+            return (
+                <div key={`${city.name}-${city.zone}`} className={`px-6 py-5 flex justify-between items-center hover:bg-slate-50 transition-colors group ${isFav ? 'bg-blue-50/30' : ''}`}>
+                    <div className="flex items-center gap-4">
+                        <button onClick={() => toggleFavorite(city.zone)} className={`p-2 rounded-full transition-colors ${isFav ? 'text-yellow-400 hover:bg-yellow-50' : 'text-slate-200 hover:text-yellow-400 hover:bg-slate-100'}`}>
+                            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <div>
+                            <p className="font-black text-slate-800 text-lg">{city.name}</p>
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{city.country}</p>
+                        </div>
+                    </div>
+                    <div className="text-right">
+                        <p className="font-mono font-black text-2xl md:text-3xl text-slate-900 tabular-nums tracking-tight">
+                            {time.toLocaleTimeString(undefined, { timeZone: city.zone, hour: '2-digit', minute: '2-digit', hour12: false })}
+                        </p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            {time.toLocaleDateString(undefined, { timeZone: city.zone, weekday: 'short', day: 'numeric' })}
+                        </p>
+                    </div>
+                </div>
+            );
+        }) : (
+            <div className="p-10 text-center text-slate-400 font-bold">No cities found matching "{search}"</div>
+        )}
+      </div>
     </div>
   );
 };
@@ -713,7 +1064,7 @@ export const MilitaryTimeCalculator: React.FC = () => {
   const [m12, setM12] = useState('');
   const [ampm, setAmpm] = useState<'AM' | 'PM'>('PM');
   const [t24, setT24] = useState('');
-  const [res, setRes] = useState<string | null>(null);
+  const [res, setRes] = useState<{ str: string, steps: string[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const convert = () => {
@@ -734,10 +1085,23 @@ export const MilitaryTimeCalculator: React.FC = () => {
       }
 
       let hour24 = h;
-      if (ampm === 'PM' && h !== 12) hour24 += 12;
-      if (ampm === 'AM' && h === 12) hour24 = 0;
+      let steps: string[] = [];
+      steps.push(`Start time: ${h}:${m.toString().padStart(2, '0')} ${ampm}`);
 
-      setRes(`${hour24.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} Hours`);
+      if (ampm === 'PM' && h !== 12) {
+        hour24 += 12;
+        steps.push(`PM and not 12: Add 12 to hours (${h} + 12 = ${hour24})`);
+      } else if (ampm === 'AM' && h === 12) {
+        hour24 = 0;
+        steps.push(`12 AM (Midnight): Hours become 00`);
+      } else {
+        steps.push(`${ampm}: Hours remain ${hour24.toString().padStart(2, '0')}`);
+      }
+
+      setRes({
+        str: `${hour24.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} Hours`,
+        steps
+      });
     } else {
       let input = t24.trim();
       input = input.replace(':', '');
@@ -772,7 +1136,29 @@ export const MilitaryTimeCalculator: React.FC = () => {
       let hStandard = h % 12;
       if (hStandard === 0) hStandard = 12;
 
-      setRes(`${hStandard}:${m.toString().padStart(2, '0')} ${suffix}`);
+      let steps: string[] = [];
+      steps.push(`Start time: ${input.slice(0, 2)}:${input.slice(2, 4)}`);
+      
+      if (h >= 12) {
+        steps.push(`Hours >= 12: It is PM`);
+        if (h > 12) {
+          steps.push(`Subtract 12 from hours (${h} - 12 = ${hStandard})`);
+        } else {
+          steps.push(`12 PM (Noon): Hours remain 12`);
+        }
+      } else {
+        steps.push(`Hours < 12: It is AM`);
+        if (h === 0) {
+          steps.push(`00 Hours (Midnight): Becomes 12 AM`);
+        } else {
+          steps.push(`Hours remain ${h}`);
+        }
+      }
+
+      setRes({
+        str: `${hStandard}:${m.toString().padStart(2, '0')} ${suffix}`,
+        steps
+      });
     }
   };
 
@@ -830,9 +1216,26 @@ export const MilitaryTimeCalculator: React.FC = () => {
       <button onClick={convert} className="w-full py-6 bg-slate-900 text-white font-black rounded-2xl hover:scale-[1.01] active:scale-[0.99] transition-all text-lg tracking-wide shadow-xl shadow-slate-200">Convert Time</button>
       
       {res && (
-        <div className="p-12 bg-blue-50 rounded-[2.5rem] border-2 border-blue-100 text-center shadow-sm">
-          <p className="text-sm font-black uppercase text-blue-400 tracking-[0.2em] mb-4">Converted Result</p>
-          <p className="text-6xl md:text-7xl font-black text-slate-900 tracking-tighter">{res}</p>
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pt-6 border-t border-slate-100">
+          <div className="p-12 bg-blue-50 rounded-[2.5rem] border-2 border-blue-100 text-center shadow-sm">
+            <p className="text-sm font-black uppercase text-blue-400 tracking-[0.2em] mb-4">Converted Result</p>
+            <p className="text-6xl md:text-7xl font-black text-slate-900 tracking-tighter">{res.str}</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Conversion Steps
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              {res.steps.map((step, i) => (
+                <div key={i}>
+                  <p className={i === 0 ? "font-bold text-slate-900" : "pl-4 text-blue-600"}>{step}</p>
+                  {i < res.steps.length - 1 && <div className="border-t border-slate-200 my-2"></div>}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -843,33 +1246,66 @@ export const MilitaryTimeCalculator: React.FC = () => {
 export const OvertimeCalculator: React.FC = () => {
   const [rate, setRate] = useState('25');
   const [hrs, setHrs] = useState('45');
-  const [res, setRes] = useState<any>(null);
+  const [res, setRes] = useState<{ regPay: number, otPay: number, total: number, regHrs: number, otHrs: number, otRate: number } | null>(null);
+
   const calculate = () => {
-    const r = parseFloat(rate);
-    const h = parseFloat(hrs);
-    const reg = Math.min(40, h);
-    const ot = Math.max(0, h - 40);
-    const pay = (reg * r) + (ot * r * 1.5);
-    setRes({ regPay: reg * r, otPay: ot * r * 1.5, total: pay });
+    const r = parseFloat(rate) || 0;
+    const h = parseFloat(hrs) || 0;
+    const regHrs = Math.min(40, h);
+    const otHrs = Math.max(0, h - 40);
+    const otRate = r * 1.5;
+    
+    const regPay = regHrs * r;
+    const otPay = otHrs * otRate;
+    const pay = regPay + otPay;
+    
+    setRes({ regPay, otPay, total: pay, regHrs, otHrs, otRate });
   };
+
   return (
-    <div className="p-10 space-y-8">
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6">
       <div className="grid grid-cols-2 gap-5">
         <div>
-          <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Hourly Rate ($)</label>
-          <input type="number" value={rate} onChange={e => setRate(e.target.value)} placeholder="Rate" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" />
+          <label className="text-xs font-black uppercase text-slate-600 block mb-2 tracking-widest">Hourly Rate ($)</label>
+          <input type="number" value={rate} onChange={e => setRate(e.target.value)} placeholder="Rate" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
         </div>
         <div>
-          <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1">Total Hours</label>
-          <input type="number" value={hrs} onChange={e => setHrs(e.target.value)} placeholder="Hours" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800" />
+          <label className="text-xs font-black uppercase text-slate-600 block mb-2 tracking-widest">Total Hours</label>
+          <input type="number" value={hrs} onChange={e => setHrs(e.target.value)} placeholder="Hours" className="w-full p-4 border rounded-2xl font-bold text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
         </div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow hover:bg-blue-700 transition-colors text-base tracking-wide">Calculate Pay</button>
-      {res && <div className="p-8 bg-blue-50 rounded-2xl space-y-4 font-bold border border-blue-100 text-lg">
-        <div className="flex justify-between"><span>Regular Pay (40h):</span><span>${res.regPay.toFixed(2)}</span></div>
-        <div className="flex justify-between text-blue-600"><span>Overtime (1.5x):</span><span>${res.otPay.toFixed(2)}</span></div>
-        <div className="flex justify-between text-3xl border-t border-blue-200 pt-4 text-blue-900"><span>Total Gross:</span><span>${res.total.toFixed(2)}</span></div>
-      </div>}
+      
+      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow hover:bg-blue-700 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Calculate Pay</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pt-6 border-t border-slate-100">
+          <div className="p-10 bg-blue-50 text-center rounded-[2rem] border border-blue-100 shadow-sm">
+             <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500">Total Gross Pay</p>
+             <p className="text-5xl font-black text-blue-900">${res.total.toFixed(2)}</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Pay Breakdown
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span>Regular Pay ({res.regHrs}h × ${rate}):</span>
+                <span className="font-bold text-slate-900">${res.regPay.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center pb-2 border-b border-slate-200 text-blue-600">
+                <span>Overtime ({res.otHrs}h × ${res.otRate.toFixed(2)}):</span>
+                <span className="font-bold">${res.otPay.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center pt-1 font-black text-blue-900 text-lg">
+                <span>Total:</span>
+                <span>${res.total.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -984,21 +1420,141 @@ export const Chronometer: React.FC = () => {
 };
 
 export const DecimalTimeCalculatorComp: React.FC = () => {
-  const [h, setH] = useState('8');
-  const [m, setM] = useState('30');
-  const [res, setRes] = useState<string | null>(null);
-  const calculate = () => setRes((parseInt(h) + parseInt(m)/60).toFixed(2));
+  const [h, setH] = useState('2');
+  const [m, setM] = useState('45');
+  const [s, setS] = useState('45');
+  const [res, setRes] = useState<{ hours: string, minutes: string, seconds: string } | null>(null);
+
+  const calculate = () => {
+    const hours = parseInt(h || '0');
+    const minutes = parseInt(m || '0');
+    const seconds = parseInt(s || '0');
+
+    const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+    
+    const decimalHours = (totalSeconds / 3600).toFixed(4);
+    const decimalMinutes = (totalSeconds / 60).toFixed(2);
+    const decimalSeconds = totalSeconds.toFixed(0);
+
+    setRes({ hours: decimalHours, minutes: decimalMinutes, seconds: decimalSeconds });
+  };
+
   return (
-    <div className="p-10 space-y-8">
-      <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Time to Convert</label>
-        <div className="flex gap-5">
-          <div className="flex-1 relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span><input aria-label="Hours" type="number" value={h} onChange={e => setH(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800" /></div>
-          <div className="flex-1 relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span><input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800" /></div>
+    <div className="p-8 md:p-10 space-y-8">
+      <div className="space-y-4">
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 tracking-widest">Time to Convert</label>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="relative">
+            <span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span>
+            <input 
+              aria-label="Hours" 
+              type="number" 
+              value={h} 
+              onChange={e => setH(e.target.value)} 
+              className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" 
+              placeholder="0"
+            />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span>
+            <input 
+              aria-label="Minutes" 
+              type="number" 
+              value={m} 
+              onChange={e => setM(e.target.value)} 
+              className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" 
+              placeholder="0"
+            />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Seconds</span>
+            <input 
+              aria-label="Seconds" 
+              type="number" 
+              value={s} 
+              onChange={e => setS(e.target.value)} 
+              className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" 
+              placeholder="0"
+            />
+          </div>
         </div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 transition-colors text-base tracking-wide">Convert to Decimal</button>
-      {res && <div className="p-10 bg-slate-50 text-center text-6xl font-black rounded-[2rem] border border-slate-100 text-slate-900">{res} hrs</div>}
+
+      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow-lg hover:bg-slate-800 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">
+        Convert to Decimal
+      </button>
+
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          {/* Main Result */}
+          <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-200 text-center space-y-6">
+            <div>
+              <p className="text-5xl md:text-6xl font-black text-slate-900 tracking-tight">{res.hours}</p>
+              <p className="text-xs font-black uppercase tracking-widest text-slate-400 mt-2">Decimal Hours</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-slate-200/60">
+              <div>
+                <p className="text-2xl font-black text-slate-700">{res.minutes}</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Total Minutes</p>
+              </div>
+              <div>
+                <p className="text-2xl font-black text-slate-700">{res.seconds}</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Total Seconds</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Breakdown Section */}
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-8">
+            <h3 className="text-xl font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Calculation Steps
+            </h3>
+
+            {/* Hours Calculation */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-black uppercase tracking-widest text-slate-500 border-b border-slate-100 pb-2">To Decimal Hours</h4>
+              <div className="font-mono text-sm md:text-base text-slate-700 space-y-2 bg-slate-50 p-4 rounded-xl">
+                <p className="flex flex-wrap gap-2 items-center">
+                  <span className="font-bold text-blue-600">{h || 0} hr</span> + 
+                  <span className="font-bold text-blue-600">{m || 0} min</span> × (1 hr / 60 min) + 
+                  <span className="font-bold text-blue-600">{s || 0} sec</span> × (1 hr / 3600 sec)
+                </p>
+                <p className="text-slate-400 text-xs pl-4">↓</p>
+                <p>
+                  = {h || 0} hr + {(parseInt(m || '0') / 60).toFixed(4)} hr + {(parseInt(s || '0') / 3600).toFixed(4)} hr
+                </p>
+                <p className="text-slate-400 text-xs pl-4">↓</p>
+                <p className="font-bold text-lg text-slate-900">= {res.hours} hours</p>
+              </div>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                We convert everything to hours. Minutes are divided by 60 (since there are 60 minutes in an hour), and seconds are divided by 3600 (60 × 60). Adding these parts gives the total decimal hours.
+              </p>
+            </div>
+
+            {/* Minutes Calculation */}
+            <div className="space-y-4 pt-4">
+              <h4 className="text-sm font-black uppercase tracking-widest text-slate-500 border-b border-slate-100 pb-2">To Total Minutes</h4>
+              <div className="font-mono text-sm md:text-base text-slate-700 space-y-2 bg-slate-50 p-4 rounded-xl">
+                <p className="flex flex-wrap gap-2 items-center">
+                  <span className="font-bold text-blue-600">{h || 0} hr</span> × 60 + 
+                  <span className="font-bold text-blue-600">{m || 0} min</span> + 
+                  <span className="font-bold text-blue-600">{s || 0} sec</span> / 60
+                </p>
+                <p className="text-slate-400 text-xs pl-4">↓</p>
+                <p>
+                  = {parseInt(h || '0') * 60} min + {m || 0} min + {(parseInt(s || '0') / 60).toFixed(2)} min
+                </p>
+                <p className="text-slate-400 text-xs pl-4">↓</p>
+                <p className="font-bold text-lg text-slate-900">= {res.minutes} minutes</p>
+              </div>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                To get total minutes, we multiply hours by 60 and divide seconds by 60, then add them to the minutes.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -1030,79 +1586,227 @@ export const DaysFromNowCalculator: React.FC = () => {
 
 export const BillableHoursCalculator: React.FC = () => {
   const [m, setM] = useState('45');
-  const [res, setRes] = useState<string | null>(null);
-  const calculate = () => setRes((Math.ceil(parseInt(m)/6)/10).toFixed(1));
+  const [res, setRes] = useState<{ units: string, minutes: number, roundedMinutes: number } | null>(null);
+
+  const calculate = () => {
+    const mins = parseInt(m) || 0;
+    const units = Math.ceil(mins / 6);
+    const roundedMins = units * 6;
+    setRes({
+      units: (units / 10).toFixed(1),
+      minutes: mins,
+      roundedMinutes: roundedMins
+    });
+  };
+
   return (
-    <div className="p-10 space-y-8">
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6">
       <div className="space-y-3 text-center">
         <label className="text-xs font-black uppercase text-slate-600 block tracking-widest">Minutes Worked</label>
-        <input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} placeholder="e.g. 45" className="w-full p-5 border rounded-2xl text-center font-black text-5xl text-slate-800" />
+        <input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} placeholder="e.g. 45" className="w-full p-5 border rounded-2xl text-center font-black text-5xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 transition-colors text-base tracking-wide">Convert to Billable Units (0.1)</button>
-      {res && <div className="p-10 bg-blue-50 text-center font-black text-6xl text-blue-900 rounded-[2rem] border border-blue-100">{res} Units</div>}
+      
+      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Convert to Billable Units (0.1)</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pt-6 border-t border-slate-100">
+          <div className="p-10 bg-blue-50 text-center rounded-[2rem] border border-blue-100 shadow-sm">
+             <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500">Billable Units</p>
+             <p className="text-6xl font-black text-blue-900">{res.units}</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Calculation Steps
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Standard Billing Increment:</p>
+              <p className="pl-4 font-bold text-blue-600">6 minutes = 0.1 unit</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. Round Up to Next Increment:</p>
+              <p className="pl-4 font-bold text-blue-600">{res.minutes} minutes → rounded up to {res.roundedMinutes} minutes</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>3. Calculate Units:</p>
+              <p className="pl-4 font-bold text-blue-600">{res.roundedMinutes} ÷ 60 = {res.units} hours/units</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export const TimeBetweenTimesCalculator: React.FC = () => {
-  const [t1, setT1] = useState('09:00'); const [t2, setT2] = useState('17:00'); const [res, setRes] = useState<string | null>(null);
+  const [t1, setT1] = useState('09:00');
+  const [t2, setT2] = useState('17:00');
+  const [res, setRes] = useState<{ str: string, diffM: number, isOvernight: boolean } | null>(null);
+
   const calculate = () => {
-    const [h1, m1] = t1.split(':').map(Number); const [h2, m2] = t2.split(':').map(Number);
-    let diff = (h2*60+m2)-(h1*60+m1); if (diff < 0) diff += 1440;
-    setRes(`${Math.floor(diff/60)}h ${diff%60}m`);
+    const [h1, m1] = t1.split(':').map(Number);
+    const [h2, m2] = t2.split(':').map(Number);
+    
+    let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
+    let isOvernight = false;
+    
+    if (diff < 0) {
+      diff += 1440;
+      isOvernight = true;
+    }
+    
+    setRes({ 
+      str: `${Math.floor(diff / 60)}h ${diff % 60}m`,
+      diffM: diff,
+      isOvernight
+    });
   };
+
   return (
-    <div className="p-10 bg-white rounded-[2rem] space-y-8">
+    <div className="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
       <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Range</label>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 tracking-widest">Time Range</label>
         <div className="flex gap-6 items-center">
           <div className="flex-1">
-            <span className="text-[10px] font-black text-slate-500 block mb-1">START</span>
-            <input aria-label="Start Time" type="time" value={t1} onChange={e => setT1(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800" />
+            <span className="text-[10px] font-black text-slate-500 block mb-1 uppercase">START</span>
+            <input aria-label="Start Time" type="time" value={t1} onChange={e => setT1(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
           </div>
           <span className="font-black text-slate-300 pt-6 text-xl">→</span>
           <div className="flex-1">
-            <span className="text-[10px] font-black text-slate-500 block mb-1">END</span>
-            <input aria-label="End Time" type="time" value={t2} onChange={e => setT2(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800" />
+            <span className="text-[10px] font-black text-slate-500 block mb-1 uppercase">END</span>
+            <input aria-label="End Time" type="time" value={t2} onChange={e => setT2(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
           </div>
         </div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow hover:bg-blue-700 transition-colors text-base tracking-wide">Get Duration</button>
-      {res && <div className="p-10 bg-blue-50 text-center text-6xl font-black rounded-[2rem] border border-blue-100 text-blue-900">{res}</div>}
+      
+      <button onClick={calculate} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl shadow hover:bg-blue-700 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Get Duration</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="p-10 bg-blue-50 text-center text-6xl font-black rounded-[2rem] border border-blue-100 text-blue-900">
+            {res.str}
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              How it works
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Convert times to minutes from midnight:</p>
+              <p className="pl-4 font-bold text-blue-600">Start: {parseInt(t1.split(':')[0]) * 60 + parseInt(t1.split(':')[1])} min | End: {parseInt(t2.split(':')[0]) * 60 + parseInt(t2.split(':')[1])} min</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. Calculate difference:</p>
+              <p className="pl-4 font-bold text-blue-600">
+                {res.isOvernight 
+                  ? `End is smaller, so add 24h (1440m): (End + 1440) - Start = ${res.diffM} min`
+                  : `End - Start = ${res.diffM} min`
+                }
+              </p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>3. Convert back to Hours & Minutes:</p>
+              <p className="pl-4 font-bold text-blue-600">{Math.floor(res.diffM / 60)} hours, {res.diffM % 60} minutes</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export const MinutesToHoursCalculator: React.FC = () => {
   const [m, setM] = useState('150');
-  const [res, setRes] = useState<string | null>(null);
-  const calculate = () => setRes(`${Math.floor(parseInt(m)/60)}h ${parseInt(m)%60}m`);
+  const [res, setRes] = useState<{ str: string, h: number, remM: number } | null>(null);
+
+  const calculate = () => {
+    const mins = parseInt(m || '0');
+    const h = Math.floor(mins / 60);
+    const remM = mins % 60;
+    setRes({ str: `${h}h ${remM}m`, h, remM });
+  };
+
   return (
     <div className="p-10 space-y-8">
       <div className="space-y-3 text-center">
         <label className="text-xs font-black uppercase text-slate-600 block tracking-widest">Total Minutes</label>
-        <input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-5 border rounded-2xl text-center font-black text-5xl text-slate-800" />
+        <input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-5 border rounded-2xl text-center font-black text-5xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 transition-colors text-base tracking-wide">Convert to Hours & Minutes</button>
-      {res && <div className="p-10 bg-slate-50 text-center text-5xl font-black rounded-[2rem] border border-slate-100 text-slate-900">{res}</div>}
+      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Convert to Hours & Minutes</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="p-10 bg-slate-50 text-center text-5xl font-black rounded-[2rem] border border-slate-100 text-slate-900">
+            {res.str}
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              How it works
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Divide total minutes by 60 to get hours:</p>
+              <p className="pl-4 font-bold text-blue-600">{m} ÷ 60 = {res.h} hours (remainder {res.remM})</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. The remainder is the leftover minutes:</p>
+              <p className="pl-4 font-bold text-blue-600">{res.remM} minutes</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export const HoursToMinutesCalculator: React.FC = () => {
-  const [h, setH] = useState('2'); const [m, setM] = useState('30'); const [res, setRes] = useState<number | null>(null);
-  const calculate = () => setRes(parseInt(h)*60 + parseInt(m));
+  const [h, setH] = useState('2');
+  const [m, setM] = useState('30');
+  const [res, setRes] = useState<{ total: number, h: number, m: number } | null>(null);
+
+  const calculate = () => {
+    const hours = parseInt(h || '0');
+    const mins = parseInt(m || '0');
+    const total = (hours * 60) + mins;
+    setRes({ total, h: hours, m: mins });
+  };
+
   return (
     <div className="p-10 space-y-8">
       <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Hours & Minutes</label>
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 tracking-widest">Hours & Minutes</label>
         <div className="flex gap-5">
-          <div className="flex-1 relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span><input aria-label="Hours" type="number" value={h} onChange={e => setH(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800" /></div>
-          <div className="flex-1 relative"><span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span><input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800" /></div>
+          <div className="flex-1 relative">
+            <span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Hours</span>
+            <input aria-label="Hours" type="number" value={h} onChange={e => setH(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
+          </div>
+          <div className="flex-1 relative">
+            <span className="absolute left-3 top-2 text-[10px] font-black text-slate-500 uppercase">Minutes</span>
+            <input aria-label="Minutes" type="number" value={m} onChange={e => setM(e.target.value)} className="w-full p-4 pt-6 border rounded-2xl font-bold text-center text-xl text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
+          </div>
         </div>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 transition-colors text-base tracking-wide">Convert to Total Minutes</button>
-      {res !== null && <div className="p-10 bg-slate-50 text-center text-6xl font-black rounded-[2rem] border border-slate-100 text-slate-900">{res} mins</div>}
+      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Convert to Total Minutes</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="p-10 bg-slate-50 text-center text-6xl font-black rounded-[2rem] border border-slate-100 text-slate-900">
+            {res.total} mins
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              How it works
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Multiply hours by 60 to get minutes:</p>
+              <p className="pl-4 font-bold text-blue-600">{res.h} hours × 60 = {res.h * 60} minutes</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. Add the remaining minutes:</p>
+              <p className="pl-4 font-bold text-blue-600">{res.h * 60} + {res.m} = {res.total} minutes</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -1168,36 +1872,109 @@ export const PregnancyCalculator: React.FC = () => {
 export const TimeCardCalculator: React.FC = () => {
   const [hrs, setHrs] = useState(['8', '8', '8', '8', '8', '0', '0']);
   const total = hrs.reduce((a, b) => a + parseFloat(b || '0'), 0);
+  
   return (
-    <div className="p-10 space-y-8">
+    <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
       <div className="space-y-4">
-        <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1 text-center">Hours per Day</label>
-        <div className="grid grid-cols-7 gap-3">
+        <label className="text-xs font-black uppercase text-slate-600 block mb-2 ml-1 text-center tracking-widest">Hours per Day</label>
+        <div className="grid grid-cols-7 gap-2 md:gap-3">
           {['MON','TUE','WED','THU','FRI','SAT','SUN'].map((day, i) => (
             <div key={i} className="text-center">
-              <span className="text-[10px] font-black text-slate-500 block mb-2">{day}</span>
-              <input aria-label={day} type="text" value={hrs[i]} onChange={e => {const n = [...hrs]; n[i] = e.target.value; setHrs(n);}} className="w-full p-3 border rounded-2xl text-center font-bold text-lg text-slate-800" />
+              <span className="text-[10px] font-black text-slate-400 block mb-2">{day}</span>
+              <input aria-label={day} type="text" value={hrs[i]} onChange={e => {const n = [...hrs]; n[i] = e.target.value; setHrs(n);}} className="w-full p-2 md:p-3 border rounded-xl md:rounded-2xl text-center font-bold text-base md:text-lg text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
             </div>
           ))}
         </div>
       </div>
-      <div className="p-10 bg-indigo-50 text-center text-6xl font-black text-indigo-900 rounded-[2rem] border border-indigo-100">{total} <span className="text-xl uppercase text-indigo-400 block mt-2">Total Hours</span></div>
+      
+      <div className="space-y-8 pt-6 border-t border-slate-100">
+        <div className="p-10 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100 shadow-sm">
+          <p className="text-6xl font-black text-indigo-900">{total}</p>
+          <p className="text-xs font-black text-indigo-400 uppercase tracking-widest mt-2">Total Weekly Hours</p>
+        </div>
+        
+        <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+          <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+            <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+            Summary
+          </h3>
+          <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+            <p>Sum of all daily hours entered above.</p>
+            <p className="pl-4 font-bold text-indigo-600">{hrs.map(h => parseFloat(h)||0).join(' + ')} = {total}</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export const TimeFromNowCalculator: React.FC = () => {
-  const [val, setVal] = useState('1'); const [unit, setUnit] = useState<'hours' | 'minutes'>('hours'); const [dir, setDir] = useState<'from now' | 'ago'>('from now'); const [res, setRes] = useState<string | null>(null);
-  const calculate = () => { const now = new Date(); const amount = parseFloat(val || '0'); const offset = unit === 'hours' ? amount * 3600000 : amount * 60000; const target = new Date(now.getTime() + (dir === 'from now' ? offset : -offset)); setRes(target.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) + ' (' + target.toLocaleDateString() + ')'); };
+export const TimeFromNowCalculator: React.FC<{ defaultUnit?: 'hours' | 'minutes' }> = ({ defaultUnit = 'hours' }) => {
+  const [val, setVal] = useState('1');
+  const [unit, setUnit] = useState<'hours' | 'minutes'>(defaultUnit);
+  const [dir, setDir] = useState<'from now' | 'ago'>('from now');
+  const [res, setRes] = useState<{ timeStr: string, dateStr: string, now: Date, offsetMs: number } | null>(null);
+
+  const calculate = () => {
+    const now = new Date();
+    const amount = parseFloat(val || '0');
+    const offset = unit === 'hours' ? amount * 3600000 : amount * 60000;
+    const targetMs = now.getTime() + (dir === 'from now' ? offset : -offset);
+    const target = new Date(targetMs);
+    
+    setRes({
+      timeStr: target.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }),
+      dateStr: target.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+      now,
+      offsetMs: dir === 'from now' ? offset : -offset
+    });
+  };
+
   return (
     <div className="p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-8">
-      <div className="flex gap-3 p-1.5 bg-slate-100 rounded-2xl"><button onClick={() => setDir('from now')} className={`flex-1 py-4 rounded-xl font-black text-sm ${dir === 'from now' ? 'bg-white text-blue-600 shadow' : 'text-slate-500'}`}>FROM NOW</button><button onClick={() => setDir('ago')} className={`flex-1 py-4 rounded-xl font-black text-sm ${dir === 'ago' ? 'bg-white text-rose-600 shadow' : 'text-slate-500'}`}>AGO</button></div>
-      <div className="space-y-3">
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1">Amount</label>
-        <div className="flex gap-5"><input aria-label="Amount" type="number" value={val} onChange={e => setVal(e.target.value)} className="w-1/2 p-5 border rounded-2xl text-3xl font-black text-center text-slate-800" /><select aria-label="Unit" value={unit} onChange={e => setUnit(e.target.value as any)} className="w-1/2 p-5 border rounded-2xl font-black text-center text-xl bg-white text-slate-800"><option value="hours">Hours</option><option value="minutes">Minutes</option></select></div>
+      <div className="flex gap-3 p-1.5 bg-slate-100 rounded-2xl">
+        <button onClick={() => setDir('from now')} className={`flex-1 py-4 rounded-xl font-black text-sm transition-all ${dir === 'from now' ? 'bg-white text-blue-600 shadow-sm scale-[1.02]' : 'text-slate-500 hover:text-slate-700'}`}>FROM NOW</button>
+        <button onClick={() => setDir('ago')} className={`flex-1 py-4 rounded-xl font-black text-sm transition-all ${dir === 'ago' ? 'bg-white text-rose-600 shadow-sm scale-[1.02]' : 'text-slate-500 hover:text-slate-700'}`}>AGO</button>
       </div>
-      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 transition-colors text-base tracking-wide">Calculate Exact Time</button>
-      {res && <div className="p-10 bg-blue-50 rounded-[2rem] text-center border border-blue-100"><p className="text-5xl font-black text-blue-800">{res}</p></div>}
+      
+      <div className="space-y-3">
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 tracking-widest">Duration Amount</label>
+        <div className="flex gap-5">
+          <input aria-label="Amount" type="number" value={val} onChange={e => setVal(e.target.value)} className="w-1/2 p-5 border rounded-2xl text-3xl font-black text-center text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
+          <select aria-label="Unit" value={unit} onChange={e => setUnit(e.target.value as any)} className="w-1/2 p-5 border rounded-2xl font-black text-center text-xl bg-white text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all cursor-pointer">
+            <option value="hours">Hours</option>
+            <option value="minutes">Minutes</option>
+          </select>
+        </div>
+      </div>
+      
+      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Calculate Exact Time</button>
+      
+      {res && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="p-10 bg-blue-50 rounded-[2rem] text-center border border-blue-100 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500">The time will be</p>
+            <p className="text-5xl md:text-6xl font-black text-blue-900 tracking-tight mb-2">{res.timeStr}</p>
+            <p className="text-blue-600 font-medium">{res.dateStr}</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Calculation Breakdown
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              <p>1. Start Time (Now):</p>
+              <p className="pl-4 font-bold text-blue-600">{res.now.toLocaleTimeString()} ({res.now.toLocaleDateString()})</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>2. {dir === 'from now' ? 'Add' : 'Subtract'} Duration:</p>
+              <p className="pl-4 font-bold text-blue-600">{Math.abs(res.offsetMs / (unit === 'hours' ? 3600000 : 60000))} {unit} ({Math.abs(res.offsetMs).toLocaleString()} ms)</p>
+              <div className="border-t border-slate-200 my-2"></div>
+              <p>3. Result Time:</p>
+              <p className="pl-4 font-bold text-blue-600">{res.timeStr}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -1247,40 +2024,83 @@ export const DateAddSubtractCalculator: React.FC = () => {
   const [months, setMonths] = useState('0');
   const [weeks, setWeeks] = useState('0');
   const [days, setDays] = useState('0');
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<{ dateStr: string, steps: string[] } | null>(null);
 
   const calculate = () => {
     const date = new Date(startDate);
     const sign = op === 'add' ? 1 : -1;
+    const steps: string[] = [];
     
-    date.setFullYear(date.getFullYear() + (parseInt(years) || 0) * sign);
-    date.setMonth(date.getMonth() + (parseInt(months) || 0) * sign);
-    date.setDate(date.getDate() + ((parseInt(weeks) || 0) * 7 + (parseInt(days) || 0)) * sign);
+    steps.push(`Start Date: ${date.toDateString()}`);
     
-    setResult(date.toDateString());
+    const y = (parseInt(years) || 0) * sign;
+    if (y !== 0) {
+      date.setFullYear(date.getFullYear() + y);
+      steps.push(`${op === 'add' ? 'Added' : 'Subtracted'} ${Math.abs(y)} years → ${date.toDateString()}`);
+    }
+    
+    const m = (parseInt(months) || 0) * sign;
+    if (m !== 0) {
+      date.setMonth(date.getMonth() + m);
+      steps.push(`${op === 'add' ? 'Added' : 'Subtracted'} ${Math.abs(m)} months → ${date.toDateString()}`);
+    }
+    
+    const w = (parseInt(weeks) || 0) * sign;
+    const d = (parseInt(days) || 0) * sign;
+    const totalDays = (w * 7) + d;
+    
+    if (totalDays !== 0) {
+      date.setDate(date.getDate() + totalDays);
+      steps.push(`${op === 'add' ? 'Added' : 'Subtracted'} ${Math.abs(totalDays)} days (${Math.abs(w)} weeks, ${Math.abs(d)} days) → ${date.toDateString()}`);
+    }
+    
+    setResult({ dateStr: date.toDateString(), steps });
   };
 
   return (
     <div className="p-8 md:p-10 bg-white rounded-[2rem] shadow-sm border border-slate-100 space-y-6">
       <div>
-        <label className="text-xs font-black uppercase text-slate-600 block ml-1 mb-2">Start Date</label>
-        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800" />
+        <label className="text-xs font-black uppercase text-slate-600 block ml-1 mb-2 tracking-widest">Start Date</label>
+        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full p-4 border rounded-2xl font-bold text-lg text-slate-800 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all" />
       </div>
       
       <div className="flex bg-slate-100 p-1.5 rounded-2xl">
-        <button onClick={() => setOp('add')} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${op === 'add' ? 'bg-white text-blue-600 shadow' : 'text-slate-500'}`}>Add (+)</button>
-        <button onClick={() => setOp('sub')} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${op === 'sub' ? 'bg-white text-rose-600 shadow' : 'text-slate-500'}`}>Subtract (-)</button>
+        <button onClick={() => setOp('add')} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${op === 'add' ? 'bg-white text-blue-600 shadow scale-[1.02]' : 'text-slate-500 hover:text-slate-700'}`}>Add (+)</button>
+        <button onClick={() => setOp('sub')} className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${op === 'sub' ? 'bg-white text-rose-600 shadow scale-[1.02]' : 'text-slate-500 hover:text-slate-700'}`}>Subtract (-)</button>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-         <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Years</label><input type="number" value={years} onChange={e => setYears(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800" /></div>
-         <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Months</label><input type="number" value={months} onChange={e => setMonths(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800" /></div>
-         <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Weeks</label><input type="number" value={weeks} onChange={e => setWeeks(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800" /></div>
-         <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Days</label><input type="number" value={days} onChange={e => setDays(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800" /></div>
+        <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Years</label><input type="number" value={years} onChange={e => setYears(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800 focus:ring-2 focus:ring-blue-100 outline-none" placeholder="0" /></div>
+        <div><label className="text-[10px] font-black uppercase text-slate-500 block ml-1 mb-1">Months</label><input type="number" value={months} onChange={e => setMonths(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800 focus:ring-2 focus:ring-blue-100 outline-none" placeholder="0" /></div>
+        <div><label className="text-[10px] font-black uppercase text-slate-500 block mb-1">Weeks</label><input type="number" value={weeks} onChange={e => setWeeks(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800 focus:ring-2 focus:ring-blue-100 outline-none" placeholder="0" /></div>
+        <div><label className="text-[10px] font-black uppercase text-slate-500 block mb-1">Days</label><input type="number" value={days} onChange={e => setDays(e.target.value)} className="w-full p-3 border rounded-xl font-bold text-center text-slate-800 focus:ring-2 focus:ring-blue-100 outline-none" placeholder="0" /></div>
       </div>
 
-      <button onClick={calculate} className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl shadow hover:bg-indigo-700 transition-colors text-base tracking-wide">Calculate New Date</button>
-      {result && <div className="p-8 bg-indigo-50 text-center rounded-[2rem] border border-indigo-100"><p className="text-3xl font-black text-indigo-900">{result}</p></div>}
+      <button onClick={calculate} className="w-full py-5 bg-slate-900 text-white font-black rounded-2xl shadow hover:bg-slate-800 hover:scale-[1.01] active:scale-[0.99] transition-all text-base tracking-wide uppercase">Calculate Date</button>
+      
+      {result && (
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="p-10 bg-blue-50 text-center rounded-[2rem] border border-blue-100 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-widest mb-2 text-blue-500">Resulting Date</p>
+            <p className="text-3xl md:text-4xl font-black text-blue-900">{result.dateStr}</p>
+          </div>
+
+          <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm space-y-6 text-left">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+              Step-by-Step Calculation
+            </h3>
+            <div className="bg-slate-50 p-6 rounded-2xl font-mono text-sm text-slate-700 space-y-3">
+              {result.steps.map((step, i) => (
+                <div key={i}>
+                  <p className={i === 0 ? "font-bold text-slate-900" : "pl-4 text-blue-600"}>{step}</p>
+                  {i < result.steps.length - 1 && <div className="border-t border-slate-200 my-2"></div>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

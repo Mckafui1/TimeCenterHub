@@ -8,7 +8,8 @@
     "build": "npm run build:client && npm run build:server && node prerender.js",
     "build:client": "vite build --outDir dist/static",
     "build:server": "vite build --ssr entry-server.tsx --outDir dist/server",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "lucide-react": "^0.575.0",

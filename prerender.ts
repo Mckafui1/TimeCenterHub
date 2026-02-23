@@ -5,8 +5,8 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server.js';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppRoutes } from './src/App.tsx';
-import { TOOLS } from './src/constants.tsx';
+import { AppRoutes } from './App.tsx';
+import { TOOLS } from './constants.tsx';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const template = fs.readFileSync(path.resolve(__dirname, 'dist/index.html'), 'utf-8');
@@ -28,7 +28,7 @@ const ensureDir = (dir) => {
 };
 
 const render = (url) => {
-  const helmetContext = {};
+  const helmetContext: any = {};
   
   const appHtml = renderToString(
     React.createElement(

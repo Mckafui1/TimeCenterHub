@@ -4,6 +4,9 @@
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Force class strategy for dark mode in Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
     @apply bg-white dark:bg-slate-900 text-slate-900 dark:text-white transition-colors duration-300;

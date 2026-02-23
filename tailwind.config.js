@@ -7,7 +7,7 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'selector',
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
