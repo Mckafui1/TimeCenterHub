@@ -77,4 +77,33 @@ routes.forEach(route => {
   }
 });
 
+// Generate Sitemap
+const generateSitemap = () => {
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${routes.map(route => `  <url>
+    <loc>https://timecenterhub.com${route === '/' ? '' : route}</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <priority>${route === '/' ? '1.0' : '0.8'}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+  fs.writeFileSync(path.resolve(__dirname, 'dist/sitemap.xml'), sitemap);
+  console.log('Generated: sitemap.xml');
+};
+
+generateSitemap();
+
+// Copy robots.txt
+const copyRobots = () => {
+  const robotsSrc = path.resolve(__dirname, 'public/robots.txt');
+  const robotsDest = path.resolve(__dirname, 'dist/robots.txt');
+  if (fs.existsSync(robotsSrc)) {
+    fs.copyFileSync(robotsSrc, robotsDest);
+    console.log('Copied: robots.txt');
+  }
+};
+
+copyRobots();
+
 console.log('Prerendering complete.');

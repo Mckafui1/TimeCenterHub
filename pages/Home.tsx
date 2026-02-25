@@ -98,20 +98,26 @@ const Home: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
       <Helmet>
         <title>Time Calculator & Date Tools - Free Online Hours, Minutes & Age Calculator</title>
-        <meta name="description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, convert time zones, and manage dates with our accurate, privacy-focused tools." />
+        <meta name="description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, and manage dates with our accurate tools." />
         <link rel="canonical" href="https://timecenterhub.com/" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Time Calculator & Date Tools - Free Online Hours, Minutes & Age Calculator" />
-        <meta property="og:description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, convert time zones, and manage dates with our accurate, privacy-focused tools." />
+        <meta property="og:description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, and manage dates with our accurate tools." />
         <meta property="og:url" content="https://timecenterhub.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="TimeCenterHub" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="https://timecenterhub.com/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="TimeCenterHub - Online Time Tools" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Time Calculator & Date Tools - Free Online Hours, Minutes & Age Calculator" />
-        <meta name="twitter:description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, convert time zones, and manage dates with our accurate, privacy-focused tools." />
+        <meta name="twitter:description" content="Free online Time Calculator to add or subtract hours, minutes, and seconds. Calculate exact age, track work hours, and manage dates with our accurate tools." />
+        <meta name="twitter:image" content="https://timecenterhub.com/og-image.jpg" />
       </Helmet>
 
       {/* Hero Section */}
