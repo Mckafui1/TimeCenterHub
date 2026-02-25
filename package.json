@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client && npm run build:server && node prerender.js",
+    "clean": "node -e \"import('fs').then(fs => fs.rmSync('dist', { recursive: true, force: true }))\"",
+    "build": "npm run clean && npm run build:client && npm run build:server && node prerender.js",
     "build:client": "vite build --outDir dist/static",
     "build:server": "vite build --ssr entry-server.tsx --outDir dist/server",
     "preview": "vite preview",
