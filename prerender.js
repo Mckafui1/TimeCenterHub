@@ -6,73 +6,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const toAbsolute = (p) => path.resolve(__dirname, p);
 
 const template = fs.readFileSync(toAbsolute('dist/static/index.html'), 'utf-8');
-const { render } = await import('./dist/server/entry-server.js');
+const { render, TOOLS } = await import('./dist/server/entry-server.js');
 
 // Define routes to prerender
-// We can't easily import TOOLS from constants.tsx here because it's not built for Node yet in this context,
-// unless we also build constants.tsx or duplicate the list.
-// For simplicity, I will hardcode the main routes and a few tool routes, 
-// OR I can try to parse the sitemap.xml if I had one generated? 
-// Actually, I can just fetch the routes from the built server bundle if I exported them?
-// No, let's just list them. The user wants "not an SPA", so main pages are critical.
-
 const routes = [
   '/',
   '/about',
   '/contact',
   '/privacy',
   '/sitemap',
-  // Time Tools
-  '/time-calculator',
-  '/chronometer',
-  '/time-duration',
-  '/add-time',
-  '/subtract-time',
-  '/hours-from-now',
-  '/minutes-from-now',
-  '/time-until-midnight',
-  '/sleep-calculator',
-  '/meeting-cost',
-  '/world-clock',
-  '/time-to-decimal',
-  '/speed-distance-time',
-  // Date Tools
-  '/age-calculator',
-  '/date-calculator',
-  '/weekday',
-  '/week-number',
-  '/time-between-dates',
-  '/days-from-now',
-  '/business-days',
-  '/day-of-year',
-  '/leap-year',
-  '/pregnancy-due-date',
-  '/zodiac',
-  '/birthday-countdown',
-  '/retirement',
-  '/wedding',
-  // Work Tools
-  '/work-hours',
-  '/time-card',
-  '/overtime',
-  '/billable',
-  '/shifts',
-  '/breaks',
-  // Converter Tools
-  '/military-time',
-  '/minutes-to-hours',
-  '/hours-to-minutes',
-  '/unix',
-  '/units',
-  '/ms-to-seconds',
-  '/ms-to-date',
-  '/pace',
-  // Countdown Tools
-  '/pomodoro',
-  '/timer',
-  '/new-year',
-  '/exam',
-  '/federal-holidays'
+  ...TOOLS.map(tool => tool.path)
 ];
 
 (async () => {
@@ -115,6 +58,7 @@ const routes = [
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes.map(route => `  <url>
     <loc>https://timecenterhub.com${route}</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>${route === '/' ? 'daily' : 'weekly'}</changefreq>
     <priority>${route === '/' ? '1.0' : '0.8'}</priority>
   </url>`).join('\n')}
@@ -122,6 +66,14 @@ ${routes.map(route => `  <url>
 
   fs.writeFileSync(toAbsolute('dist/static/sitemap.xml'), sitemap);
   console.log('Sitemap generated.');
+
+  // Copy robots.txt
+  const robotsSrc = toAbsolute('public/robots.txt');
+  const robotsDest = toAbsolute('dist/static/robots.txt');
+  if (fs.existsSync(robotsSrc)) {
+    fs.copyFileSync(robotsSrc, robotsDest);
+    console.log('Copied: robots.txt');
+  }
   
   // Clean up: move dist/static to dist
   console.log('Moving files to dist root...');
